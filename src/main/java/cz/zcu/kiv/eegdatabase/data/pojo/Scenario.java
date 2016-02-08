@@ -248,7 +248,7 @@ public class Scenario implements Serializable, Comparable<Scenario> {
 		this.experiments = experiments;
 	}
 
-	@XmlJavaTypeAdapter(BlobSerializer.class)
+	//@XmlJavaTypeAdapter(BlobSerializer.class)
 	@Basic(fetch=FetchType.LAZY)
 	@Lob
 	@Column(name = "SCENARIO_FILE", nullable = true)

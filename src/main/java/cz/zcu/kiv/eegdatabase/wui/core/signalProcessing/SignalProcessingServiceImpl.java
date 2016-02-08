@@ -24,6 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -240,6 +241,11 @@ public class SignalProcessingServiceImpl
             return null;
         }
 
+    }
+
+    @Override
+    public Blob createBlob(byte[] content) {
+        return resultDao.createBlob(content);
     }
 
     public ProcessService getEegService() {

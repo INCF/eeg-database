@@ -23,7 +23,9 @@
 package cz.zcu.kiv.eegdatabase.data.dao;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.ServiceResult;
+import org.hibernate.Hibernate;
 
+import java.sql.Blob;
 import java.util.List;
 import java.util.Map;
 
@@ -43,5 +45,10 @@ public class SimpleServiceResultDao extends SimpleGenericDao<ServiceResult, Inte
     public List<ServiceResult> getResultByPerson(int personId) {
         String hqlQuery = "from ServiceResult s where s.owner.personId = :personId";
         return getHibernateTemplate().findByNamedParam(hqlQuery, "personId", personId);
+    }
+
+    @Override
+    public Blob createBlob(byte[] content) {
+        return Hibernate.getLobCreator(this.getSessionFactory().getCurrentSession()).createBlob(content);
     }
 }

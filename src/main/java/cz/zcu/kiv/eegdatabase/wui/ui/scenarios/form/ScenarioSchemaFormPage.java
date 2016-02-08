@@ -159,9 +159,9 @@ public class ScenarioSchemaFormPage extends MenuPage {
                             String pojo = schemaGenerator.generatePojo();
                             String bean = schemaGenerator.generateBean();
 
-                            scenarioSchema.setSql(Hibernate.createClob(sql));
-                            scenarioSchema.setHbmXml(Hibernate.createClob(hbmXml));
-                            scenarioSchema.setPojo(Hibernate.createClob(pojo));
+                            scenarioSchema.setSql(scenarioFacade.createClob(sql));
+                            scenarioSchema.setHbmXml(scenarioFacade.createClob(hbmXml));
+                            scenarioSchema.setPojo(scenarioFacade.createClob(pojo));
                             scenarioSchema.setBean(bean);
                             scenarioSchema.setApproved('n');
                         }

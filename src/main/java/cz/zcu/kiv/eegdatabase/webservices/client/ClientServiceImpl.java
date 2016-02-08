@@ -253,8 +253,9 @@ public class ClientServiceImpl implements ClientService {
 
 		try {
 			if (inputData != null) {
-				
-				file.setFileContent(Hibernate.createBlob(inputData.getInputStream()));
+
+                file.setFileContent(Hibernate.getLobCreator(personDao.getSessionFactory().getCurrentSession()).
+                        createBlob(inputData.getInputStream(), info.getFileLength()));
 			}
 		} catch (IOException ex) {
 			log.error(ex.getMessage(), ex);

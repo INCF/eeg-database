@@ -24,6 +24,7 @@ package cz.zcu.kiv.eegdatabase.data.dao;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.ServiceResult;
 
+import java.sql.Blob;
 import java.util.List;
 
 /**
@@ -36,4 +37,6 @@ import java.util.List;
 public interface ServiceResultDao extends GenericDao<ServiceResult, Integer> {
 
     public List<ServiceResult> getResultByPerson(int personId);
+
+    Blob createBlob(byte[] content);
 }

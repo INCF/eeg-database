@@ -82,7 +82,7 @@ public class DataFileServiceImpl implements DataFileService {
         datafile.setExperiment(experimentDao.getExperimentForDetail(experimentId));
         datafile.setDescription(description);
         datafile.setFilename(file.getOriginalFilename().replace(" ", "_"));
-        datafile.setFileContent(Hibernate.createBlob(file.getBytes()));
+        datafile.setFileContent(Hibernate.getLobCreator(experimentDao.getSessionFactory().getCurrentSession()).createBlob(file.getBytes()));
         datafile.setMimetype(file.getContentType() != null ? file.getContentType().toLowerCase() : "application/octet-stream");
 
         //DB column size restriction

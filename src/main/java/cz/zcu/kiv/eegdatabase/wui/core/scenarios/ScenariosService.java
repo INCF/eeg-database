@@ -27,6 +27,7 @@
  */
 package cz.zcu.kiv.eegdatabase.wui.core.scenarios;
 
+import java.sql.Clob;
 import java.util.List;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
@@ -79,4 +80,6 @@ public interface ScenariosService extends GenericService<Scenario, Integer> {
     List<ScenarioSchemas> getListOfScenarioSchemas();
 
     FileDTO getScenarioFile(int scenarioId);
+
+    Clob createClob(String content);
 }

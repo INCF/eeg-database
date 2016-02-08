@@ -35,6 +35,7 @@ import cz.zcu.kiv.eegdatabase.wui.core.GenericService;
 import cz.zcu.kiv.eegdatabase.wui.core.file.FileDTO;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -65,4 +66,6 @@ public interface SignalProcessingService extends GenericService<ServiceResult, I
 
     @Transactional(readOnly = true)
     FileDTO getResultFile(int resultId);
+
+    public Blob createBlob(byte[] content);
 }

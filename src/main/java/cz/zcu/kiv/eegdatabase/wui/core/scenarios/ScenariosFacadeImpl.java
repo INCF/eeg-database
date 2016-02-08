@@ -27,6 +27,7 @@
  */
 package cz.zcu.kiv.eegdatabase.wui.core.scenarios;
 
+import java.sql.Clob;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -138,6 +139,11 @@ public class ScenariosFacadeImpl implements ScenariosFacade {
     @Override
     public Scenario getScenarioByTitle(String title) {
         return service.getScenarioByTitle(title);
+    }
+
+    @Override
+    public Clob createClob(String content) {
+        return service.createClob(content);
     }
 
     // @Override

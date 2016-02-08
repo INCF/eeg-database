@@ -28,7 +28,9 @@
 package cz.zcu.kiv.eegdatabase.data.dao;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.ScenarioSchemas;
+import org.hibernate.Hibernate;
 
+import java.sql.Clob;
 import java.util.List;
 
 /**
@@ -74,6 +76,11 @@ public class SimpleScenarioSchemasDao
         String hqlSelect = "from ScenarioSchemas scenarioSchemas where scenarioSchemas.approved='y'";
         List<ScenarioSchemas> list = getHibernateTemplate().find(hqlSelect);
         return list;
+    }
+
+    @Override
+    public Clob createClob(String content) {
+        return Hibernate.getLobCreator(this.getSessionFactory().getCurrentSession()).createClob(content);
     }
 
 }

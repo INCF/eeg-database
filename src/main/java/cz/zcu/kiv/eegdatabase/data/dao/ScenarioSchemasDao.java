@@ -28,6 +28,8 @@
 package cz.zcu.kiv.eegdatabase.data.dao;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.ScenarioSchemas;
+
+import java.sql.Clob;
 import java.util.List;
 
 /**
@@ -41,4 +43,6 @@ public interface ScenarioSchemasDao extends GenericDao<ScenarioSchemas, Integer>
   public int getNextSchemaId();
   
   List<ScenarioSchemas> getListOfScenarioSchemas();
+
+    Clob createClob(String content);
 }

@@ -32,6 +32,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Blob;
+import java.sql.Clob;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -309,5 +310,10 @@ public class ScenariosServiceImpl implements ScenariosService {
             return null;
         }
 
+    }
+
+    @Override
+    public Clob createClob(String content) {
+        return schemaDAO.createClob(content);
     }
 }

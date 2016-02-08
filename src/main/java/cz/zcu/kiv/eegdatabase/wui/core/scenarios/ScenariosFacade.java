@@ -27,6 +27,7 @@
  */
 package cz.zcu.kiv.eegdatabase.wui.core.scenarios;
 
+import java.sql.Clob;
 import java.util.List;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
@@ -79,4 +80,6 @@ public interface ScenariosFacade extends GenericFacade<Scenario, Integer> {
     void flush();
 
     Scenario getScenarioByTitle(String input);
+
+    Clob createClob(String content);
 }

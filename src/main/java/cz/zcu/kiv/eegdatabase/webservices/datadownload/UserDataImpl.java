@@ -43,6 +43,7 @@ import java.sql.Timestamp;
 import java.util.*;
 
 import org.hibernate.Hibernate;
+import org.hibernate.Session;
 
 /**
  * Web service providing user's data remotely.
@@ -351,10 +352,12 @@ public class UserDataImpl implements UserDataService {
         file.setDescription(dataFile.getDescription());
         file.setFilename(dataFile.getFileName());
         file.setMimetype(dataFile.getMimeType());
+        Session session = experimentDao.getSessionFactory().getCurrentSession();
 
         try {
             if (inputData != null) {
-                file.setFileContent(Hibernate.createBlob(inputData.getInputStream()));
+               // file.setFileContent(Hibernate.createBlob(inputData.getInputStream()));
+                file.setFileContent(Hibernate.getLobCreator(session).createBlob(inputData.getInputStream(), dataFile.getFileLength()));
             }
         } catch (IOException e) {
             log.error(e.getMessage(), e);
