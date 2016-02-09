@@ -91,7 +91,7 @@ public class LinkedInManager {
     private void connect() {
         if (linkedin == null) {
             try {
-                linkedin = new LinkedInTemplate(consumerKey, consumerSercet, accessToken, accessTokenSecret);
+                linkedin = new LinkedInTemplate(accessToken);
             } catch (Exception e) {
                 //In case of Exception, no action will be taken.
             }

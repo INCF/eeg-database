@@ -22,12 +22,12 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.data.dao;
 
+import org.apache.lucene.queryparser.classic.ParseException;
+import org.hibernate.SessionFactory;
+
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
-
-import org.apache.lucene.queryparser.classic.ParseException;
-import org.hibernate.SessionFactory;
 
 /**
  * Interface for connecting logic and data layer.

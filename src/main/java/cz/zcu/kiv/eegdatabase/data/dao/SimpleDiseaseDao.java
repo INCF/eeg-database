@@ -63,18 +63,15 @@ public class SimpleDiseaseDao extends SimpleGenericDao<Disease, Integer>
     @Override
     public boolean canDelete(int id) {
         String hqlQuery = "select dis.experiments from Disease dis where dis.diseaseId = :id";
-        String[] names = {"id"};
-        Object[] values = {id};
-        List<Disease> list = getHibernateTemplate().findByNamedParam(hqlQuery, names, values);
+        List<Disease> list = getSessionFactory().getCurrentSession().createQuery(hqlQuery).setParameter("id", id).list();
         return (list.size() == 0);
     }
 
     @Override
     public boolean hasGroupRel(int id) {
         String hqlQuery = "from Disease dis where dis.diseaseId = :id";
-        String[] names = {"id"};
-        Object[] values = {id};
-        List<Disease> list = getHibernateTemplate().findByNamedParam(hqlQuery, names, values);
+
+        List<Disease> list = getSessionFactory().getCurrentSession().createQuery(hqlQuery).setParameter("id", id).list();
         return list.get(0).getResearchGroups().size() > 0;
     }
 

@@ -47,8 +47,8 @@ public class SimpleEducationLevelDao
      * @return List of EducationLevel entities with searched title
      */
     public List<EducationLevel> getEducationLevels(String title) {
-        String HQLselect = "from EducationLevel level where level.title = :title";
-        return getHibernateTemplate().findByNamedParam(HQLselect, "title", title);
+        String hqlQuery = "from EducationLevel level where level.title = :title";
+        return getSessionFactory().getCurrentSession().createQuery(hqlQuery).setParameter("title", title).list();
     }
 
     @Override
@@ -72,18 +72,14 @@ public class SimpleEducationLevelDao
     @Override
     public boolean canDelete(int id) {
         String hqlQuery = "select ed.persons from EducationLevel ed where ed.educationLevelId = :id";
-        String[] names = {"id"};
-        Object[] values = {id};
-        List<EducationLevel> list = getHibernateTemplate().findByNamedParam(hqlQuery, names, values);
+        List<EducationLevel> list = getSessionFactory().getCurrentSession().createQuery(hqlQuery).setParameter("id", id).list();
         return (list.size() == 0);
     }
 
     @Override
     public boolean hasGroupRel(int id) {
         String hqlQuery = "from EducationLevel ed where ed.educationLevelId = :id";
-        String[] names = {"id"};
-        Object[] values = {id};
-        List<EducationLevel> list = getHibernateTemplate().findByNamedParam(hqlQuery, names, values);
+        List<EducationLevel> list = getSessionFactory().getCurrentSession().createQuery(hqlQuery).setParameter("id", id).list();
         return list.get(0).getResearchGroups().size() > 0;
     }
 
@@ -102,7 +98,7 @@ public class SimpleEducationLevelDao
     @Override
     public List<EducationLevel> getDefaultRecords() {
         String hqlQuery = "from EducationLevel ed where ed.defaultNumber = 1";
-        return getHibernateTemplate().find(hqlQuery);
+        return getSessionFactory().getCurrentSession().createQuery(hqlQuery).list();
     }
 
     @Override

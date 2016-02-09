@@ -126,7 +126,7 @@
 				<prop key="hibernate.dialect">${db.dialect}</prop>
 				<prop key="autocommmit">true</prop>
 				<prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
-				<!--<prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</prop>-->
+				<prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</prop>
 				<!--<prop key="hibernate.cache.provider_class">${hibernate.cache.provider_class}</prop>-->
 			</props>
 		</property>
@@ -145,12 +145,13 @@
 		<property name="cacheSeconds" value="90"/>
 	</bean>
 
-	<bean id="txManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+	<bean id="txManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
 		<property name="sessionFactory" ref="sessionFactory"/>
 	</bean>
 
 	<bean id="transactionTemplate" class="org.springframework.transaction.support.TransactionTemplate">
 		<property name="transactionManager" ref="txManager"/>
+
 	</bean>
 
 	<bean id="captchaEngine"
@@ -280,8 +281,7 @@
 
 	<tx:advice id="txAdvice" transaction-manager="txManager">
 		<tx:attributes>
-			<tx:method name="get*" read-only="true"/>
-			<tx:method name="*" read-only="false"/>
+            <tx:method name="*" read-only="false"/>
 		</tx:attributes>
 	</tx:advice>
     

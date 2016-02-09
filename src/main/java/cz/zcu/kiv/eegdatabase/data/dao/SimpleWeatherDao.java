@@ -37,15 +37,12 @@ public class SimpleWeatherDao extends SimpleGenericDao<Weather, Integer> impleme
 
     public List<Weather> getItemsForList() {
         String hqlQuery = "from Weather w order by w.title";
-        List<Weather> list = getHibernateTemplate().find(hqlQuery);
-        return list;
+        return getSessionFactory().getCurrentSession().createQuery(hqlQuery).list();
     }
 
     public boolean canDelete(int id) {
         String hqlQuery = "select w.experiments from Weather w where w.id = :id";
-        String[] names = {"id"};
-        Object[] values = {id};
-        List<Weather> list = getHibernateTemplate().findByNamedParam(hqlQuery, names, values);
+        List<Weather> list = getSessionFactory().getCurrentSession().createQuery(hqlQuery).setParameter("id", id).list();
         return (list.size() == 0);
     }
 
@@ -81,8 +78,7 @@ public class SimpleWeatherDao extends SimpleGenericDao<Weather, Integer> impleme
 
     public List<Weather> getDefaultRecords() {
         String hqlQuery = "from Weather h where h.defaultNumber = 1";
-        List<Weather> list = getHibernateTemplate().find(hqlQuery);
-        return list;
+        return getSessionFactory().getCurrentSession().createQuery(hqlQuery).list();
     }
 
     public boolean canSaveTitle(String title, int groupId, int weatherId) {

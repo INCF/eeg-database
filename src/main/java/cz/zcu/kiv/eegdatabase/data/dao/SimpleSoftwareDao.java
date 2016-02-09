@@ -61,18 +61,14 @@ public class SimpleSoftwareDao extends SimpleGenericDao<Software, Integer>
     @Override
     public boolean canDelete(int id) {
         String hqlQuery = "select st.experiments from Software st where st.softwareId = :id";
-        String[] names = {"id"};
-        Object[] values = {id};
-        List<Software> list = getHibernateTemplate().findByNamedParam(hqlQuery, names, values);
+        List<Software> list = getSessionFactory().getCurrentSession().createQuery(hqlQuery).setParameter("id", id).list();
         return (list.size() == 0);
     }
 
     @Override
     public boolean hasGroupRel(int id) {
         String hqlQuery = "from Software st where st.softwareId = :id";
-        String[] names = {"id"};
-        Object[] values = {id};
-        List<Software> list = getHibernateTemplate().findByNamedParam(hqlQuery, names, values);
+        List<Software> list = getSessionFactory().getCurrentSession().createQuery(hqlQuery).setParameter("id", id).list();
         return list.get(0).getResearchGroups().size() > 0;
     }
 
@@ -91,7 +87,7 @@ public class SimpleSoftwareDao extends SimpleGenericDao<Software, Integer>
     @Override
     public List<Software> getDefaultRecords() {
         String hqlQuery = "from Software st where st.defaultNumber = 1";
-        return getHibernateTemplate().find(hqlQuery);
+        return getSessionFactory().getCurrentSession().createQuery(hqlQuery).list();
     }
 
     @Override

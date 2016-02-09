@@ -45,13 +45,13 @@ public class SimpleExperimentPackageLicenseDao extends SimpleGenericDao<Experime
 	public void removeLicenseFromPackage(int packageId, int licenseId )
 	{
 		String hqlQuery = "delete from ExperimentPackageLicense epl where epl.experimentPackage = :ep and epl.license = :l";
-        Session session = getSession();
+        Session session = currentSession();
         session.createQuery(hqlQuery).setInteger("ep", packageId).setInteger("l", licenseId).executeUpdate();
 	}
 
 	@Override
 	public void removeAllConnections(ExperimentPackage pack) {
 		String hqlQuery = "delete from ExperimentPackageLicense epl where epl.experimentPackage = :ep";
-        this.getSession().createQuery(hqlQuery).setInteger("ep", pack.getExperimentPackageId()).executeUpdate();
+        this.currentSession().createQuery(hqlQuery).setInteger("ep", pack.getExperimentPackageId()).executeUpdate();
 	}
 }

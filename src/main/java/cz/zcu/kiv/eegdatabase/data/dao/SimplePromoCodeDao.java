@@ -39,20 +39,20 @@ public class SimplePromoCodeDao extends SimpleGenericDao<PromoCode,Integer> impl
     public List<PromoCode> getAvailableGroupPromoCodes()  {
         String query = "select m from PromoCode m where m.type = :promoCodeType and m.valid = 'TRUE'";
 
-        List<PromoCode> ret = this.getSession().createQuery(query).setParameter("promoCodeType", MembershipPlanType.GROUP.getType()).list(); //set parameters
+        List<PromoCode> ret = this.currentSession().createQuery(query).setParameter("promoCodeType", MembershipPlanType.GROUP.getType()).list(); //set parameters
         return ret;
     }
 
     public List<PromoCode> getAvailablePersonPromoCodes()  {
         String query = "select m from PromoCode m where m.type = :promoCodeType and m.valid = 'TRUE'";
 
-        List<PromoCode> ret = this.getSession().createQuery(query).setParameter("promoCodeType", MembershipPlanType.PERSON.getType()).list(); //set parameters
+        List<PromoCode> ret = this.currentSession().createQuery(query).setParameter("promoCodeType", MembershipPlanType.PERSON.getType()).list(); //set parameters
         return ret;
     }
 
     public PromoCode getPromoCodeById(Integer id)  {
         String query = "select m from PromoCode m where m.promoCodeId = :id";
-        PromoCode ret = (PromoCode) this.getSession().createQuery(query).setParameter("id",id).uniqueResult();
+        PromoCode ret = (PromoCode) this.currentSession().createQuery(query).setParameter("id",id).uniqueResult();
         return ret;
     }
 
@@ -60,7 +60,7 @@ public class SimplePromoCodeDao extends SimpleGenericDao<PromoCode,Integer> impl
         Timestamp time = new Timestamp(new Date().getTime());
 
         String query = "select m from PromoCode m where m.keyword = :keyword and m.valid='TRUE' and :time between m.from and m.to";
-        PromoCode ret = (PromoCode) this.getSession().createQuery(query).setParameter("keyword",keyWord).setParameter("time",time).uniqueResult();
+        PromoCode ret = (PromoCode) this.currentSession().createQuery(query).setParameter("keyword",keyWord).setParameter("time",time).uniqueResult();
         return ret;
     }
 

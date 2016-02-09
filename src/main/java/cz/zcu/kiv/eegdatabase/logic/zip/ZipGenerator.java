@@ -36,7 +36,6 @@ import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
 import cz.zcu.kiv.eegdatabase.data.pojo.Scenario;
 import cz.zcu.kiv.eegdatabase.logic.controller.experiment.MetadataCommand;
 import cz.zcu.kiv.eegdatabase.logic.xml.DataTransformer;
-import org.apache.activemq.util.ByteArrayInputStream;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

@@ -62,18 +62,14 @@ public class SimpleElectrodeTypeDao extends SimpleGenericDao<ElectrodeType, Inte
     @Override
     public boolean canDelete(int id) {
         String hqlQuery = "select el.electrodeLocations from ElectrodeType el where el.electrodeTypeId = :id";
-        String[] names = {"id"};
-        Object[] values = {id};
-        List<ElectrodeType> list = getHibernateTemplate().findByNamedParam(hqlQuery, names, values);
+        List<ElectrodeType> list = getSessionFactory().getCurrentSession().createQuery(hqlQuery).setParameter("id", id).list();
         return (list.size() == 0);
     }
 
     @Override
     public boolean hasGroupRel(int id) {
         String hqlQuery = "from ElectrodeType el where el.electrodeFixId = :id";
-        String[] names = {"id"};
-        Object[] values = {id};
-        List<ElectrodeType> list = getHibernateTemplate().findByNamedParam(hqlQuery, names, values);
+        List<ElectrodeType> list = getSessionFactory().getCurrentSession().createQuery(hqlQuery).setParameter("id", id).list();
         return list.get(0).getResearchGroups().size() > 0;
     }
 
@@ -92,7 +88,7 @@ public class SimpleElectrodeTypeDao extends SimpleGenericDao<ElectrodeType, Inte
     @Override
     public List<ElectrodeType> getDefaultRecords() {
         String hqlQuery = "from ElectrodeType el where el.defaultNumber = 1";
-        return getHibernateTemplate().find(hqlQuery);
+        return getSessionFactory().getCurrentSession().createQuery(hqlQuery).list();
     }
 
     @Override

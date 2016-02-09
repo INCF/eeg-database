@@ -99,8 +99,8 @@ public class SimplePersonDao
      * @return
      */
     public List<Person> getPersonsWherePendingRequirement() {
-        String HQLselect = "from Person person where person.requiresWriting = 'T' and person.authority = 'ROLE_READER'";
-        return getHibernateTemplate().find(HQLselect);
+        String hqlQuery = "from Person person where person.requiresWriting = 'T' and person.authority = 'ROLE_READER'";
+        return getSessionFactory().getCurrentSession().createQuery(hqlQuery).list();
     }
 
     /**
@@ -113,9 +113,8 @@ public class SimplePersonDao
      *         else return false
      */
     public boolean usernameExists(String userName) {
-        String HQLselect = "from Person person where person.username = :userName";
-        List<Person> list = getHibernateTemplate().
-                findByNamedParam(HQLselect, "userName", userName);
+        String hqlQuery = "from Person person where person.username = :userName";
+        List<Person> list = getSessionFactory().getCurrentSession().createQuery(hqlQuery).setParameter("userName", userName).list();
         return (!list.isEmpty());
     }
 
@@ -129,9 +128,8 @@ public class SimplePersonDao
      *         else return false
      */
     public boolean fbUidExists(String facebookId) {
-        String HQLselect = "from Person person where person.facebookId = :facebookId";
-        List<Person> list = getHibernateTemplate().
-                findByNamedParam(HQLselect, "facebookId", facebookId);
+        String hqlQuery = "from Person person where person.facebookId = :facebookId";
+        List<Person> list = getSessionFactory().getCurrentSession().createQuery(hqlQuery).setParameter("facebookId", facebookId).list();
         return (!list.isEmpty());
     }
 
@@ -142,8 +140,8 @@ public class SimplePersonDao
      * @return list of Person with supervisor's authority.
      */
     public List<Person> getSupervisors() {
-        String HQLselect = "from Person person where person.authority = 'ROLE_SUPERVISOR'";
-        return getHibernateTemplate().find(HQLselect);
+        String hqlQuery = "from Person person where person.authority = 'ROLE_SUPERVISOR'";
+        return getSessionFactory().getCurrentSession().createQuery(hqlQuery).list();
     }
 
     /**
@@ -210,7 +208,7 @@ public class SimplePersonDao
         List<Person> results;
 
         try {
-            results = getHibernateTemplate().find(hqlQuery);
+            results = getSessionFactory().getCurrentSession().createQuery(hqlQuery).list();
         } catch (Exception e) {
             return new ArrayList<Person>();
         }

@@ -50,7 +50,7 @@ public class SimpleProjectTypeDao extends SimpleGenericDao<ProjectType, Integer>
     @Override
     public List<ProjectType> getItemsForList() {
         String hqlQuery = "from ProjectType pr order by pr.title";
-        return getHibernateTemplate().find(hqlQuery);
+        return getSessionFactory().getCurrentSession().createQuery(hqlQuery).list();
     }
 
     @Override
@@ -62,18 +62,14 @@ public class SimpleProjectTypeDao extends SimpleGenericDao<ProjectType, Integer>
     @Override
     public boolean canDelete(int id) {
         String hqlQuery = "select pr.experiments from ProjectType pr where pr.projectTypeId = :id";
-        String[] names = {"id"};
-        Object[] values = {id};
-        List<ProjectType> list = getHibernateTemplate().findByNamedParam(hqlQuery, names, values);
+        List<ProjectType> list = getSessionFactory().getCurrentSession().createQuery(hqlQuery).setParameter("id", id).list();
         return (list.size() == 0);
     }
 
     @Override
     public boolean hasGroupRel(int id) {
         String hqlQuery = "from ProjectType pr where pr.projectTypeId = :id";
-        String[] names = {"id"};
-        Object[] values = {id};
-        List<ProjectType> list = getHibernateTemplate().findByNamedParam(hqlQuery, names, values);
+        List<ProjectType> list = getSessionFactory().getCurrentSession().createQuery(hqlQuery).setParameter("id", id).list();
         return list.get(0).getResearchGroups().size() > 0;
     }
 

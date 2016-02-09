@@ -52,7 +52,7 @@ public class SimpleReservationDao
         if (newInstance.getStartTime().getTime() >= newInstance.getEndTime().getTime()) {
             throw new DaoException("Time of start cannot be lower than or equal to time of end!");
         }
-        Criteria overlapCriteria = getSession().createCriteria(Reservation.class);
+        Criteria overlapCriteria = currentSession().createCriteria(Reservation.class);
         //start overlap
         LogicalExpression startOverlap = Restrictions.and(
                 Restrictions.and(
@@ -101,20 +101,20 @@ public class SimpleReservationDao
         }
 
         String hqlQuery = "from Reservation reservation where reservation.startTime < (:endtime) AND reservation.endTime > (:starttime)" + filterGroup + " order by reservation.startTime";
-        Session session = getSession();
+        Session session = currentSession();
         return session.createQuery(hqlQuery).setTimestamp("starttime", start.getTime()).setTimestamp("endtime", end.getTime()).list();
     }
 
     public Reservation getReservationById(int id) {
         String hqlQuery = "from Reservation reservation where reservation.reservationId = :id";
-        Session session = getSession();
+        Session session = currentSession();
         List res = session.createQuery(hqlQuery).setInteger("id", id).list();
         return res.size() == 1 ? (Reservation) res.get(0) : null;
     }
 
     public boolean deleteReservation(int id) {
         String hqlQuery = "delete from Reservation reservation where reservation.reservationId = :id";
-        Session session = getSession();
+        Session session = currentSession();
         return session.createQuery(hqlQuery).setInteger("id", id).executeUpdate() == 1;
     }
 }

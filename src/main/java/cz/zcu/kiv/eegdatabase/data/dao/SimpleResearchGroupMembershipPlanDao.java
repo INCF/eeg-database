@@ -37,7 +37,7 @@ public class SimpleResearchGroupMembershipPlanDao extends SimpleGenericDao<Resea
     public List<ResearchGroupMembershipPlan> getGroupMembershipPlans(ResearchGroup researchGroup) {
         String query = "select m from ResearchGroupMembershipPlan m where m.researchGroup = :group";
 
-        List<ResearchGroupMembershipPlan> ret = this.getSession().createQuery(query).setParameter("group",researchGroup).list(); //set parameters
+        List<ResearchGroupMembershipPlan> ret = this.currentSession().createQuery(query).setParameter("group",researchGroup).list(); //set parameters
         return ret;
     }
 
@@ -45,7 +45,7 @@ public class SimpleResearchGroupMembershipPlanDao extends SimpleGenericDao<Resea
     public boolean isPlanUsed(int membershipPlanId) {
 
         String query = "select membershipPlan from ResearchGroupMembershipPlan m where m.membershipPlan.membershipId = :plan";
-        return (!this.getSession().createQuery(query).setParameter("plan",membershipPlanId).list().isEmpty());
+        return (!this.currentSession().createQuery(query).setParameter("plan",membershipPlanId).list().isEmpty());
     }
 
 }

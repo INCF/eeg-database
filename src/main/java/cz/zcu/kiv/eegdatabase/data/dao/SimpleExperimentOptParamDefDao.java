@@ -35,15 +35,14 @@ public class SimpleExperimentOptParamDefDao extends SimpleGenericDao<ExperimentO
 
     public List<ExperimentOptParamDef> getItemsForList() {
         String hqlQuery = "from ExperimentOptParamDef i order by i.paramName";
-        List<ExperimentOptParamDef> list = getHibernateTemplate().find(hqlQuery);
-        return list;
+        return getSessionFactory().getCurrentSession().createQuery(hqlQuery).list();
     }
 
     public boolean canDelete(int id) {
         String hqlQuery = "select def.experimentOptParamVals from ExperimentOptParamDef def where def.experimentOptParamDefId = :id";
         String[] names = {"id"};
         Object[] values = {id};
-        List<ExperimentOptParamDef> list = getHibernateTemplate().findByNamedParam(hqlQuery, names, values);
+        List<ExperimentOptParamDef> list = getSessionFactory().getCurrentSession().createQuery(hqlQuery).setParameter("id", id).list();
         return (list.size() == 0);
     }
 
@@ -60,8 +59,7 @@ public class SimpleExperimentOptParamDefDao extends SimpleGenericDao<ExperimentO
 
     public List<ExperimentOptParamDef> getDefaultRecords() {
         String hqlQuery = "from ExperimentOptParamDef h where h.defaultNumber = 1";
-        List<ExperimentOptParamDef> list = getHibernateTemplate().find(hqlQuery);
-        return list;
+        return getSessionFactory().getCurrentSession().createQuery(hqlQuery).list();
     }
 
     public boolean hasGroupRel(int id) {

@@ -54,7 +54,7 @@ public class SimplePersonalLicenseDao extends SimpleGenericDao<PersonalLicense, 
 	@Override
 	public List<PersonalLicense> getLicenseRequests(ResearchGroup group, PersonalLicenseState state) {
 		if (group != null) {
-			Criteria criteria = this.getSession().createCriteria(PersonalLicense.class);
+			Criteria criteria = this.currentSession().createCriteria(PersonalLicense.class);
 			criteria.add(Restrictions.eq("licenseState", state));
 			criteria.createAlias("license", "l");
 			//criteria.add(Restrictions.ne("l.licenseType", LicenseType.OWNER));
@@ -67,7 +67,7 @@ public class SimplePersonalLicenseDao extends SimpleGenericDao<PersonalLicense, 
 
 	@Override
 	public List<PersonalLicense> getLicenseRequests(Person applicant, PersonalLicenseState state) {
-		Criteria criteria = this.getSession().createCriteria(PersonalLicense.class);
+		Criteria criteria = this.currentSession().createCriteria(PersonalLicense.class);
 		criteria.add(Restrictions.eq("person.personId", applicant.getPersonId()));
 		criteria.add(Restrictions.eq("licenseState", state));
 		return criteria.list();
@@ -96,7 +96,7 @@ public class SimplePersonalLicenseDao extends SimpleGenericDao<PersonalLicense, 
 
 	@Override
 	public List<License> getUsersLicenses(Person person) {
-		Criteria criteria = this.getSession().createCriteria(PersonalLicense.class);
+		Criteria criteria = this.currentSession().createCriteria(PersonalLicense.class);
 		criteria.add(Restrictions.eq("person.personId", person.getPersonId()));
 		criteria.setProjection(Projections.property("license"));
 		return criteria.list();
@@ -105,7 +105,7 @@ public class SimplePersonalLicenseDao extends SimpleGenericDao<PersonalLicense, 
 	@Override
 	public byte[] getAttachmentContent(int personalLicenseId) {
 		String query = "from PersonalLicense pl where pl.personalLicenseId = :id";
-        PersonalLicense result =  (PersonalLicense) this.getSession().createQuery(query).setInteger("id", personalLicenseId).uniqueResult();
+        PersonalLicense result =  (PersonalLicense) this.currentSession().createQuery(query).setInteger("id", personalLicenseId).uniqueResult();
         try {
             return result.getAttachmentContent().getBytes(1, (int) result.getAttachmentContent().length());
         } catch (SQLException e) {

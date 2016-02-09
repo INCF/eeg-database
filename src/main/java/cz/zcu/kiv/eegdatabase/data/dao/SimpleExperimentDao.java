@@ -37,6 +37,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import com.hp.hpl.jena.sparql.function.library.e;
 import org.apache.commons.lang.NotImplementedException;
 import org.elasticsearch.index.query.AndFilterBuilder;
 import org.elasticsearch.index.query.BoolFilterBuilder;
@@ -91,13 +92,13 @@ public class SimpleExperimentDao extends SimpleGenericDao<Experiment, Integer> i
 	}
 
 	public List<DataFile> getDataFilesWhereExpId(int experimentId) {
-		String HQLselect = "from DataFile file where file.experiment.experimentId = :experimentId";
-		return getHibernateTemplate().findByNamedParam(HQLselect, "experimentId", experimentId);
+		String hqlQuery = "from DataFile file where file.experiment.experimentId = :experimentId";
+		return getSessionFactory().getCurrentSession().createQuery(hqlQuery).setParameter("experimentId", experimentId).list();
 	}
 
 	public List<DataFile> getDataFilesWhereId(int dataFileId) {
-		String HQLselect = "from DataFile file where file.dataFileId = :dataFileId";
-		return getHibernateTemplate().findByNamedParam(HQLselect, "dataFileId", dataFileId);
+		String hqlQuery = "from DataFile file where file.dataFileId = :dataFileId";
+		return getSessionFactory().getCurrentSession().createQuery(hqlQuery).list();
 	}
 
 	@Override
@@ -217,9 +218,7 @@ public class SimpleExperimentDao extends SimpleGenericDao<Experiment, Integer> i
 				+ "epl.license.licenseId = pl.license.licenseId and "
 				+ "pl.person.personId = :personId) "
 				+ " ORDER BY ex.startTime DESC";
-		String[] stringParams = {"personId"};
-		Object[] objectParams = {personId};
-		return getHibernateTemplate().findByNamedParam(HQLselect, stringParams, objectParams);
+        return getSessionFactory().getCurrentSession().createQuery(HQLselect).setParameter("personId", personId).list();
 	}
 
 	public List<Experiment> getExperimentSearchResults(List<SearchRequest> requests, int personId) throws NumberFormatException {
@@ -272,7 +271,7 @@ public class SimpleExperimentDao extends SimpleGenericDao<Experiment, Integer> i
 					+ "epc.experimentPackage.experimentPackageId = epl.experimentPackage.experimentPackageId and "
 					+ "epl.license.licenseId = pl.license.licenseId and "
 					+ "pl.person.personId = " + personId + ")";
-			Session ses = getSession();
+			Session ses = currentSession();
 			Query q = ses.createQuery(hqlQuery);
 			int i = 0;
 			for (Date date : datas) {

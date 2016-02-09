@@ -39,7 +39,7 @@ public class SimpleExperimentLicenceDao extends SimpleGenericDao<ExperimentLicen
     @Override
     public void remove(Experiment experiment, License license) {
         String hqlQuery = "delete from ExperimentLicence el where el.experiment = :ex and el.license = :lic";
-        this.getSession().createQuery(hqlQuery).setParameter("ex",experiment).setParameter("lic",license).executeUpdate();
+        this.currentSession().createQuery(hqlQuery).setParameter("ex",experiment).setParameter("lic",license).executeUpdate();
     }
 
 }

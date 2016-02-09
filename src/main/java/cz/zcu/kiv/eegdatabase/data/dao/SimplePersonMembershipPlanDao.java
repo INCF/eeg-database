@@ -39,7 +39,7 @@ public class SimplePersonMembershipPlanDao extends SimpleGenericDao<PersonMember
     public List<PersonMembershipPlan> getPersonMembershipPlans(Person person) {
         String query = "select m from PersonMembershipPlan m where m.person = :person";
 
-        List<PersonMembershipPlan> ret = this.getSession().createQuery(query).setParameter("person",person).list(); //set parameters
+        List<PersonMembershipPlan> ret = this.currentSession().createQuery(query).setParameter("person",person).list(); //set parameters
         return ret;
     }
 
@@ -47,7 +47,7 @@ public class SimplePersonMembershipPlanDao extends SimpleGenericDao<PersonMember
     public boolean isPlanUsed(int membershipPlanId) {
 
         String query = "select membershipPlan from PersonMembershipPlan m where m.membershipPlan.membershipId = :plan";
-        return (!this.getSession().createQuery(query).setParameter("plan",membershipPlanId).list().isEmpty());
+        return (!this.currentSession().createQuery(query).setParameter("plan",membershipPlanId).list().isEmpty());
     }
 
     @Override
@@ -57,7 +57,7 @@ public class SimplePersonMembershipPlanDao extends SimpleGenericDao<PersonMember
 
         String query = "select m from PersonMembershipPlan m where m.person = :person and m.to > :time";
 
-        return (!this.getSession().createQuery(query).setParameter("person",person).setParameter("time",time).list().isEmpty()); //set parameters
+        return (!this.currentSession().createQuery(query).setParameter("person",person).setParameter("time",time).list().isEmpty()); //set parameters
 
     }
 

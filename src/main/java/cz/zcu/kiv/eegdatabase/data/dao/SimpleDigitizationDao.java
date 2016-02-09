@@ -46,7 +46,7 @@ public class SimpleDigitizationDao
         String[] paramNames = {"samplingRate", "gain", "filter"};
         Object[] values = {samplingRate, gain, filter};
         String HQLQuery = "from Digitization d where d.samplingRate = :samplingRate and d.gain = :gain and d.filter = :filter";
-        List<Digitization> list = getHibernateTemplate().findByNamedParam(HQLQuery, paramNames, values);
+        List<Digitization> list = (List<Digitization>) getHibernateTemplate().findByNamedParam(HQLQuery, paramNames, values);
         if (list.size() > 0) {
             return list.get(0);
         }
@@ -75,18 +75,14 @@ public class SimpleDigitizationDao
     @Override
     public boolean canDelete(int id) {
         String hqlQuery = "select dig.experiments from Digitization dig where dig.digitizationId = :id";
-        String[] names = {"id"};
-        Object[] values = {id};
-        List<Digitization> list = getHibernateTemplate().findByNamedParam(hqlQuery, names, values);
+        List<Digitization> list = getSessionFactory().getCurrentSession().createQuery(hqlQuery).setParameter("id", id).list();
         return (list.size() == 0);
     }
 
     @Override
     public boolean hasGroupRel(int id) {
         String hqlQuery = "from Digitization dig where dig.digitizationId = :id";
-        String[] names = {"id"};
-        Object[] values = {id};
-        List<Digitization> list = getHibernateTemplate().findByNamedParam(hqlQuery, names, values);
+        List<Digitization> list = getSessionFactory().getCurrentSession().createQuery(hqlQuery).setParameter("id", id).list();
         return list.get(0).getResearchGroups().size() > 0;
     }
 

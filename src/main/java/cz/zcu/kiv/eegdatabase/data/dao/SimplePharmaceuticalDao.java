@@ -52,7 +52,7 @@ public class SimplePharmaceuticalDao extends SimpleGenericDao<Pharmaceutical, In
     @Override
     public List<Pharmaceutical> getItemsForList() {
         String hqlQuery = "from Pharmaceutical ph order by ph.title";
-        return getHibernateTemplate().find(hqlQuery);
+        return getSessionFactory().getCurrentSession().createQuery(hqlQuery).list();
     }
 
     @Override
@@ -64,18 +64,14 @@ public class SimplePharmaceuticalDao extends SimpleGenericDao<Pharmaceutical, In
     @Override
     public boolean canDelete(int id) {
         String hqlQuery = "select ph.experiments from Pharmaceutical ph where ph.pharmaceuticalId = :id";
-        String[] names = {"id"};
-        Object[] values = {id};
-        List<Pharmaceutical> list = getHibernateTemplate().findByNamedParam(hqlQuery, names, values);
+        List<Pharmaceutical> list = getSessionFactory().getCurrentSession().createQuery(hqlQuery).setParameter("id", id).list();
         return (list.size() == 0);
     }
 
     @Override
     public boolean hasGroupRel(int id) {
         String hqlQuery = "from Pharmaceutical ph where ph.pharmaceuticalId = :id";
-        String[] names = {"id"};
-        Object[] values = {id};
-        List<Pharmaceutical> list = getHibernateTemplate().findByNamedParam(hqlQuery, names, values);
+        List<Pharmaceutical> list = getSessionFactory().getCurrentSession().createQuery(hqlQuery).setParameter("id", id).list();
         return list.get(0).getResearchGroups().size() > 0;
     }
 

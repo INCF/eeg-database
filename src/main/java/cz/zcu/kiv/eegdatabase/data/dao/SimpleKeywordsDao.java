@@ -52,7 +52,7 @@ public class SimpleKeywordsDao extends SimpleGenericDao<Keywords, Integer> {
      */
     public String getKeywords(int groupId){
         String hqlQuery = "select k.keywordsText " +"from Keywords k " + "left join k.researchGroup rg " + "where rg.researchGroupId = :groupId and k.keywordsText is not null" ;     
-        List<String> list = getHibernateTemplate().findByNamedParam(hqlQuery, "groupId", groupId);
+        List<String> list = getSessionFactory().getCurrentSession().createQuery(hqlQuery).setParameter("groupId", groupId).list();
         if(!list.isEmpty()){
             return list.get(0);
         }else{
@@ -73,7 +73,7 @@ public class SimpleKeywordsDao extends SimpleGenericDao<Keywords, Integer> {
      */
     public int getID(int groupId){
         String hqlQuery = "select k.keywordsId " +"from Keywords k " + "left join k.researchGroup rg " + "where rg.researchGroupId = :groupId" ;     
-        List<Integer> list = getHibernateTemplate().findByNamedParam(hqlQuery, "groupId", groupId);
+        List<Integer> list = getSessionFactory().getCurrentSession().createQuery(hqlQuery).setParameter("groupId", groupId).list();
         if(!list.isEmpty()){
             return list.get(0);
         }else{

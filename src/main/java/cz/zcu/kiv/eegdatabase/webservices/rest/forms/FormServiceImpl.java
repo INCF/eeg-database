@@ -24,25 +24,6 @@
  **********************************************************************************************************************/
 package cz.zcu.kiv.eegdatabase.webservices.rest.forms;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.InitializingBean;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
-
 import cz.zcu.kiv.eegdatabase.data.dao.FormLayoutDao;
 import cz.zcu.kiv.eegdatabase.data.dao.GenericDao;
 import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
@@ -56,14 +37,7 @@ import cz.zcu.kiv.eegdatabase.webservices.rest.forms.wrappers.AvailableFormsData
 import cz.zcu.kiv.eegdatabase.webservices.rest.forms.wrappers.AvailableLayoutsData;
 import cz.zcu.kiv.eegdatabase.webservices.rest.forms.wrappers.AvailableLayoutsDataList;
 import cz.zcu.kiv.eegdatabase.webservices.rest.forms.wrappers.RecordIdsDataList;
-import cz.zcu.kiv.formgen.FormNotFoundException;
-import cz.zcu.kiv.formgen.LayoutGenerator;
-import cz.zcu.kiv.formgen.ObjectBuilder;
-import cz.zcu.kiv.formgen.ObjectBuilderException;
-import cz.zcu.kiv.formgen.PersistentObjectException;
-import cz.zcu.kiv.formgen.PersistentObjectProvider;
-import cz.zcu.kiv.formgen.TemplateGeneratorException;
-import cz.zcu.kiv.formgen.Writer;
+import cz.zcu.kiv.formgen.*;
 import cz.zcu.kiv.formgen.core.PersistentObjectBuilder;
 import cz.zcu.kiv.formgen.core.SimpleDataGenerator;
 import cz.zcu.kiv.formgen.core.SimpleLayoutGenerator;
@@ -72,6 +46,24 @@ import cz.zcu.kiv.formgen.model.FormData;
 import cz.zcu.kiv.formgen.odml.OdmlReader;
 import cz.zcu.kiv.formgen.odml.OdmlWriter;
 import cz.zcu.kiv.formgen.odml.TemplateStyle;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 
 /**
@@ -80,7 +72,7 @@ import cz.zcu.kiv.formgen.odml.TemplateStyle;
  * @author Jakub Krauz
  */
 @Service
-@Transactional(readOnly = true)
+@Transactional(readOnly = false)
 public class FormServiceImpl implements FormService, InitializingBean, ApplicationContextAware {
 	
     /** Base package of POJO classes. */
@@ -111,7 +103,7 @@ public class FormServiceImpl implements FormService, InitializingBean, Applicati
 	 * @see org.springframework.beans.factory.InitializingBean#afterPropertiesSet()
 	 */
 	@Override
-	@Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
+	@Transactional(readOnly = false)
 	public void afterPropertiesSet() {
 		LayoutGenerator generator = new SimpleLayoutGenerator();
 		try {
@@ -124,11 +116,11 @@ public class FormServiceImpl implements FormService, InitializingBean, Applicati
 					writer.writeLayout(form, stream);
 					FormLayout layout = new FormLayout(form.getName(), form.getLayoutName(),
 							stream.toByteArray(), null, FormLayoutType.ODML_EEGBASE);
-					formLayoutDao.createOrUpdateByName(layout);
+					//formLayoutDao.createOrUpdateByName(layout);
 					writerGui.writeLayout(form, streamGui);
 					FormLayout layoutGui = new FormLayout(form.getName(), form.getName() + "-gui",
                             streamGui.toByteArray(), null, FormLayoutType.ODML_GUI);
-                    formLayoutDao.createOrUpdateByName(layoutGui);
+                   // formLayoutDao.createOrUpdateByName(layoutGui);
 				} catch (TemplateGeneratorException e) {
 					logger.error("Could not update the following layout: " + form.getLayoutName(), e);
 				}

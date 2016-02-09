@@ -35,16 +35,13 @@ public class SimpleHardwareDao extends SimpleGenericDao<Hardware, Integer> imple
 
     public boolean canDelete(int id) {
         String hqlQuery = "select h.experiments from Hardware h where h.hardwareId = :id";
-        String[] names = {"id"};
-        Object[] values = {id};
-        List<Hardware> list = getHibernateTemplate().findByNamedParam(hqlQuery, names, values);
+        List<Hardware> list = getSessionFactory().getCurrentSession().createQuery(hqlQuery).setParameter("id", id).list();
         return (list.size() == 0);
     }
 
     public List<Hardware> getItemsForList() {
         String hqlQuery = "from Hardware h order by h.title, h.type";
-        List<Hardware> list = getHibernateTemplate().find(hqlQuery);
-        return list;
+        return getSessionFactory().getCurrentSession().createQuery(hqlQuery).list();
     }
 
     public List<Hardware> getRecordsByGroup(int groupId) {
@@ -60,8 +57,7 @@ public class SimpleHardwareDao extends SimpleGenericDao<Hardware, Integer> imple
 
     public List<Hardware> getDefaultRecords() {
         String hqlQuery = "from Hardware h where h.defaultNumber = 1";
-        List<Hardware> list = getHibernateTemplate().find(hqlQuery);
-        return list;
+        return getSessionFactory().getCurrentSession().createQuery(hqlQuery).list();
     }
 
     public boolean canSaveTitle(String title, int groupId, int hwId) {

@@ -22,17 +22,14 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.components.utils;
 
-import java.io.File;
-import java.io.IOException;
-
-import org.apache.velocity.runtime.resource.loader.ResourceLoaderFactory;
-import org.apache.wicket.markup.html.image.Image;
-import org.apache.wicket.model.IModel;
+import org.apache.wicket.markup.html.image.Image;import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.ResourceModel;
 import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.request.resource.ContextRelativeResource;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.ResourceLoader;
+
+import java.io.File;
+import java.io.IOException;
 
 /**
  * Utilities class for getting string from properties file.

@@ -25,9 +25,9 @@
        xmlns:security="http://www.springframework.org/schema/security"
        xmlns:task="http://www.springframework.org/schema/task"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
-		http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
 		http://www.springframework.org/schema/security
-		http://www.springframework.org/schema/security/spring-security-3.1.xsd http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
+		http://www.springframework.org/schema/security/spring-security-4.0.xsd http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
 
 	<!-- <context:component-scan base-package="cz.zcu.kiv.eegdatabase.logic.controller" /> -->
 
@@ -35,18 +35,21 @@
 	<!-- SECURITY -->
 	<security:http create-session="never" auto-config="true" access-decision-manager-ref="accessDecisionManager">
 
-		<security:intercept-url pattern="/signin/*" access="IS_AUTHENTICATED_ANONYMOUSLY" />
-		<security:intercept-url pattern="/signin" access="IS_AUTHENTICATED_ANONYMOUSLY" />
-		<security:intercept-url pattern="/signup" access="IS_AUTHENTICATED_ANONYMOUSLY" />
-		<security:intercept-url pattern="/signup/*" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+		<!--<security:intercept-url pattern="/signin/*" access="IS_AUTHENTICATED_ANONYMOUSLY" />-->
+		<!--<security:intercept-url pattern="/signin" access="IS_AUTHENTICATED_ANONYMOUSLY" />-->
+		<!--<security:intercept-url pattern="/signup" access="IS_AUTHENTICATED_ANONYMOUSLY" />-->
+		<!--<security:intercept-url pattern="/signup/*" access="IS_AUTHENTICATED_ANONYMOUSLY" />-->
 
-		<security:intercept-url pattern="/connect" access="IS_AUTHENTICATED_FULLY" />
-		<security:intercept-url pattern="/connect/*" access="IS_AUTHENTICATED_FULLY" />
-		<security:intercept-url pattern="/status" access="IS_AUTHENTICATED_FULLY" />
-		<security:intercept-url pattern="/oauthcallback" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+		<!--<security:intercept-url pattern="/connect" access="IS_AUTHENTICATED_FULLY" />-->
+		<!--<security:intercept-url pattern="/connect/*" access="IS_AUTHENTICATED_FULLY" />-->
+		<!--<security:intercept-url pattern="/status" access="IS_AUTHENTICATED_FULLY" />-->
+		<!--<security:intercept-url pattern="/oauthcallback" access="IS_AUTHENTICATED_ANONYMOUSLY" />-->
 
-		<security:remember-me />
-		<security:intercept-url pattern="/**" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+        <security:remember-me
+                remember-me-parameter="_spring_security_remember_me"
+                remember-me-cookie="SPRING_SECURITY_REMEMBER_ME_COOKIE"
+       />
+		<!--<security:intercept-url pattern="/**" access="IS_AUTHENTICATED_ANONYMOUSLY" />-->
 	</security:http>
 
 	<security:authentication-manager alias="authenticationManager">
@@ -58,14 +61,14 @@
 	</security:authentication-manager>
 
 	<bean id="accessDecisionManager" class="org.springframework.security.access.vote.AffirmativeBased">
-		<property name="decisionVoters">
+		<constructor-arg>
 			<list>
 				<bean class="org.springframework.security.access.vote.RoleVoter">
 					<property name="rolePrefix" value="ROLE_" />
 				</bean>
 				<bean class="org.springframework.security.access.vote.AuthenticatedVoter" />
 			</list>
-		</property>
+		</constructor-arg>
 	</bean>
     
 	<bean id="encoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />

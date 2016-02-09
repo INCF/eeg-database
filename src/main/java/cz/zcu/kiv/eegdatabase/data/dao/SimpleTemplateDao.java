@@ -47,9 +47,8 @@ public class SimpleTemplateDao extends SimpleGenericDao<Template, Integer> imple
     @Override
     public List<Template> getDefaultTemplates() {
         String hqlQuery = "from Template t where t.personByPersonId is null";
-        List<Template> list = getHibernateTemplate().find(hqlQuery);
 
-        return list;
+        return getSessionFactory().getCurrentSession().createQuery(hqlQuery).list();
     }
 
     @Override

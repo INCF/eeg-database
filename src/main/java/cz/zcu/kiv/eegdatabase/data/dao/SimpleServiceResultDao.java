@@ -44,7 +44,7 @@ public class SimpleServiceResultDao extends SimpleGenericDao<ServiceResult, Inte
     @Override
     public List<ServiceResult> getResultByPerson(int personId) {
         String hqlQuery = "from ServiceResult s where s.owner.personId = :personId";
-        return getHibernateTemplate().findByNamedParam(hqlQuery, "personId", personId);
+        return getSessionFactory().getCurrentSession().createQuery(hqlQuery).setParameter("personId", personId).list();
     }
 
     @Override

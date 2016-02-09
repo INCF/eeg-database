@@ -24,16 +24,15 @@
  **********************************************************************************************************************/
 package cz.zcu.kiv.eegdatabase.data.dao;
 
-import java.util.List;
-
+import cz.zcu.kiv.eegdatabase.data.pojo.FormLayout;
+import cz.zcu.kiv.eegdatabase.data.pojo.FormLayoutType;
+import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.dao.support.DataAccessUtils;
 
-import cz.zcu.kiv.eegdatabase.data.pojo.FormLayout;
-import cz.zcu.kiv.eegdatabase.data.pojo.FormLayoutType;
-import cz.zcu.kiv.eegdatabase.data.pojo.Person;
+import java.util.List;
 
 
 /**
@@ -94,7 +93,7 @@ public class SimpleFormLayoutDao extends SimpleGenericDao<FormLayout,Integer> im
 		if (owner != null)
 			criteria.add(Restrictions.eq("person.personId", owner.getPersonId()));
 		
-		return getHibernateTemplate().findByCriteria(criteria);
+		return (List<String>) getHibernateTemplate().findByCriteria(criteria);
 	}
 
 	
@@ -183,7 +182,7 @@ public class SimpleFormLayoutDao extends SimpleGenericDao<FormLayout,Integer> im
 		if (templateType != null)
 		    criteria.add(Restrictions.eq("type", templateType));
 		
-        return getHibernateTemplate().findByCriteria(criteria);
+        return (List<FormLayout>) getHibernateTemplate().findByCriteria(criteria);
 	}
 
     

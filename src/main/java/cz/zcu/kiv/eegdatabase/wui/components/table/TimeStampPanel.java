@@ -1,6 +1,5 @@
 package cz.zcu.kiv.eegdatabase.wui.components.table;
 
-import org.apache.commons.net.ntp.TimeStamp;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.PropertyModel;

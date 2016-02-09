@@ -44,8 +44,7 @@ public class SimpleArticleDao extends SimpleGenericDao<Article, Integer> impleme
     @Override
     public List<Article> getAllArticles() {
         String HQLSelect = "from Article order by time desc";
-        List<Article> articles = getHibernateTemplate().find(HQLSelect);
-        return articles;
+        return currentSession().createQuery(HQLSelect).list();
     }
 
     @Override
@@ -56,7 +55,7 @@ public class SimpleArticleDao extends SimpleGenericDao<Article, Integer> impleme
         if (person.getAuthority().equals("ROLE_ADMIN")) {
             // We can simply load the newest articles
             query = "select DISTINCT a from Article a left join fetch a.articleComments order by a.time desc";
-            articles = getSession().createQuery(query).list();
+            articles = currentSession().createQuery(query).list();
         } else {
             // We need to load only articles which can be viewed by the logged user.
             // That is, we need to load only public articles or articles from the groups the logged user is member of.
@@ -65,7 +64,7 @@ public class SimpleArticleDao extends SimpleGenericDao<Article, Integer> impleme
                     "a.researchGroup.researchGroupId in " +
                     "(select rm.id.researchGroupId from ResearchGroupMembership rm where rm.id.personId = :personId) " +
                     "order by a.time desc";
-            articles = getSession().createQuery(query).setParameter("personId", person.getPersonId()).list();
+            articles = currentSession().createQuery(query).setParameter("personId", person.getPersonId()).list();
         }
 
         return articles;
@@ -79,7 +78,7 @@ public class SimpleArticleDao extends SimpleGenericDao<Article, Integer> impleme
         if (person.getAuthority().equals("ROLE_ADMIN")) {
             // We can simply load the newest articles
             query = "select DISTINCT a from Article a left join fetch a.articleComments order by a.time desc";
-            articles = getSession().createQuery(query).setMaxResults(limit).list();
+            articles = currentSession().createQuery(query).setMaxResults(limit).list();
         } else {
             // We need to load only articles which can be viewed by the logged user.
             // That is, we need to load only public articles or articles from the groups the logged user is member of.
@@ -88,7 +87,7 @@ public class SimpleArticleDao extends SimpleGenericDao<Article, Integer> impleme
                     "a.researchGroup.researchGroupId in " +
                     "(select rm.id.researchGroupId from ResearchGroupMembership rm where rm.id.personId = :personId) " +
                     "order by a.time desc";
-            articles = getSession().createQuery(query).setParameter("personId", person.getPersonId()).setMaxResults(limit).list();
+            articles = currentSession().createQuery(query).setParameter("personId", person.getPersonId()).setMaxResults(limit).list();
         }
 
         return articles;
@@ -102,7 +101,7 @@ public class SimpleArticleDao extends SimpleGenericDao<Article, Integer> impleme
         if (person.getAuthority().equals("ROLE_ADMIN")) {
             // We can simply load the newest articles
             query = "from Article a order by a.time desc";
-            articles = getSession().createQuery(query).setFirstResult(min).setMaxResults(count).list();
+            articles = currentSession().createQuery(query).setFirstResult(min).setMaxResults(count).list();
         } else {
             // We need to load only articles which can be viewed by the logged user.
             // That is, we need to load only public articles or articles from the groups the logged user is member of.
@@ -111,7 +110,7 @@ public class SimpleArticleDao extends SimpleGenericDao<Article, Integer> impleme
                     "a.researchGroup.researchGroupId in " +
                     "(select rm.id.researchGroupId from ResearchGroupMembership rm where rm.id.personId = :personId) " +
                     "order by a.time desc";
-            articles = getSession().createQuery(query).setFirstResult(min).setMaxResults(count).setParameter("personId", person.getPersonId()).list();
+            articles = currentSession().createQuery(query).setFirstResult(min).setMaxResults(count).setParameter("personId", person.getPersonId()).list();
         }
 
         return articles;
@@ -120,13 +119,13 @@ public class SimpleArticleDao extends SimpleGenericDao<Article, Integer> impleme
     @Override
     public int getArticleCountForPerson(Person person) {
         if (person.getAuthority().equals("ROLE_ADMIN")) {
-            return ((Long) getSession().createQuery("select count(*) from Article").uniqueResult()).intValue();
+            return ((Long) currentSession().createQuery("select count(*) from Article").uniqueResult()).intValue();
         }
         String query = "select count(*) from Article a where a.person.personId = :personId or " +
                 "a.researchGroup.researchGroupId is null or " +
                 "a.researchGroup.researchGroupId in " +
                 "(select rm.id.researchGroupId from ResearchGroupMembership rm where rm.id.personId = :personId)";
-        return ((Long) getSession().createQuery(query).setParameter("personId", person.getPersonId()).uniqueResult()).intValue();
+        return ((Long) currentSession().createQuery(query).setParameter("personId", person.getPersonId()).uniqueResult()).intValue();
     }
 
     /**
@@ -143,20 +142,19 @@ public class SimpleArticleDao extends SimpleGenericDao<Article, Integer> impleme
         if (loggedPerson.getAuthority().equals("ROLE_ADMIN")) {
             String query = "from Article a left join fetch a.subscribers left join fetch a.articleComments "
                     + "where a.articleId = :id";
-            return (Article) getSession().createQuery(query).setParameter("id", id).uniqueResult();
+            return (Article) currentSession().createQuery(query).setParameter("id", id).uniqueResult();
         } else {
             String query = "from Article a left join fetch a.subscribers left join fetch a.articleComments "+
                     "where a.articleId = :id and (" +
                     "a.researchGroup.researchGroupId is null or " +
                     "a.researchGroup.researchGroupId in " +
                     "(select rm.id.researchGroupId from ResearchGroupMembership rm where rm.id.personId = :personId))";
-            return (Article) getSession().createQuery(query).setParameter("id", id).setParameter("personId", loggedPerson.getPersonId()).uniqueResult();
+            return (Article) currentSession().createQuery(query).setParameter("id", id).setParameter("personId", loggedPerson.getPersonId()).uniqueResult();
         }
     }
 
     public List<Article> getAllUserArticles() {
         String HQLSelect = "from Article order by time desc";
-        List<Article> articles = getHibernateTemplate().find(HQLSelect);
-        return articles;
+        return currentSession().createQuery(HQLSelect).list();
     }
 }

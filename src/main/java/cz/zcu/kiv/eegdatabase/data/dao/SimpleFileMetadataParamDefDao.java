@@ -35,15 +35,12 @@ public class SimpleFileMetadataParamDefDao extends SimpleGenericDao<FileMetadata
 
     public List<FileMetadataParamDef> getItemsForList() {
         String hqlQuery = "from FileMetadataParamDef d order by d.paramName";
-        List<FileMetadataParamDef> list = getHibernateTemplate().find(hqlQuery);
-        return list;
+        return getSessionFactory().getCurrentSession().createQuery(hqlQuery).list();
     }
 
     public boolean canDelete(int id) {
         String hqlQuery = "select def.fileMetadataParamVals from FileMetadataParamDef def where def.fileMetadataParamDefId = :id";
-        String[] names = {"id"};
-        Object[] values = {id};
-        List<FileMetadataParamDef> list = getHibernateTemplate().findByNamedParam(hqlQuery, names, values);
+        List<FileMetadataParamDef> list = getSessionFactory().getCurrentSession().createQuery(hqlQuery).setParameter("id", id).list();
         return (list.size() == 0);
     }
 
@@ -59,8 +56,7 @@ public class SimpleFileMetadataParamDefDao extends SimpleGenericDao<FileMetadata
 
     public List<FileMetadataParamDef> getDefaultRecords() {
         String hqlQuery = "from FileMetadataParamDef h where h.defaultNumber = 1";
-        List<FileMetadataParamDef> list = getHibernateTemplate().find(hqlQuery);
-        return list;
+        return getSessionFactory().getCurrentSession().createQuery(hqlQuery).list();
     }
 
     public boolean hasGroupRel(int id) {

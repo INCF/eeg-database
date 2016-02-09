@@ -64,12 +64,11 @@ public class SimpleHistoryDao extends SimpleGenericDao<History, Integer> impleme
     leftJoin = getLeftJoin(isGroupAdmin, groupId);
     whereCondition = getWhereCondition(historyType);
     groupCondition = getGroupCondition(isGroupAdmin, groupId);
-    String HQLselect = "select distinct h from History as h" + leftJoin + whereCondition + groupCondition;
+    String hqlQuery = "select distinct h from History as h" + leftJoin + whereCondition + groupCondition;
     if (!isGroupAdmin) {
-      return getHibernateTemplate().find(HQLselect);
+      return getSessionFactory().getCurrentSession().createQuery(hqlQuery).list();
     }
-    results = getHibernateTemplate().find(HQLselect);
-    return results;
+    return getSessionFactory().getCurrentSession().createQuery(hqlQuery).list();
   }
 /**
  * Returns string left join for hql query if user has some group and his role is GROUP_ADMIN
@@ -122,9 +121,9 @@ public class SimpleHistoryDao extends SimpleGenericDao<History, Integer> impleme
     whereCondition = getWhereCondition(historyType);
     groupCondition = getGroupCondition(isGroupAdmin, groupId);
 
-    String HQLselect = "select distinct new cz.zcu.kiv.eegdatabase.logic.controller.history.DownloadStatistic(count(h.historyId)) from History as h" + leftJoin + whereCondition + groupCondition;
+    String hqlQuery = "select distinct new cz.zcu.kiv.eegdatabase.logic.controller.history.DownloadStatistic(count(h.historyId)) from History as h" + leftJoin + whereCondition + groupCondition;
 
-    dCount = getHibernateTemplate().find(HQLselect);
+    dCount = getSessionFactory().getCurrentSession().createQuery(hqlQuery).list();
     return dCount.get(0).getCount();
   }
 /**
@@ -243,7 +242,7 @@ public class SimpleHistoryDao extends SimpleGenericDao<History, Integer> impleme
  * Returns search results
  * @param requests - search request
  * @param isGroupAdmin - determined role GROUP_ADMIN
- * @param groupId - group id
+ * @param groupsId - group id
  * @return list of search results
  */
   public List<History> getHistorySearchResults(List<SearchRequest> requests, boolean isGroupAdmin, List<Integer> groupsId) {
@@ -271,7 +270,7 @@ public class SimpleHistoryDao extends SimpleGenericDao<History, Integer> impleme
     hqlQuery += getGroupsCondition(isGroupAdmin, groupsId);
     List<History> results;
     try {
-      results = getHibernateTemplate().find(hqlQuery);
+      results = getSessionFactory().getCurrentSession().createQuery(hqlQuery).list();
       System.out.println(results.size());
     } catch (Exception e) {
       return new ArrayList<History>();
@@ -281,7 +280,7 @@ public class SimpleHistoryDao extends SimpleGenericDao<History, Integer> impleme
 /**
  * Returns groups cnodition
  * @param isGroupAdmin - determined role GROUP_ADMIN
- * @param groupId - group id
+ * @param groupsId - group id
  * @return groups condition for history search
  */
   private String getGroupsCondition(boolean isGroupAdmin, List<Integer> groupsId) {

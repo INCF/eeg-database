@@ -22,14 +22,7 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.data.dao;
 
-import java.io.IOException;
-import java.io.Serializable;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
+import cz.zcu.kiv.eegdatabase.logic.indexing.PojoIndexer;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.lucene.queryparser.classic.ParseException;
@@ -41,9 +34,15 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 
-import cz.zcu.kiv.eegdatabase.logic.indexing.PojoIndexer;
+import java.io.IOException;
+import java.io.Serializable;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Class implements interface for connecting logic and data layer.
@@ -174,7 +173,8 @@ public class SimpleGenericDao<T, PK extends Serializable>
      */
     public List<T> getAllRecords() {
         DetachedCriteria forClass = DetachedCriteria.forClass(type);
-        return getHibernateTemplate().findByCriteria(forClass);
+       // return getHibernateTemplate().findByCriteria(forClass);
+        return forClass.getExecutableCriteria(currentSession()).list();
         //return getHibernateTemplate().loadAll(type);
     }
 
@@ -214,8 +214,9 @@ public class SimpleGenericDao<T, PK extends Serializable>
      * @return list that includes specific count of records
      */
     public List<T> getRecordsAtSides(int first, int max) {
-        return getHibernateTemplate().findByCriteria(
+        return (List<T>) getHibernateTemplate().findByCriteria(
                 DetachedCriteria.forClass(type), first, max);
+
     }
 
     /**

@@ -49,8 +49,8 @@ public class SimpleScenarioSchemasDao
      */
     @Deprecated
     public List<ScenarioSchemas> getSchemaNames() {
-        String hqlSelect = "from ScenarioSchemas scenarioSchemas where scenarioSchemas.approved='y'";
-        List<ScenarioSchemas> list = getHibernateTemplate().find(hqlSelect);
+        String hqlQuery = "from ScenarioSchemas scenarioSchemas where scenarioSchemas.approved='y'";
+        List<ScenarioSchemas> list = getSessionFactory().getCurrentSession().createQuery(hqlQuery).list();
         return list;
     }
     
@@ -59,22 +59,22 @@ public class SimpleScenarioSchemasDao
      */
     @Deprecated
     public List<ScenarioSchemas> getSchemaDescriptions() {
-        String hqlSelect = "from ScenarioSchemas scenarioSchemas where scenarioSchemas.approved='y'";
-        List<ScenarioSchemas> list = getHibernateTemplate().find(hqlSelect);
+        String hqlQuery = "from ScenarioSchemas scenarioSchemas where scenarioSchemas.approved='y'";
+        List<ScenarioSchemas> list = getSessionFactory().getCurrentSession().createQuery(hqlQuery).list();
         return list;
     }
 
     public int getNextSchemaId() {
-        String hqlSelect = "select max(schema.schemaId) from ScenarioSchemas schema";
-        List<Integer> idList = getHibernateTemplate().find(hqlSelect);
+        String hqlQuery= "select max(schema.schemaId) from ScenarioSchemas schema";
+        List<Integer> idList = getSessionFactory().getCurrentSession().createQuery(hqlQuery).list();
         int id = idList.get(0) + 1;
         return id;
     }
 
     @Override
     public List<ScenarioSchemas> getListOfScenarioSchemas() {
-        String hqlSelect = "from ScenarioSchemas scenarioSchemas where scenarioSchemas.approved='y'";
-        List<ScenarioSchemas> list = getHibernateTemplate().find(hqlSelect);
+        String hqlQuery = "from ScenarioSchemas scenarioSchemas where scenarioSchemas.approved='y'";
+        List<ScenarioSchemas> list = getSessionFactory().getCurrentSession().createQuery(hqlQuery).list();
         return list;
     }
 

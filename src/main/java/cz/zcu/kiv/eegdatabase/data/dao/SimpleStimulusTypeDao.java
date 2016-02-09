@@ -62,18 +62,14 @@ public class SimpleStimulusTypeDao extends SimpleGenericDao<StimulusType, Intege
     @Override
     public boolean canDelete(int id) {
         String hqlQuery = "select st.stimulusRels from StimulusType st where st.stimulusTypeId = :id";
-        String[] names = {"id"};
-        Object[] values = {id};
-        List<StimulusType> list = getHibernateTemplate().findByNamedParam(hqlQuery, names, values);
+        List<StimulusType> list = getSessionFactory().getCurrentSession().createQuery(hqlQuery).setParameter("id", id).list();
         return (list.size() == 0);
     }
 
     @Override
     public boolean hasGroupRel(int id) {
         String hqlQuery = "from StimulusType st where st.stimulusTypeId = :id";
-        String[] names = {"id"};
-        Object[] values = {id};
-        List<StimulusType> list = getHibernateTemplate().findByNamedParam(hqlQuery, names, values);
+        List<StimulusType> list = getSessionFactory().getCurrentSession().createQuery(hqlQuery).setParameter("id", id).list();
         return list.get(0).getResearchGroups().size() > 0;
     }
 

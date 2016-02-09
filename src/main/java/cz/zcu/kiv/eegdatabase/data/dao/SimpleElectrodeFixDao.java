@@ -64,7 +64,7 @@ public class SimpleElectrodeFixDao extends SimpleGenericDao<ElectrodeFix, Intege
         String hqlQuery = "select el.electrodeLocations from ElectrodeFix el where el.electrodeFixId = :id";
         String[] names = {"id"};
         Object[] values = {id};
-        List<ElectrodeFix> list = getHibernateTemplate().findByNamedParam(hqlQuery, names, values);
+        List<ElectrodeFix> list = getSessionFactory().getCurrentSession().createQuery(hqlQuery).setParameter("id", id).list();
         return (list.size() == 0);
     }
 
@@ -73,7 +73,7 @@ public class SimpleElectrodeFixDao extends SimpleGenericDao<ElectrodeFix, Intege
         String hqlQuery = "from ElectrodeFix el where el.electrodeFixId = :id";
         String[] names = {"id"};
         Object[] values = {id};
-        List<ElectrodeFix> list = getHibernateTemplate().findByNamedParam(hqlQuery, names, values);
+        List<ElectrodeFix> list = getSessionFactory().getCurrentSession().createQuery(hqlQuery).setParameter("id", id).list();
         return list.get(0).getResearchGroups().size() > 0;
     }
 
@@ -92,7 +92,7 @@ public class SimpleElectrodeFixDao extends SimpleGenericDao<ElectrodeFix, Intege
     @Override
     public List<ElectrodeFix> getDefaultRecords() {
         String hqlQuery = "from ElectrodeFix el where el.defaultNumber = 1";
-        return getHibernateTemplate().find(hqlQuery);
+        return getSessionFactory().getCurrentSession().createQuery(hqlQuery).list();
     }
 
     @Override

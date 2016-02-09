@@ -26,7 +26,7 @@ import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.GrantedAuthorityImpl;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.web.SignInAdapter;
@@ -58,7 +58,7 @@ public class SpringSecuritySignInAdapter implements SignInAdapter {
 
         Person person = personDao.getPerson(localUserId);
 
-        GrantedAuthority grantedAuthority = new GrantedAuthorityImpl(person.getAuthority());
+        GrantedAuthority grantedAuthority = new SimpleGrantedAuthority(person.getAuthority());
         List<GrantedAuthority> grantedAuthorities = Collections.singletonList(grantedAuthority);
         Authentication a = new SocialAuthenticationToken(grantedAuthorities, person);
         a.setAuthenticated(true);

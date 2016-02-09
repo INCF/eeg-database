@@ -88,7 +88,7 @@ public class SimpleArtifactRemovingDao extends SimpleGenericDao<ArtifactRemoveMe
     @Override
     public List<ArtifactRemoveMethod> getDefaultRecords() {
         String hqlQuery = "from ArtifactRemoveMethod ar where ar.defaultNumber = 1";
-        return getHibernateTemplate().find(hqlQuery);
+        return getSessionFactory().getCurrentSession().createQuery(hqlQuery).list();
     }
 
     @Override

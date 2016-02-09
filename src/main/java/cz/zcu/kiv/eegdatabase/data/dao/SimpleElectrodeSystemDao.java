@@ -64,7 +64,7 @@ public class SimpleElectrodeSystemDao extends SimpleGenericDao<ElectrodeSystem, 
         String hqlQuery = "select el.electrodeConfs from ElectrodeSystem el where el.electrodeSystemId = :id";
         String[] names = {"id"};
         Object[] values = {id};
-        List<ElectrodeSystem> list = getHibernateTemplate().findByNamedParam(hqlQuery, names, values);
+        List<ElectrodeSystem> list = getSessionFactory().getCurrentSession().createQuery(hqlQuery).setParameter("id", id).list();
         return (list.size() == 0);
     }
 
@@ -73,7 +73,7 @@ public class SimpleElectrodeSystemDao extends SimpleGenericDao<ElectrodeSystem, 
         String hqlQuery = "from ElectrodeSystem el where el.electrodeSystemId = :id";
         String[] names = {"id"};
         Object[] values = {id};
-        List<ElectrodeSystem> list = getHibernateTemplate().findByNamedParam(hqlQuery, names, values);
+        List<ElectrodeSystem> list = getSessionFactory().getCurrentSession().createQuery(hqlQuery).setParameter("id", id).list();
         return list.get(0).getResearchGroups().size() > 0;
     }
 
@@ -92,7 +92,7 @@ public class SimpleElectrodeSystemDao extends SimpleGenericDao<ElectrodeSystem, 
     @Override
     public List<ElectrodeSystem> getDefaultRecords() {
         String hqlQuery = "from ElectrodeSystem el where el.defaultNumber=1";
-        return getHibernateTemplate().find(hqlQuery);
+        return getSessionFactory().getCurrentSession().createQuery(hqlQuery).list();
     }
 
     @Override

@@ -81,7 +81,7 @@ public class SimpleExperimentPackageConnectionDao extends SimpleGenericDao<Exper
 	@Override
 	public boolean removeExperimentFromPackage(int experimentId, int packageId) {
 		String hqlQuery = "delete from ExperimentPackageConnection epc where epc.experiment = :experiment and epc.experimentPackage = :package";
-		int i = this.getSession().createQuery(hqlQuery).setInteger("experiment", experimentId).setInteger("package", packageId).executeUpdate();
+		int i = this.currentSession().createQuery(hqlQuery).setInteger("experiment", experimentId).setInteger("package", packageId).executeUpdate();
 		return i > 0;
 	}
 
@@ -100,7 +100,7 @@ public class SimpleExperimentPackageConnectionDao extends SimpleGenericDao<Exper
 	@Override
 	public void removeAllConnections(ExperimentPackage pack) {
 		String hqlQuery = "delete from ExperimentPackageConnection epc where epc.experimentPackage = :ep";
-		this.getSession().createQuery(hqlQuery).setInteger("ep", pack.getExperimentPackageId()).executeUpdate();
+		this.currentSession().createQuery(hqlQuery).setInteger("ep", pack.getExperimentPackageId()).executeUpdate();
 	}
 
 	@Override

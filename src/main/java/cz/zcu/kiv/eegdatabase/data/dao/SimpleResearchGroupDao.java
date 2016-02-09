@@ -54,7 +54,7 @@ public class SimpleResearchGroupDao
         String hqlQuery = "from ResearchGroup researchGroup "
                 + "where researchGroupId in (select rgm.id.researchGroupId from ResearchGroupMembership rgm where id.personId = :personId) "
                 + "order by researchGroup.title";
-        return getHibernateTemplate().findByNamedParam(hqlQuery, "personId", person.getPersonId());
+        return getSessionFactory().getCurrentSession().createQuery(hqlQuery).setParameter("personId", person.getPersonId()).list();
     }
 
     public List<ResearchGroup> getResearchGroupsWhereMember(Person person, int limit) {
@@ -62,8 +62,8 @@ public class SimpleResearchGroupDao
                 + "where researchGroupId in (select rgm.id.researchGroupId from ResearchGroupMembership rgm where id.personId = :personId) "
                 + "order by researchGroup.title";
 
-        getHibernateTemplate().setMaxResults(limit);
-        List<ResearchGroup> list = getHibernateTemplate().findByNamedParam(hqlQuery, "personId", person.getPersonId());
+        List<ResearchGroup> list = getSessionFactory().getCurrentSession().createQuery(hqlQuery).setParameter
+                ("personId", person.getPersonId()).setMaxResults(limit).list();
         getHibernateTemplate().setMaxResults(0);
         return list;
     }
@@ -77,7 +77,7 @@ public class SimpleResearchGroupDao
     public List<ResearchGroup> getResearchGroupsWhereOwner(Person person) {
         String hqlQuery = "from ResearchGroup researchGroup "
                 + "where researchGroup.person.personId = :ownerId";
-        return getHibernateTemplate().findByNamedParam(hqlQuery, "ownerId", person.getPersonId());
+        return getSessionFactory().getCurrentSession().createQuery(hqlQuery).setParameter("ownerId", person.getPersonId()).list();
     }
 
     public List<ResearchGroup> getResearchGroupsWhereAbleToWriteInto(Person person) {
@@ -89,7 +89,7 @@ public class SimpleResearchGroupDao
 
         String[] names = {"personId", "experimenter", "admin"};
         Object[] params = {person.getPersonId(), Util.GROUP_EXPERIMENTER, Util.GROUP_ADMIN};
-        List<ResearchGroup> list = getHibernateTemplate().findByNamedParam(hqlQuery, names, params);
+        List<ResearchGroup> list = (List<ResearchGroup>) getHibernateTemplate().findByNamedParam(hqlQuery, names, params);
         return list;
     }
 
@@ -101,8 +101,7 @@ public class SimpleResearchGroupDao
                 + "from ResearchGroup g "
                 + "left join g.researchGroupMemberships m "
                 + "where m.person.personId = :personId";
-        List<ResearchGroupAccountInfo> list = getHibernateTemplate().findByNamedParam(hqlQuery, "personId", person.getPersonId());
-        return list;
+        return getSessionFactory().getCurrentSession().createQuery(hqlQuery).setParameter("personId", person.getPersonId()).list();
     }
 
     public List getListOfGroupMembers(int groupId) {
@@ -130,7 +129,7 @@ public class SimpleResearchGroupDao
 
         String[] names = {"personId", "admin"};
         Object[] params = {person.getPersonId(), Util.GROUP_ADMIN};
-        List<ResearchGroup> list = getHibernateTemplate().findByNamedParam(hqlQuery, names, params);
+        List<ResearchGroup> list = (List<ResearchGroup>) getHibernateTemplate().findByNamedParam(hqlQuery, names, params);
         return list;
     }
 
@@ -149,7 +148,7 @@ public class SimpleResearchGroupDao
         String hqlQuery = "from ResearchGroup g where g.title = :title and g.researchGroupId != :id";
         String[] names = {"title", "id"};
         Object[] values = {title, id};
-        List<ResearchGroup> list = getHibernateTemplate().findByNamedParam(hqlQuery, names, values);
+        List<ResearchGroup> list = (List<ResearchGroup>) getHibernateTemplate().findByNamedParam(hqlQuery, names, values);
         return (list.size() == 0);
     }
 

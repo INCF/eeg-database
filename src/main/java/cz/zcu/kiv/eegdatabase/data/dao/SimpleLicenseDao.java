@@ -59,13 +59,13 @@ public class SimpleLicenseDao extends SimpleGenericDao<License, Integer> impleme
 	@Override
 	public List<License> getLicensesByType(List<LicenseType> licenseType) {
 		String hqlQuery = "select l from License l where l.licenseType IN (:licenseType)";
-		return this.getSession().createQuery(hqlQuery).setParameterList("licenseType", licenseType).list();
+		return this.currentSession().createQuery(hqlQuery).setParameterList("licenseType", licenseType).list();
 	}
 
 	@Override
     public byte[] getLicenseAttachmentContent(int licenseId) {
         String query = "from License l where l.licenseId = :id";
-        License result =  (License) this.getSession().createQuery(query).setInteger("id", licenseId).uniqueResult();
+        License result =  (License) this.currentSession().createQuery(query).setInteger("id", licenseId).uniqueResult();
         try {
             return result.getAttachmentContent() != null ? result.getAttachmentContent().getBytes(1, (int) result.getAttachmentContent().length()) : new byte[0];
         } catch (SQLException e) {
@@ -83,7 +83,7 @@ public class SimpleLicenseDao extends SimpleGenericDao<License, Integer> impleme
                 + "select epl.license.licenseId from ExperimentPackageLicense as epl where epl.experimentPackage.experimentPackageId = :packageId"
                 + ") and pl.license.researchGroup IS NOT NULL";
 
-        return (List<License>) this.getSession().createQuery(query)
+        return (List<License>) this.currentSession().createQuery(query)
                 .setParameter("personId", personId)
                 .setParameter("state", PersonalLicenseState.AUTHORIZED)
                 .setParameter("packageId", packageId).list();
@@ -91,7 +91,7 @@ public class SimpleLicenseDao extends SimpleGenericDao<License, Integer> impleme
 
     @Override
     public void update(License transientObject) {
-        this.getSession().merge(transientObject);
+        this.currentSession().merge(transientObject);
     }
 
     @Override
@@ -140,7 +140,7 @@ public class SimpleLicenseDao extends SimpleGenericDao<License, Integer> impleme
     public List<License> getLicensesForExperiment(int experimentId) {
         List<License> ret;
         String query = "select l from License l where l.licenseId IN(select license.licenseId from ExperimentLicence where experiment.experimentId = :exId)";
-        ret = (List<License>) this.getSession().createQuery(query).setParameter("exId",experimentId).list();
+        ret = (List<License>) this.currentSession().createQuery(query).setParameter("exId",experimentId).list();
 
         return ret;
 
@@ -150,7 +150,7 @@ public class SimpleLicenseDao extends SimpleGenericDao<License, Integer> impleme
     public List<License> getPersonLicenses(int personId)  {
         List<License> ret;
         String query = "select distinct l.license from ExperimentLicence l where l.experiment.personByOwnerId.personId = :personId";
-        ret = (List<License>) this.getSession().createQuery(query).setParameter("personId",personId).list();
+        ret = (List<License>) this.currentSession().createQuery(query).setParameter("personId",personId).list();
 
         return ret;
 

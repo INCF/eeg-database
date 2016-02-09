@@ -167,7 +167,7 @@ public class SimpleAuthorizationManager extends HibernateDaoSupport implements A
         String[] paramNames = {"loggedUserId", "personId"};
         Object[] values = {personId1, personId2};
 
-        List<Integer> list = getHibernateTemplate().findByNamedParam(hqlQuery, paramNames, values);
+        List<Integer> list = (List<Integer>) getHibernateTemplate().findByNamedParam(hqlQuery, paramNames, values);
 
         return list;
     }

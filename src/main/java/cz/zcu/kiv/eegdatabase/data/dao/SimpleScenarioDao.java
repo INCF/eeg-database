@@ -52,8 +52,7 @@ public class SimpleScenarioDao extends SimpleGenericDao<Scenario, Integer> imple
 
 	public List<Scenario> getScenariosWhereOwner(Person owner) {
 		String hqlQuery = "from Scenario s where s.person.personId = :ownerId";
-		List<Scenario> list = getHibernateTemplate().findByNamedParam(hqlQuery, "ownerId", owner.getPersonId());
-		return list;
+		return getSessionFactory().getCurrentSession().createQuery(hqlQuery).setParameter("ownerId", owner.getPersonId()).list();
 	}
 
 	public List<Scenario> getScenariosWhereOwner(Person person, int limit) {
@@ -94,7 +93,7 @@ public class SimpleScenarioDao extends SimpleGenericDao<Scenario, Integer> imple
 
 		hqlQuery += ")";
 		try {
-			results = getHibernateTemplate().find(hqlQuery);
+			results = getSessionFactory().getCurrentSession().createQuery(hqlQuery).list();
 		} catch (Exception e) {
 			return new ArrayList<Scenario>();
 		}
@@ -105,7 +104,7 @@ public class SimpleScenarioDao extends SimpleGenericDao<Scenario, Integer> imple
 		String hqlQuery = "from Scenario s where s.title = :title and s.scenarioId != :id";
 		String[] names = {"title", "id"};
 		Object[] values = {title, id};
-		List<Scenario> list = getHibernateTemplate().findByNamedParam(hqlQuery, names, values);
+		List<Scenario> list = (List<Scenario>) getHibernateTemplate().findByNamedParam(hqlQuery, names, values);
 		return (list.size() == 0);
 	}
 
