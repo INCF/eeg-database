@@ -22,33 +22,7 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.ui.experiments.metadata;
 
-import java.io.ByteArrayOutputStream;
-import java.text.DateFormat;
-import java.util.Date;
-import java.util.List;
-
-import odml.core.Reader;
-import odml.core.Section;
-import odml.core.Writer;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.apache.wicket.RestartResponseAtInterceptPageException;
-import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.markup.html.AjaxLink;
-import org.apache.wicket.extensions.wizard.IWizardStep;
-import org.apache.wicket.extensions.wizard.Wizard;
-import org.apache.wicket.extensions.wizard.WizardModel;
-import org.apache.wicket.extensions.wizard.WizardStep;
-import org.apache.wicket.markup.html.form.ChoiceRenderer;
-import org.apache.wicket.markup.html.panel.Panel;
-import org.apache.wicket.model.CompoundPropertyModel;
-import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.Model;
-import org.apache.wicket.spring.injection.annot.SpringBean;
-
 import com.sun.xml.messaging.saaj.util.ByteInputStream;
-
 import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
 import cz.zcu.kiv.eegdatabase.data.pojo.Template;
 import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
@@ -59,6 +33,28 @@ import cz.zcu.kiv.eegdatabase.wui.core.experiments.ExperimentsFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.experiments.metadata.TemplateFacade;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ExperimentsDetailPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.metadata.template.ListTemplatePage;
+import odml.core.Reader;
+import odml.core.Section;
+import odml.core.Writer;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.apache.wicket.RestartResponseAtInterceptPageException;
+import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.markup.html.AjaxLink;
+import org.apache.wicket.extensions.wizard.Wizard;
+import org.apache.wicket.extensions.wizard.WizardModel;
+import org.apache.wicket.extensions.wizard.WizardStep;
+import org.apache.wicket.markup.html.form.ChoiceRenderer;
+import org.apache.wicket.markup.html.panel.Panel;
+import org.apache.wicket.model.CompoundPropertyModel;
+import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.Model;
+import org.apache.wicket.spring.injection.annot.SpringBean;
+
+import java.io.ByteArrayOutputStream;
+import java.text.DateFormat;
+import java.util.Date;
+import java.util.List;
 
 public class MetadataForm extends Panel {
 
@@ -96,7 +92,7 @@ public class MetadataForm extends Panel {
             wizardModel.add(new WizardStep());
         }
 
-        wizard = new Wizard("wizard", wizardModel, true) {
+        wizard = new Wizard("wizard", wizardModel) {
 
             private static final long serialVersionUID = 1L;
 
@@ -140,7 +136,7 @@ public class MetadataForm extends Panel {
                         wizardModel.add(new MetadataWizardStep(new Model<Section>(subsection)));
                     }
 
-                    Wizard wiz = new Wizard("wizard", wizardModel, true) {
+                    Wizard wiz = new Wizard("wizard", wizardModel) {
 
                         private static final long serialVersionUID = 1L;
 

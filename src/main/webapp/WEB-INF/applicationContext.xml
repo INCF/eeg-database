@@ -49,6 +49,7 @@
                 remember-me-parameter="_spring_security_remember_me"
                 remember-me-cookie="SPRING_SECURITY_REMEMBER_ME_COOKIE"
        />
+        <security:csrf disabled="true"/>
 		<!--<security:intercept-url pattern="/**" access="IS_AUTHENTICATED_ANONYMOUSLY" />-->
 	</security:http>
 

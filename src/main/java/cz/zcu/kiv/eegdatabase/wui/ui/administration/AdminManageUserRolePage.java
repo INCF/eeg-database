@@ -22,12 +22,15 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.ui.administration;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
-
+import cz.zcu.kiv.eegdatabase.data.pojo.Person;
+import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroupMembership;
+import cz.zcu.kiv.eegdatabase.wui.components.menu.button.ButtonPageMenu;
+import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
+import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
+import cz.zcu.kiv.eegdatabase.wui.core.GroupRole;
+import cz.zcu.kiv.eegdatabase.wui.core.UserRole;
+import cz.zcu.kiv.eegdatabase.wui.core.group.ResearchGroupFacade;
+import cz.zcu.kiv.eegdatabase.wui.core.person.PersonFacade;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
@@ -48,15 +51,7 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.util.string.Strings;
 
-import cz.zcu.kiv.eegdatabase.data.pojo.Person;
-import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroupMembership;
-import cz.zcu.kiv.eegdatabase.wui.components.menu.button.ButtonPageMenu;
-import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
-import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
-import cz.zcu.kiv.eegdatabase.wui.core.GroupRole;
-import cz.zcu.kiv.eegdatabase.wui.core.UserRole;
-import cz.zcu.kiv.eegdatabase.wui.core.group.ResearchGroupFacade;
-import cz.zcu.kiv.eegdatabase.wui.core.person.PersonFacade;
+import java.util.*;
 
 /**
  * Page for change user role.
@@ -242,7 +237,6 @@ public class AdminManageUserRolePage extends MenuPage {
         AutoCompleteSettings settings = new AutoCompleteSettings();
         settings.setShowListOnEmptyInput(true);
         settings.setShowCompleteListOnFocusGain(true);
-        settings.setUseHideShowCoveredIEFix(false);
         settings.setMaxHeightInPx(200);
         settings.setAdjustInputWidth(false);
         return settings;

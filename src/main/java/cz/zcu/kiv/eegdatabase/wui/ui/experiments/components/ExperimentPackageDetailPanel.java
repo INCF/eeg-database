@@ -131,7 +131,7 @@ public class ExperimentPackageDetailPanel extends Panel {
 	
 	private void addLicenseSelect() {
 		generateLicenseChoices();
-		licenseSelect = new DropDownChoice<License>("licensePolicy", licenseModel, optionsModel, new IChoiceRenderer<License>() {
+		licenseSelect = new DropDownChoice<License>("licensePolicy", licenseModel, optionsModel, new ChoiceRenderer<License>() {
 
 			@Override
 			public Object getDisplayValue(License object) {

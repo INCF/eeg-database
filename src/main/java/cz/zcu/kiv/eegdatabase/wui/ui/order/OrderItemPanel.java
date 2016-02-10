@@ -83,7 +83,7 @@ public class OrderItemPanel extends Panel {
         hideActionModel = ResourceUtils.getModel("action.hide");
 
         final OrderItem modelItem = model.getObject();
-        final Experiment experiment = model.getObject().getExperiment();
+        final Experiment experiment = facade.getExperimentForDetail(model.getObject().getExperiment().getExperimentId());
         final ExperimentPackage experimentPackage = model.getObject().getExperimentPackage();
         final MembershipPlan membershipPlan = model.getObject().getMembershipPlan();
         final ResearchGroup researchGroup = model.getObject().getResearchGroup();

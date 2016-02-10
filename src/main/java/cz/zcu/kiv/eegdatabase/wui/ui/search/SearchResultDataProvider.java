@@ -62,7 +62,7 @@ public class SearchResultDataProvider extends ListDataProvider<FullTextResult> {
     }
 
     @Override
-    public Iterator<? extends FullTextResult> iterator(long first, long count) {
+    public Iterator<FullTextResult> iterator(long first, long count) {
         return searchService.getResultsForQuery(searchQuery, category, (int) first, (int) count).iterator();
     }
 

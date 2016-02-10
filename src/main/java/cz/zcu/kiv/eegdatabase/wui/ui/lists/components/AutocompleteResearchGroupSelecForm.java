@@ -22,11 +22,7 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.ui.lists.components;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
-
+import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.wicket.MarkupContainer;
@@ -41,7 +37,10 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.model.util.ListModel;
 import org.apache.wicket.util.string.Strings;
 
-import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
 
 public class AutocompleteResearchGroupSelecForm extends Form<Void> {
 
@@ -120,7 +119,6 @@ public class AutocompleteResearchGroupSelecForm extends Form<Void> {
         AutoCompleteSettings settings = new AutoCompleteSettings();
         settings.setShowListOnEmptyInput(true);
         settings.setShowCompleteListOnFocusGain(true);
-        settings.setUseHideShowCoveredIEFix(false);
         settings.setMaxHeightInPx(200);
         settings.setAdjustInputWidth(false);
         return settings;

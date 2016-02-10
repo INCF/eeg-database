@@ -254,7 +254,7 @@ public class PersonFormPanel<T extends Serializable> extends FormComponentPanel<
 
 
     @Override
-    protected void convertInput() {
+    public void convertInput() {
 
         this.setConvertedInput(this.getModelObject());
         //System.out.println(this.getModelObject().getSurname());

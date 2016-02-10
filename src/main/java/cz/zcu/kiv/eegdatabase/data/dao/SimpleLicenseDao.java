@@ -104,11 +104,11 @@ public class SimpleLicenseDao extends SimpleGenericDao<License, Integer> impleme
         String query = "select eoi.license from OrderItem as eoi "
                 + "join eoi.order as eo "
                 + " where eo.id = eoi.order.id and eoi.experiment.experimentId = :experimentId and eo.person.personId = :personId "
-                + "order by eo.date asc limit 1";
+                + "order by eo.date asc";
 
         License license = (License) this.getSessionFactory().getCurrentSession().createQuery(query)
                 .setParameter("personId", personId)
-                .setParameter("experimentId", experimentId)
+                .setParameter("experimentId", experimentId).setMaxResults(1)
                 .uniqueResult();
 
         return license;
@@ -124,11 +124,11 @@ public class SimpleLicenseDao extends SimpleGenericDao<License, Integer> impleme
         String query = "select eoi.license from OrderItem as eoi "
                 + "join eoi.order as eo "
                 + "where eo.id = eoi.order.id and eoi.experimentPackage.experimentPackageId = :experimentPackageId and eo.person.personId = :personId "
-                + "order by eo.date asc limit 1";
+                + "order by eo.date asc";
 
         License license = (License) this.getSessionFactory().getCurrentSession().createQuery(query)
                 .setParameter("personId", personId)
-                .setParameter("experimentPackageId", experimentPackageId)
+                .setParameter("experimentPackageId", experimentPackageId).setMaxResults(1)
                 .uniqueResult();
 
 

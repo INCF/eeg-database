@@ -111,7 +111,7 @@ public class ExperimentFormPage extends MenuPage {
         wizardModel.add(new AddExperimentScenarioForm(model));
         wizardModel.add(new AddExperimentResultsForm(fileModel));
 
-        Wizard wizard = new Wizard("wizard", wizardModel, false) {
+        Wizard wizard = new Wizard("wizard", wizardModel) {
 
             private static final long serialVersionUID = 1L;
 

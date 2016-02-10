@@ -42,10 +42,10 @@
 		<org.springframework.social.linkedin-version>1.0.0.RELEASE</org.springframework.social.linkedin-version>
 
 		<spring.webmvc.struts.version>2.5.6.SEC02</spring.webmvc.struts.version>
-		<slf4j-version>1.6.1</slf4j-version>
+		<slf4j-version>1.7.12</slf4j-version>
 
-		<jetty.version>7.5.0.v20110901</jetty.version>
-		<wicket.version>6.14.0</wicket.version>
+		<jetty.version>9.3.7.v20160115</jetty.version>
+		<wicket.version>6.20.0</wicket.version>
 
 		<!-- Delete this line when the project tests are ready to use -->
 		<skipTests>false</skipTests>
@@ -179,26 +179,26 @@
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
-			<version>3.0.1</version>
+			<version>3.1.0</version>
 			<type>jar</type>
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>jstl</artifactId>
-			<version>1.1.2</version>
+			<version>1.2</version>
 		</dependency>
 		<dependency>
 			<groupId>taglibs</groupId>
 			<artifactId>standard</artifactId>
 			<version>1.1.2</version>
 		</dependency>
-		<dependency>
-			<groupId>javax.servlet.jsp</groupId>
-			<artifactId>jsp-api</artifactId>
-			<version>2.1</version>
-			<type>jar</type>
-			<scope>provided</scope>
-		</dependency>
+		<!--<dependency>-->
+			<!--<groupId>javax.servlet.jsp</groupId>-->
+			<!--<artifactId>jsp-api</artifactId>-->
+			<!--<version>2.1</version>-->
+			<!--<type>jar</type>-->
+			<!--<scope>provided</scope>-->
+		<!--</dependency>-->
 
 		<!--================================== Sun jaxb and jaxws ======================================= -->
 
@@ -440,7 +440,7 @@
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-core</artifactId>
-			<version>4.2.11.Final</version>
+			<version>4.3.5.Final</version>
 			<exclusions>
 				<exclusion>
 					<artifactId>xml-apis</artifactId>
@@ -452,7 +452,7 @@
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-tools</artifactId>
-			<version>4.0.0.Final</version>
+			<version>4.3.2.Final</version>
 		</dependency>
 
 		<dependency>
@@ -952,16 +952,16 @@
                 </executions>
             </plugin>
 			<plugin>
-				<groupId>org.mortbay.jetty</groupId>
+				<groupId>org.eclipse.jetty</groupId>
 				<artifactId>jetty-maven-plugin</artifactId>
 				<version>${jetty.version}</version>
 				<configuration>
-					<connectors>
-						<connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
+
+						<httpConnector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
 							<port>8082</port>
 							<maxIdleTime>3600000</maxIdleTime>
-						</connector>
-					</connectors>
+						</httpConnector>
+
                     <stopKey>STOP</stopKey>
                     <stopPort>8005</stopPort>
 				</configuration>
@@ -978,7 +978,7 @@
                         <configuration>
                             <stopKey>STOP</stopKey>
                             <stopPort>8005</stopPort>
-                            <daemon>true</daemon>
+                            <!--<daemon>true</daemon>-->
                         </configuration>
                     </execution>
                     <execution>

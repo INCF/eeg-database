@@ -22,14 +22,14 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.components.model;
 
+import org.apache.wicket.util.convert.ConversionException;
+import org.apache.wicket.util.convert.converter.AbstractNumberConverter;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.NumberFormat;
 import java.util.Currency;
 import java.util.Locale;
-
-import org.apache.wicket.util.convert.ConversionException;
-import org.apache.wicket.util.convert.converter.AbstractNumberConverter;
 
 /**
  * Implementation of wicket model with money format and currency.

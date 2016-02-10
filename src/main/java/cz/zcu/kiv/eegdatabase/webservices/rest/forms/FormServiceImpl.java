@@ -120,7 +120,7 @@ public class FormServiceImpl implements FormService, InitializingBean, Applicati
 					writerGui.writeLayout(form, streamGui);
 					FormLayout layoutGui = new FormLayout(form.getName(), form.getName() + "-gui",
                             streamGui.toByteArray(), null, FormLayoutType.ODML_GUI);
-                   // formLayoutDao.createOrUpdateByName(layoutGui);
+                    //formLayoutDao.createOrUpdateByName(layoutGui);
 				} catch (TemplateGeneratorException e) {
 					logger.error("Could not update the following layout: " + form.getLayoutName(), e);
 				}
