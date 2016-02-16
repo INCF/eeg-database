@@ -186,7 +186,7 @@ public class ExperimentsPackageDownloadPage extends MenuPage {
                 {
                     timer.stop(target); //wicket6
 
-                    info("Package created!");
+                    info("Package created! Press the Download package button to download the package.");
                     if (manager.isAlive()) {
                         try {
                             manager.join();
