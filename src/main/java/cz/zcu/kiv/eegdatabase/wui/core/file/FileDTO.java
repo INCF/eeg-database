@@ -22,9 +22,9 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.core.file;
 
-import java.io.File;
-
 import cz.zcu.kiv.eegdatabase.wui.core.dto.IdentifiDTO;
+
+import java.io.File;
 
 /**
  * Object for file transfer in wicket.
@@ -39,6 +39,15 @@ public class FileDTO extends IdentifiDTO {
     private String fileName;
     private String mimetype;
     private File file;
+    private boolean deleted;
+
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
+    }
 
     public String getFileName() {
         return fileName;
