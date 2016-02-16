@@ -126,7 +126,7 @@ public class ExperimentDownloadProvider {
             Set<DataFile> newFiles = prepareDataFilesWithParameters(files, params);
 
             // prepared history log
-            createHistoryRecordAboutDownload(experiment);
+            createHistoryRecordAboutDownload(experiment, personService.getLoggedPerson());
 
             License license = licenseService.getLicenseForPurchasedExperiment(exp.getExperimentId(), EEGDataBaseSession.get().getLoggedUser().getPersonId());
             byte[] licenseFile = licenseService.getLicenseAttachmentContent(license.getLicenseId());
@@ -154,7 +154,8 @@ public class ExperimentDownloadProvider {
     }
 
     @Transactional
-    public FileDTO generatePackageFile(ExperimentPackage pckg, MetadataCommand mc, License license, List<Experiment> selectList) {
+    public FileDTO generatePackageFile(ExperimentPackage pckg, MetadataCommand mc, License license, List<Experiment> selectList,
+                                       Person loggedUser, DownloadPackageManager manager) {
 
         ZipOutputStream zipOutputStream = null;
         FileOutputStream fileOutputStream = null;
@@ -174,6 +175,7 @@ public class ExperimentDownloadProvider {
             zipOutputStream = new ZipOutputStream(fileOutputStream);
 
             for (Experiment tmp : selectList) {
+
 
                 Experiment exp = service.read(tmp.getExperimentId());
                 String experimentDirPrefix = "";
@@ -203,7 +205,10 @@ public class ExperimentDownloadProvider {
                 IOUtils.closeQuietly(in);
                 FileUtils.deleteQuietly(file);
 
-                createHistoryRecordAboutDownload(exp);
+                createHistoryRecordAboutDownload(exp, loggedUser);
+                synchronized (this) {
+                    manager.setNumberOfDownloadedExperiments(manager.getNumberOfDownloadedExperiments() + 1);
+                }
             }
 
             dto.setFile(tempZipFile);
@@ -231,9 +236,8 @@ public class ExperimentDownloadProvider {
         }
     }
 
-    private void createHistoryRecordAboutDownload(Experiment experiment) {
+    private void createHistoryRecordAboutDownload(Experiment experiment, Person user) {
 
-        Person user = personService.getLoggedPerson();
         Timestamp currentTimestamp = new java.sql.Timestamp(Calendar.getInstance().getTime().getTime());
         History history = new History();
         log.debug("Setting downloading metadata");

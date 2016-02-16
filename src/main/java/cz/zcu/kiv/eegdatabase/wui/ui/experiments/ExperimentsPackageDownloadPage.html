@@ -128,9 +128,35 @@ This file is part of the EEG-database project
             <wicket:message key="label.chooseExperiments"></wicket:message>
         </h2>
           <!--<div wicket:id="navigator"></div>-->
+          <!-- progress bar -->
+
+          <div id="wrapper-panel-frame" class="ui-corner-all">
+
+              <table>
+                  <tr>
+                      <td width="240" colspan="2">
+                          <wicket:message key="label.packageProgress" /><div wicket:id="progress"></div>
+                      </td>
+                      <!--<td>-->
+                          <!--<div wicket:id="indicator"></div>-->
+                      <!--</td>-->
+                  </tr>
+              </table>
+              <br/>
+              <div wicket:id="feedback" style="width: 360px;"></div>
+
+          </div>
+          <div class="actionBox">
+              <input type="submit" wicket:id="submit" class="lightButtonLink" wicket:message="value:button.downloadPackage"/>
+              <a href='#' wicket:id="downloadLink"><wicket:message key="link.download"></wicket:message></a>
+              <a href="#" wicket:id="viewLicenseLink"><wicket:message key="link.license.view"/></a>
+          </div>
+
         
         <span wicket:id="group">
         <span><input type="checkbox" wicket:id="selectedAll"/><wicket:message key="label.chooseAll"></wicket:message></span>
+
+
         <table class="standardValueTable" style="width: auto;">
             <thead>
             <tr>
@@ -155,10 +181,7 @@ This file is part of the EEG-database project
         </table>
         </span>
         
-        <div class="actionBox">
-          <input type="submit" wicket:id="submit" class="lightButtonLink" wicket:message="value:button.downloadPackage"/>
-            <a href="#" wicket:id="viewLicenseLink"><wicket:message key="link.license.view"/></a>
-        </div>
+
         <div wicket:id="viewLicenseWindow"></div>
       </form>
     </div>
