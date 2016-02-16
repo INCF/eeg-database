@@ -148,7 +148,7 @@ public class ExperimentsPackageDownloadPage extends MenuPage {
 
             final CheckGroup<Experiment> group = new CheckGroup<Experiment>("group", selectList);
 
-            final AbstractAjaxTimerBehavior timer = new AbstractAjaxTimerBehavior(Duration.ONE_SECOND) {
+            final AbstractAjaxTimerBehavior timer = new AbstractAjaxTimerBehavior(Duration.milliseconds(500)) {
 
                 private static final long serialVersionUID = 1L;
 
@@ -160,8 +160,6 @@ public class ExperimentsPackageDownloadPage extends MenuPage {
                             step = 100;
                         } else {
                             double percentage = (double) manager.getNumberOfDownloadedExperiments() / manager.getNumberOfExperiments() * 100;
-                            System.out.println(manager.getNumberOfDownloadedExperiments());
-                            System.out.println(percentage);
                             step = (int) percentage - progressBar.getModelObject();
                         }
                     }
@@ -198,7 +196,6 @@ public class ExperimentsPackageDownloadPage extends MenuPage {
                     }
                     outputFile = manager.getOutputFile();
                     downloadLink.setVisible(true);
-                    target.add(downloadLink);
                     target.add(downloadLink);
                 }
             };
@@ -353,6 +350,7 @@ public class ExperimentsPackageDownloadPage extends MenuPage {
                     manager.start();
                     timer.restart(target);
                     progressBar.setModelObject(0);
+                    step = 1;
 
                     //outputFile = downloadProvider.generatePackageFile(expPackage, command, licenseModel.getObject(), selectList);
 
