@@ -364,6 +364,8 @@
 		</constructor-arg>
 	</bean>
 
+    <bean id="corsFilter" class="cz.zcu.kiv.eegdatabase.webservices.rest.common.utils.CorsFilter" />
+
 	<!-- Activates @Scheduled and @Async annotations for scheduling -->
 	<task:annotation-driven executor="indexingExecutor" scheduler="indexingScheduler"/>
 	<task:executor id="indexingExecutor" pool-size="5"/>
