@@ -141,15 +141,23 @@ public class ScenarioTestIT extends AbstractUITest {
 
         createGroupIfNotExists();
         tester.clickLinkWithText("Scenarios");
-        System.out.println("testUniqueTitle " + scenarioDao.getAllRecords().size());
+        boolean scenarioInDb = false;
         for (Scenario scen: scenarioDao.getAllRecords()) {
-            System.out.println("title " + scen.getTitle());
+            if (scen.getTitle().equals("testScenario")) {
+                scenarioInDb = true;
+                break;
+            }
+        }
+        if (!scenarioInDb) {
+            createScenario("testScenario");
+            tester.clickButtonWithText(getProperty("button.save"));
+            Thread.sleep(waitForAjax);
         }
         createScenario("testScenario");
         tester.clickButtonWithText(getProperty("button.save"));
         Thread.sleep(waitForAjax);
 
-        //tester.assertTextPresent(getProperty("error.titleAlreadyInDatabase"));
+        tester.assertTextPresent(getProperty("error.titleAlreadyInDatabase"));
         tester.assertTextPresent(getProperty("action.logout"));
 
     }
