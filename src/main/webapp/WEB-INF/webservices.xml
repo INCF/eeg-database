@@ -36,7 +36,7 @@ http://cxf.apache.org/schemas/jaxws.xsd
 http://www.springframework.org/schema/context
 http://www.springframework.org/schema/context/spring-context.xsd
 http://www.springframework.org/schema/security
-http://www.springframework.org/schema/security/spring-security-3.1.xsd">
+http://www.springframework.org/schema/security/spring-security-3.2.xsd">
 
     <import resource="classpath:META-INF/cxf/cxf.xml"/>
     <!--<import resource="classpath:META-INF/cxf/cxf-extension-soap.xml"/>    DEPRECATED -->

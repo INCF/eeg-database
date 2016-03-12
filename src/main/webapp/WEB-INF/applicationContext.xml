@@ -24,13 +24,53 @@
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:security="http://www.springframework.org/schema/security"
        xmlns:task="http://www.springframework.org/schema/task"
+       xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
 		http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
 		http://www.springframework.org/schema/security
-		http://www.springframework.org/schema/security/spring-security-3.1.xsd http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
+        http://www.springframework.org/schema/security/spring-security-3.2.xsd
+		http://www.springframework.org/schema/task
+		http://www.springframework.org/schema/task/spring-task.xsd
+		http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+
 
 	<!-- <context:component-scan base-package="cz.zcu.kiv.eegdatabase.logic.controller" /> -->
 
+    <!--  Use default Auth0 security context -->
+    <bean id="auth0EntryPoint" class="com.auth0.spring.security.auth0.Auth0AuthenticationEntryPoint" />
+
+    <!-- all urls starting with unsecured are -->
+    <security:http pattern="${auth0.securedRoute}" create-session="stateless"  entry-point-ref="auth0EntryPoint">
+        <security:intercept-url pattern="${auth0.securedRoute}" access="ROLE_USER" />
+        <security:custom-filter ref="auth0Filter" after="SECURITY_CONTEXT_FILTER" ></security:custom-filter>
+        <security:custom-filter position="FIRST" ref="corsFilter"/>
+    </security:http>
+
+    <bean id="auth0Filter" class="com.auth0.spring.security.auth0.Auth0AuthenticationFilter">
+        <property name="entryPoint" ref="auth0EntryPoint"></property>
+    </bean>
+
+
+    <bean id="auth0AuthenticationProvider" class="com.auth0.spring.security.auth0.Auth0AuthenticationProvider">
+        <property name="clientSecret" value="${auth0.clientSecret}" ></property>
+        <property name="clientId" value="${auth0.clientId}" ></property>
+        <property name="securedRoute" value="${auth0.securedRoute}" ></property>
+    </bean>
+
+    <!-- Scan for spring annotated components from Auth0 -->
+    <context:component-scan base-package="com.auth0"/>
+
+    <!-- Read properties files -->
+    <context:property-placeholder location="
+        WEB-INF/project.properties,
+        WEB-INF/auth0.properties,
+        WEB-INF/db.properties,
+        WEB-INF/facebook.properties,
+        WEB-INF/linkedin.properties,
+        WEB-INF/PayPal.properties,
+        WEB-INF/xml_files.properties"
+    />
 
 	<!-- SECURITY -->
 	<security:http create-session="never" auto-config="true" access-decision-manager-ref="accessDecisionManager">
@@ -47,14 +87,23 @@
 
 		<security:remember-me />
 		<security:intercept-url pattern="/**" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+
+        <security:custom-filter position="FIRST" ref="corsFilter"/>
 	</security:http>
 
+
+
+
 	<security:authentication-manager alias="authenticationManager">
+
 		<security:authentication-provider>
 			<security:jdbc-user-service data-source-ref="dataSource" users-by-username-query="select username, password, confirmed, 1 AS enabled FROM person WHERE confirmed=true and username=?"
 																	authorities-by-username-query="select username, authority from person where username=?" />
 			<security:password-encoder ref="encoder" />
 		</security:authentication-provider>
+
+        <security:authentication-provider ref="auth0AuthenticationProvider" />
+
 	</security:authentication-manager>
 
 	<bean id="accessDecisionManager" class="org.springframework.security.access.vote.AffirmativeBased">
