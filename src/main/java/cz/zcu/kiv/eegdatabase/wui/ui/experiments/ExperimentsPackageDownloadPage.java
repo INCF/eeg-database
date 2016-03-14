@@ -143,7 +143,7 @@ public class ExperimentsPackageDownloadPage extends MenuPage {
             License toAdd = null;
             License toRemove = null;
             for (License l: lic) {
-                if (l.getTitle().equals("Creative Commons BY-NC 4.0")) {
+                if (l.getTitle().equals("Creative Commons BY-NC-SA 4.0")) {
                     toRemove = l;
 
                 }
