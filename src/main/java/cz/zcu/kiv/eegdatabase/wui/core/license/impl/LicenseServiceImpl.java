@@ -26,26 +26,24 @@
  */
 package cz.zcu.kiv.eegdatabase.wui.core.license.impl;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.sql.Blob;
-import java.util.ArrayList;
-import java.util.List;
+import cz.zcu.kiv.eegdatabase.data.dao.ExperimentLicenceDao;
+import cz.zcu.kiv.eegdatabase.data.dao.ExperimentPackageLicenseDao;
+import cz.zcu.kiv.eegdatabase.data.dao.GenericDao;
+import cz.zcu.kiv.eegdatabase.data.dao.LicenseDao;
+import cz.zcu.kiv.eegdatabase.data.pojo.*;
+import cz.zcu.kiv.eegdatabase.wui.core.GenericServiceImpl;
+import cz.zcu.kiv.eegdatabase.wui.core.license.LicenseService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.HibernateException;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.transaction.annotation.Transactional;
 
-import cz.zcu.kiv.eegdatabase.data.dao.ExperimentPackageLicenseDao;
-import cz.zcu.kiv.eegdatabase.data.dao.GenericDao;
-import cz.zcu.kiv.eegdatabase.data.dao.LicenseDao;
-import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackage;
-import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackageLicense;
-import cz.zcu.kiv.eegdatabase.data.pojo.License;
-import cz.zcu.kiv.eegdatabase.data.pojo.LicenseType;
-import cz.zcu.kiv.eegdatabase.wui.core.GenericServiceImpl;
-import cz.zcu.kiv.eegdatabase.wui.core.license.LicenseService;
+import java.io.IOException;
+import java.io.InputStream;
+import java.sql.Blob;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 
@@ -56,6 +54,7 @@ public class LicenseServiceImpl extends GenericServiceImpl<License, Integer> imp
     protected Log log = LogFactory.getLog(getClass());
 
     private ExperimentPackageLicenseDao experimentPackageLicenseDao;
+    private ExperimentLicenceDao experimentLicenceDao;
     private LicenseDao licenseDao;
 
 
@@ -70,6 +69,11 @@ public class LicenseServiceImpl extends GenericServiceImpl<License, Integer> imp
     @Required
     public void setLicenseDao(LicenseDao licenseDao) {
         this.licenseDao = licenseDao;
+    }
+
+    @Required
+    public void setExperimentLicenceDao(ExperimentLicenceDao experimentLicenceDao) {
+        this.experimentLicenceDao = experimentLicenceDao;
     }
 
     public LicenseServiceImpl(GenericDao<License, Integer> dao) {
@@ -186,6 +190,12 @@ public class LicenseServiceImpl extends GenericServiceImpl<License, Integer> imp
     @Transactional
     public void removeLicenseFromPackage(License license, ExperimentPackage pack) {
         this.experimentPackageLicenseDao.removeLicenseFromPackage(pack.getExperimentPackageId(), license.getLicenseId());
+    }
+
+    @Override
+    @Transactional
+    public void removeLicenseFromExperiment(Experiment exp, License license) {
+        this.experimentLicenceDao.remove(exp, license);
     }
     
 }

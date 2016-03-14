@@ -26,10 +26,13 @@
  */
 package cz.zcu.kiv.eegdatabase.wui.core.license;
 
+import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
 import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackage;
 import cz.zcu.kiv.eegdatabase.data.pojo.License;
 import cz.zcu.kiv.eegdatabase.data.pojo.LicenseType;
 import cz.zcu.kiv.eegdatabase.wui.core.GenericService;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 
 /**
@@ -78,5 +81,7 @@ public interface LicenseService extends GenericService<License, Integer> {
      * @param pckg 
      */
     public void removeLicenseFromPackage(License license, ExperimentPackage pckg);
-    
+
+    @Transactional
+    void removeLicenseFromExperiment(Experiment exp, License license);
 }
