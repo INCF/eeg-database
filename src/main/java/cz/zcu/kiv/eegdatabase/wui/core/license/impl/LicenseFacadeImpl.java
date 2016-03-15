@@ -22,20 +22,15 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.core.license.impl;
 
-import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackage;
-import cz.zcu.kiv.eegdatabase.data.pojo.License;
-import cz.zcu.kiv.eegdatabase.data.pojo.LicenseType;
-import cz.zcu.kiv.eegdatabase.data.pojo.Person;
-import cz.zcu.kiv.eegdatabase.data.pojo.PersonalLicense;
-import cz.zcu.kiv.eegdatabase.data.pojo.PersonalLicenseState;
-import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
+import cz.zcu.kiv.eegdatabase.data.pojo.*;
 import cz.zcu.kiv.eegdatabase.wui.core.GenericFacadeImpl;
 import cz.zcu.kiv.eegdatabase.wui.core.GenericService;
 import cz.zcu.kiv.eegdatabase.wui.core.license.LicenseFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.license.LicenseService;
 import cz.zcu.kiv.eegdatabase.wui.core.license.PersonalLicenseService;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Required;
+
+import java.util.List;
 
 /**
  *
@@ -171,6 +166,11 @@ public class LicenseFacadeImpl extends GenericFacadeImpl<License, Integer> imple
     @Override
     public List<License> getPersonLicenses(int personId)  {
         return licenseService.getPersonLicenses(personId);
+    }
+
+    @Override
+    public void removeLicenseFromExperiment(Experiment exp, License license) {
+        licenseService.removeLicenseFromExperiment(exp, license);
     }
 
 }

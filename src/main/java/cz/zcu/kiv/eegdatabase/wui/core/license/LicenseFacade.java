@@ -22,13 +22,7 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.core.license;
 
-import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackage;
-import cz.zcu.kiv.eegdatabase.data.pojo.License;
-import cz.zcu.kiv.eegdatabase.data.pojo.LicenseType;
-import cz.zcu.kiv.eegdatabase.data.pojo.Person;
-import cz.zcu.kiv.eegdatabase.data.pojo.PersonalLicense;
-import cz.zcu.kiv.eegdatabase.data.pojo.PersonalLicenseState;
-import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
+import cz.zcu.kiv.eegdatabase.data.pojo.*;
 import cz.zcu.kiv.eegdatabase.wui.core.GenericFacade;
 import java.util.List;
 
@@ -158,4 +152,5 @@ public interface LicenseFacade extends GenericFacade<License, Integer> {
 
     public List<License> getPersonLicenses(int personId);
 
+    void removeLicenseFromExperiment(Experiment exp, License license);
 }

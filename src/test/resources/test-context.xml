@@ -300,6 +300,10 @@
     		</constructor-arg>
     		<property name="sessionFactory" ref="sessionFactoryTest"/>
     	</bean>
+
+    <bean name="experimentLicenceDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleExperimentLicenceDao">
+        <property name="sessionFactory" ref="sessionFactoryTest"/>
+    </bean>
     	<!--
     	<bean name="stimulusDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleGenericDao">
     			<constructor-arg>
