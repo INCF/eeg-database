@@ -24,7 +24,10 @@ package cz.zcu.kiv.eegdatabase.wui.ui.experiments;
 
 import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
 import com.googlecode.wicket.jquery.ui.widget.progressbar.ProgressBar;
-import cz.zcu.kiv.eegdatabase.data.pojo.*;
+import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
+import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackage;
+import cz.zcu.kiv.eegdatabase.data.pojo.License;
+import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.logic.controller.experiment.MetadataCommand;
 import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
 import cz.zcu.kiv.eegdatabase.wui.components.menu.button.ButtonPageMenu;
@@ -68,7 +71,6 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.util.string.StringValue;
 import org.apache.wicket.util.time.Duration;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -137,39 +139,6 @@ public class ExperimentsPackageDownloadPage extends MenuPage {
             final FeedbackPanel feedback = new JQueryFeedbackPanel("feedback");
             add(feedback.setOutputMarkupId(true));
 
-            //remove me
-            List<License> lic = licenseFacade.getAllRecords();
-            License toAdd = null;
-            License toRemove = null;
-            for (License l: lic) {
-                if (l.getTitle().equals("Creative Commons BY-NC-SA 4.0")) {
-                    toRemove = l;
-
-                }
-                if (l.getTitle().equals("Creative Commons BY-NC 4.0")) {
-                    toAdd = l;
-                }
-            }
-            if (toRemove != null) {
-                licenseFacade.removeLicenseFromPackage(toRemove, expPackage);
-                for (Experiment exp: expFacade.getExperimentsByPackage(expPackage.getExperimentPackageId())) {
-                    licenseFacade.removeLicenseFromExperiment(exp, toRemove);
-                }
-            }
-            if (toAdd != null) {
-                ExperimentPackageLicense expPacLic = new ExperimentPackageLicense();
-                expPacLic.setExperimentPackage(expPackage);
-                expPacLic.setLicense(toAdd);
-                expPacLic.setPrice(new BigDecimal(0));
-                experimentPackageLicenseFacade.create(expPacLic);
-                for (Experiment exp: expFacade.getExperimentsByPackage(expPackage.getExperimentPackageId())) {
-                    ExperimentLicence el = new ExperimentLicence();
-                    el.setExperiment(exp);
-                    el.setLicense(toAdd);
-                    experimentLicenseFacade.create(el);
-                }
-            }
-            //end
 
             boolean canSeePersonInfoAboutUser = false;
             Person loggedPerson = EEGDataBaseSession.get().getLoggedUser();
