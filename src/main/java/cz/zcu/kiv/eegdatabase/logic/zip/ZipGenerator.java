@@ -73,7 +73,7 @@ public class ZipGenerator implements Generator {
             zipOutputStream = new ZipOutputStream(fileOutputStream);
 
             log.debug("transforming metadata from database to xml file");
-            OutputStream meta = getTransformer().transform(exp, mc, dataFiles);
+            OutputStream meta = getTransformer().transformElasticToXml(exp);
             Scenario scen = exp.getScenario();
             log.debug("getting scenario file");
 
