@@ -323,14 +323,15 @@ public class ExperimentsDownloadPage extends MenuPage {
                 @Override
                 public void onSubmit() {
                     // because we used object for check we have all data rdy to use.
-                    MetadataCommand command = ExperimentDownloadForm.this.getModelObject();
+                    MetadataCommand command = new MetadataCommand();
                     if (!uncheckPersonInfo) {
                         command.setName(false);
                         command.setBirth(false);
                         command.setEmail(false);
                         command.setPhoneNumber(false);
-                    }
 
+                    }
+                    command.setScenario(true);
                     Collection<DataFile> files = group.getModelObject();
                     FileDTO outputFile = downloadProvider.generate(experiment, command, files, paramSelect);
 

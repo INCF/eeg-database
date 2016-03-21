@@ -354,6 +354,7 @@ public class ExperimentsPackageDownloadPage extends MenuPage {
                         command.setEmail(false);
                         command.setPhoneNumber(false);
                     }
+                    command.setScenario(true);
                     manager = new DownloadPackageManager(expPackage, command, licenseModel.getObject(), selectList, downloadProvider, personFacade.getLoggedPerson());
                     manager.start();
                     timer.restart(target);
