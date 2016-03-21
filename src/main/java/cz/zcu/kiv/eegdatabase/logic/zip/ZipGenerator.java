@@ -104,13 +104,13 @@ public class ZipGenerator implements Generator {
                 }
             }
 
-//            if (xmlMetadata != null) {
-//                log.debug("saving xml file of metadata to zip file");
-//                entry = new ZipEntry(getMetadata() + ".xml");
-//                zipOutputStream.putNextEntry(entry);
-//                zipOutputStream.write(xmlMetadata);
-//                zipOutputStream.closeEntry();
-//            }
+            if (xmlMetadata != null) {
+                log.debug("saving xml file of metadata to zip file");
+                entry = new ZipEntry(getMetadata() + ".xml");
+                zipOutputStream.putNextEntry(entry);
+                zipOutputStream.write(xmlMetadata);
+                zipOutputStream.closeEntry();
+            }
 
             for (DataFile dataFile : dataFiles) {
                 entry = new ZipEntry(getDataZip() + "/" + dataFile.getFilename());

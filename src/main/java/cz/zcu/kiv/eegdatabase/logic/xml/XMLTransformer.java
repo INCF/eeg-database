@@ -26,42 +26,25 @@
  */
 package cz.zcu.kiv.eegdatabase.logic.xml;
 
+import cz.zcu.kiv.eegdatabase.data.pojo.*;
+import cz.zcu.kiv.eegdatabase.data.xmlObjects.*;
+import cz.zcu.kiv.eegdatabase.logic.controller.experiment.MetadataCommand;
+import cz.zcu.kiv.eegdatabase.wui.components.utils.DateUtils;
+import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
+import odml.core.Writer;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBElement;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.Set;
-
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBElement;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
-import cz.zcu.kiv.eegdatabase.data.pojo.DataFile;
-import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
-import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentOptParamVal;
-import cz.zcu.kiv.eegdatabase.data.pojo.FileMetadataParamVal;
-import cz.zcu.kiv.eegdatabase.data.pojo.Hardware;
-import cz.zcu.kiv.eegdatabase.data.pojo.Person;
-import cz.zcu.kiv.eegdatabase.data.pojo.PersonOptParamVal;
-import cz.zcu.kiv.eegdatabase.data.pojo.Scenario;
-import cz.zcu.kiv.eegdatabase.data.xmlObjects.DataType;
-import cz.zcu.kiv.eegdatabase.data.xmlObjects.FileMetadataType;
-import cz.zcu.kiv.eegdatabase.data.xmlObjects.HardwareType;
-import cz.zcu.kiv.eegdatabase.data.xmlObjects.MeasurationAddParam;
-import cz.zcu.kiv.eegdatabase.data.xmlObjects.MeasurationType;
-import cz.zcu.kiv.eegdatabase.data.xmlObjects.ObjectFactory;
-import cz.zcu.kiv.eegdatabase.data.xmlObjects.PersonAddParam;
-import cz.zcu.kiv.eegdatabase.data.xmlObjects.PersonType;
-import cz.zcu.kiv.eegdatabase.data.xmlObjects.ScenarioType;
-import cz.zcu.kiv.eegdatabase.data.xmlObjects.WeatherType;
-import cz.zcu.kiv.eegdatabase.logic.controller.experiment.MetadataCommand;
-import cz.zcu.kiv.eegdatabase.wui.components.utils.DateUtils;
-import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 
 /**
  *
@@ -174,6 +157,20 @@ public class XMLTransformer implements DataTransformer {
     log.debug("Written XML document into a ByteArrayOutputStream ");
     return baos;
   }
+
+    @Override
+    public OutputStream transformElasticToXml(Experiment exp) {
+        if (exp == null) {
+            return null;
+        }
+        if (exp.getElasticExperiment().getMetadata() == null) {
+            return null;
+        }
+        Writer wr = new Writer(exp.getElasticExperiment().getMetadata(), true, true);
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        wr.write(stream, false, false);
+        return stream;
+    }
 
   protected void writePerson(List<PersonType> perType, Person per,
           String position, MetadataCommand mc, Timestamp scenarioStartTime) {
