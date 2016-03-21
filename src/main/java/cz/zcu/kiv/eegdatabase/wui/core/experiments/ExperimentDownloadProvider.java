@@ -177,7 +177,7 @@ public class ExperimentDownloadProvider {
 
             for (Experiment tmp : selectList) {
 
-                Experiment exp = service.read(tmp.getExperimentId());
+                Experiment exp = service.getExperimentForDetail(tmp.getExperimentId());
                 String experimentDirPrefix = "";
 
                 // create directory for each experiment.

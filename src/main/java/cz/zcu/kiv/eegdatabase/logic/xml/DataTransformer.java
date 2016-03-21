@@ -31,10 +31,10 @@ import cz.zcu.kiv.eegdatabase.data.pojo.DataFile;
 import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
 import cz.zcu.kiv.eegdatabase.logic.controller.experiment.MetadataCommand;
 
+import javax.xml.bind.JAXBException;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Set;
-import javax.xml.bind.JAXBException;
 
 /**
  *
@@ -43,4 +43,6 @@ import javax.xml.bind.JAXBException;
 public interface DataTransformer {
 
   public OutputStream transform(Experiment m, MetadataCommand mc, Set<DataFile> datas) throws JAXBException, IOException;
+
+    OutputStream transformElasticToXml(Experiment exp);
 }

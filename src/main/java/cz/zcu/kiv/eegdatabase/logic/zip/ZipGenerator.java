@@ -73,7 +73,7 @@ public class ZipGenerator implements Generator {
             zipOutputStream = new ZipOutputStream(fileOutputStream);
 
             log.debug("transforming metadata from database to xml file");
-            OutputStream meta = getTransformer().transform(exp, mc, dataFiles);
+            OutputStream meta = getTransformer().transformElasticToXml(exp);
             Scenario scen = exp.getScenario();
             log.debug("getting scenario file");
 
@@ -104,13 +104,13 @@ public class ZipGenerator implements Generator {
                 }
             }
 
-//            if (xmlMetadata != null) {
-//                log.debug("saving xml file of metadata to zip file");
-//                entry = new ZipEntry(getMetadata() + ".xml");
-//                zipOutputStream.putNextEntry(entry);
-//                zipOutputStream.write(xmlMetadata);
-//                zipOutputStream.closeEntry();
-//            }
+            if (xmlMetadata != null) {
+                log.debug("saving xml file of metadata to zip file");
+                entry = new ZipEntry(getMetadata() + ".xml");
+                zipOutputStream.putNextEntry(entry);
+                zipOutputStream.write(xmlMetadata);
+                zipOutputStream.closeEntry();
+            }
 
             for (DataFile dataFile : dataFiles) {
                 entry = new ZipEntry(getDataZip() + "/" + dataFile.getFilename());
