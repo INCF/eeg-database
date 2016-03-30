@@ -51,7 +51,15 @@
 		<skipTests>false</skipTests>
 	</properties>
 
+
+
 	<dependencies>
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-servlets</artifactId>
+            <version>7.0.0.v20091005</version>
+        </dependency>
+
 		<dependency>
 			<groupId>postgresql</groupId>
 			<artifactId>postgresql</artifactId>
