@@ -22,7 +22,9 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.webservices.rest.experiment;
 
+import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
 import cz.zcu.kiv.eegdatabase.webservices.rest.experiment.wrappers.*;
+import org.apache.wicket.ajax.json.JSONObject;
 
 import java.util.List;
 
@@ -190,4 +192,13 @@ public interface ExperimentService {
      * @return primary key
      */
     public Integer createWeather(WeatherData weatherData, int researchGroupId);
+
+    /**
+     * Adds odML metadata to experiment
+     *
+     * @param id     experiment ID
+     * @param data odML data to be inserted to experiment
+     * @return experiment
+     */
+    public Experiment addMobioMetadata(int id, JSONObject data);
 }

@@ -23,11 +23,14 @@
 package cz.zcu.kiv.eegdatabase.webservices.rest.experiment;
 
 import cz.zcu.kiv.eegdatabase.data.dao.*;
+import cz.zcu.kiv.eegdatabase.data.nosql.MobioMetadata;
+import cz.zcu.kiv.eegdatabase.data.nosql.entities.ExperimentElastic;
 import cz.zcu.kiv.eegdatabase.data.nosql.entities.GenericParameter;
 import cz.zcu.kiv.eegdatabase.data.nosql.entities.ParameterAttribute;
 import cz.zcu.kiv.eegdatabase.data.pojo.*;
 import cz.zcu.kiv.eegdatabase.webservices.rest.experiment.wrappers.*;
 import cz.zcu.kiv.eegdatabase.webservices.rest.groups.wrappers.ResearchGroupData;
+import org.apache.wicket.ajax.json.JSONObject;
 import org.joda.time.LocalDate;
 import org.joda.time.Years;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -753,5 +756,26 @@ public class ExperimentServiceImpl implements ExperimentService {
         }
         Collections.sort(experiments, idComparator);
         return experiments;
+    }
+
+    @Override
+    @Transactional
+    public Experiment addMobioMetadata(int id, JSONObject data) {
+
+        Experiment experiment = experimentDao.read(id);
+        ExperimentElastic elasticExperiment = new ExperimentElastic();
+        MobioMetadata mobioMetadata = new MobioMetadata();
+
+        try {
+            elasticExperiment.setMetadata(mobioMetadata.createMetaData(data));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        experiment.setElasticExperiment(elasticExperiment);
+
+        experimentDao.update(experiment);
+
+        return experiment;
+
     }
 }
