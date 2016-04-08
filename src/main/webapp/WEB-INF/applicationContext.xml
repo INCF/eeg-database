@@ -33,11 +33,10 @@
 
 
 	<!-- SECURITY -->
-	<!--<security:http create-session="never" auto-config="false"
-                   access-decision-manager-ref="accessDecisionManager"
-                   entry-point-ref="myAuthenticationEntryPoint"
-                   authentication-manager-ref="authenticationManager">-->
     <security:http create-session="never" auto-config="true" access-decision-manager-ref="accessDecisionManager">
+
+        <security:http-basic entry-point-ref="restAuthenticationEntryPoint"/>
+
 		<security:intercept-url pattern="/signin/*" access="IS_AUTHENTICATED_ANONYMOUSLY" />
 		<security:intercept-url pattern="/signin" access="IS_AUTHENTICATED_ANONYMOUSLY" />
 		<security:intercept-url pattern="/signup" access="IS_AUTHENTICATED_ANONYMOUSLY" />
@@ -371,7 +370,7 @@
 
 
     <bean id="corsFilter" class="cz.zcu.kiv.eegdatabase.webservices.rest.common.utils.CorsFilter" />
-    <!--<bean id="myAuthenticationEntryPoint" class="cz.zcu.kiv.eegdatabase.webservices.rest.common.utils.RestAuthenticationEntryPoint" />-->
+    <bean id="restAuthenticationEntryPoint" class="cz.zcu.kiv.eegdatabase.webservices.rest.common.utils.RestAuthenticationEntryPoint" />
 
     <!-- Activates @Scheduled and @Async annotations for scheduling -->
 	<task:annotation-driven executor="indexingExecutor" scheduler="indexingScheduler"/>
