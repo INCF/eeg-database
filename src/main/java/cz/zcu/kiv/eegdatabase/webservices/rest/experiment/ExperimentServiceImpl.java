@@ -597,21 +597,26 @@ public class ExperimentServiceImpl implements ExperimentService {
             scenarioData.setScenarioId(exp.getScenario().getScenarioId());
             scenarioData.setScenarioName(exp.getScenario().getTitle());
 
-            WeatherData weatherData = new WeatherData();
             Weather weather = exp.getWeather();
-            weatherData.setWeatherId(weather.getWeatherId());
-            weatherData.setTitle(weather.getTitle());
-            weatherData.setDescription(weather.getDescription());
-
+            if(weather != null) {
+                WeatherData weatherData = new WeatherData();
+                weatherData.setWeatherId(weather.getWeatherId());
+                weatherData.setTitle(weather.getTitle());
+                weatherData.setDescription(weather.getDescription());
+                expData.setWeather(weatherData);
+            }
             Person subject = exp.getPersonBySubjectPersonId();
-            SubjectData subjectData = new SubjectData();
-            subjectData.setPersonId(subject.getPersonId());
-            subjectData.setName(subject.getGivenname());
-            subjectData.setSurname(subject.getSurname());
-            subjectData.setLeftHanded(subject.getLaterality() == 'L' || subject.getLaterality() == 'l');
-            subjectData.setGender(subject.getGender());
-            subjectData.setAge(Years.yearsBetween(new LocalDate(subject.getDateOfBirth()), new LocalDate()).getYears());
-            subjectData.setMail(subject.getUsername());
+            if(subject != null) {
+                SubjectData subjectData = new SubjectData();
+                subjectData.setPersonId(subject.getPersonId());
+                subjectData.setName(subject.getGivenname());
+                subjectData.setSurname(subject.getSurname());
+                subjectData.setLeftHanded(subject.getLaterality() == 'L' || subject.getLaterality() == 'l');
+                subjectData.setGender(subject.getGender());
+                subjectData.setAge(Years.yearsBetween(new LocalDate(subject.getDateOfBirth()), new LocalDate()).getYears());
+                subjectData.setMail(subject.getUsername());
+                expData.setSubject(subjectData);
+            }
 
             Artifact artifact = exp.getArtifact();
             ArtifactData artifactData = new ArtifactData();
@@ -748,10 +753,9 @@ public class ExperimentServiceImpl implements ExperimentService {
             expData.setHardwareList(new HardwareDataList(hardwareDatas));
             expData.setScenario(scenarioData);
             expData.setArtifact(artifactData);
-            expData.setSubject(subjectData);
             expData.setDiseases(new DiseaseDataList(diseaseDatas));
             expData.setDigitization(dgData);
-            expData.setWeather(weatherData);
+
             experiments.add(expData);
         }
         Collections.sort(experiments, idComparator);
