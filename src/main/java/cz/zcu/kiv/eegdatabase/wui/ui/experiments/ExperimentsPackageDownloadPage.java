@@ -93,10 +93,6 @@ public class ExperimentsPackageDownloadPage extends MenuPage {
 
     @SpringBean
     private LicenseFacade licenseFacade;
-    @SpringBean
-    private ExperimentPackageLicenseFacade experimentPackageLicenseFacade;
-    @SpringBean
-    private ExperimentLicenseFacade experimentLicenseFacade;
 
     @SpringBean
     private ExperimentPackageLicenseFacade experimentPackageLicenseFacade;
