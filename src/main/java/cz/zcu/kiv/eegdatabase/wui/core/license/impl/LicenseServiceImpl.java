@@ -192,11 +192,10 @@ public class LicenseServiceImpl extends GenericServiceImpl<License, Integer> imp
         this.experimentPackageLicenseDao.removeLicenseFromPackage(pack.getExperimentPackageId(), license.getLicenseId());
     }
 
-
     @Override
     @Transactional
     public void removeLicenseFromExperiment(Experiment exp, License license) {
         this.experimentLicenceDao.remove(exp, license);
-        }
+    }
     
 }

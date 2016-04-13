@@ -24,6 +24,7 @@ package cz.zcu.kiv.eegdatabase.webservices.rest.experiment;
 
 import cz.zcu.kiv.eegdatabase.webservices.rest.common.wrappers.RecordCountData;
 import cz.zcu.kiv.eegdatabase.webservices.rest.experiment.wrappers.*;
+import org.apache.wicket.ajax.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
@@ -316,6 +317,23 @@ public class ExperimentServiceController {
     @RequestMapping("/electrodeSystems")
     public ElectrodeSystemDataList getElectrodeSystems() {
         return new ElectrodeSystemDataList(service.getElectrodeSystems());
+    }
+
+    /**
+     * Adds/updates odML data to the given experiment
+     *
+     * @param experimentId ID of experiment to edit parameters of.
+     * @param data odML data.
+     * @return Success confirmation.
+     */
+    @RequestMapping(value = "/addOdmlMobio/{experimentId}", method = RequestMethod.POST, consumes = {"application/json;charset=UTF-8"}, produces={"application/json;charset=UTF-8"})
+    public AddMobioMetadataResult addMobioMetadata(@PathVariable int experimentId, @RequestBody String data) throws Exception {
+
+
+        JSONObject jsonObj = new JSONObject(data);
+        service.addMobioMetadata(experimentId, jsonObj);
+        return new AddMobioMetadataResult(true);
+
     }
 
 }

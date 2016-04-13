@@ -33,7 +33,9 @@
 
 
 	<!-- SECURITY -->
-	<security:http create-session="never" auto-config="true" access-decision-manager-ref="accessDecisionManager">
+    <security:http create-session="never" auto-config="true" access-decision-manager-ref="accessDecisionManager">
+
+        <security:http-basic entry-point-ref="restAuthenticationEntryPoint"/>
 
 		<security:intercept-url pattern="/signin/*" access="IS_AUTHENTICATED_ANONYMOUSLY" />
 		<security:intercept-url pattern="/signin" access="IS_AUTHENTICATED_ANONYMOUSLY" />
@@ -47,6 +49,9 @@
 
 		<security:remember-me />
 		<security:intercept-url pattern="/**" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+
+        <security:custom-filter position="FIRST" ref="corsFilter"/>
+
 	</security:http>
 
 	<security:authentication-manager alias="authenticationManager">
@@ -317,6 +322,10 @@
 		<property name="ontologyHeader" value="classpath:ontologyHeader.owl" />
 	</bean>
 
+	<bean name="removeTmpFilesFactory" class="cz.zcu.kiv.eegdatabase.logic.init.SimpleRemoveTmpFilesFactory" init-method="init">
+
+	</bean>
+
 	<!-- Creating csv file with our experiments and scenarios for NIF -->
 	<bean name="csvFactory" class="cz.zcu.kiv.eegdatabase.logic.csv.SimpleCSVFactory">
 		<property name="domain" value="${app.domain}" />
@@ -363,7 +372,11 @@
 		</constructor-arg>
 	</bean>
 
-	<!-- Activates @Scheduled and @Async annotations for scheduling -->
+
+    <bean id="corsFilter" class="cz.zcu.kiv.eegdatabase.webservices.rest.common.utils.CorsFilter" />
+    <bean id="restAuthenticationEntryPoint" class="cz.zcu.kiv.eegdatabase.webservices.rest.common.utils.RestAuthenticationEntryPoint" />
+
+    <!-- Activates @Scheduled and @Async annotations for scheduling -->
 	<task:annotation-driven executor="indexingExecutor" scheduler="indexingScheduler"/>
 	<task:executor id="indexingExecutor" pool-size="5"/>
 	<task:scheduler id="indexingScheduler" pool-size="1"/>

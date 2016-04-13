@@ -171,6 +171,7 @@ public class LicenseFacadeImpl extends GenericFacadeImpl<License, Integer> imple
     @Override
     public void removeLicenseFromExperiment(Experiment exp, License license) {
         licenseService.removeLicenseFromExperiment(exp, license);
+
     }
 
 }

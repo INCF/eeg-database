@@ -157,11 +157,10 @@ public class ExperimentsDetailPage extends MenuPage {
         Section toRemove = null;
         if (list != null) {
             for (Section s: list) {
-                if (s.getName().equals("Experiment")) {
+                if (s.getName().equals("Experimentators")) {
                     toRemove = s;
                     break;
                 }
-
             }
             list.remove(toRemove);
         }
@@ -174,7 +173,10 @@ public class ExperimentsDetailPage extends MenuPage {
 
             @Override
             protected void populateItem(ListItem<Section> item) {
+
                 item.add(new ViewMetadataSectionPanel("section", item.getModel()));
+
+
             }
         };
         

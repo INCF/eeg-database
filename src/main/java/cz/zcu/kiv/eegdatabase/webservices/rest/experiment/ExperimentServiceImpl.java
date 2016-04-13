@@ -23,11 +23,14 @@
 package cz.zcu.kiv.eegdatabase.webservices.rest.experiment;
 
 import cz.zcu.kiv.eegdatabase.data.dao.*;
+import cz.zcu.kiv.eegdatabase.data.nosql.MobioMetadata;
+import cz.zcu.kiv.eegdatabase.data.nosql.entities.ExperimentElastic;
 import cz.zcu.kiv.eegdatabase.data.nosql.entities.GenericParameter;
 import cz.zcu.kiv.eegdatabase.data.nosql.entities.ParameterAttribute;
 import cz.zcu.kiv.eegdatabase.data.pojo.*;
 import cz.zcu.kiv.eegdatabase.webservices.rest.experiment.wrappers.*;
 import cz.zcu.kiv.eegdatabase.webservices.rest.groups.wrappers.ResearchGroupData;
+import org.apache.wicket.ajax.json.JSONObject;
 import org.joda.time.LocalDate;
 import org.joda.time.Years;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -594,21 +597,26 @@ public class ExperimentServiceImpl implements ExperimentService {
             scenarioData.setScenarioId(exp.getScenario().getScenarioId());
             scenarioData.setScenarioName(exp.getScenario().getTitle());
 
-            WeatherData weatherData = new WeatherData();
             Weather weather = exp.getWeather();
-            weatherData.setWeatherId(weather.getWeatherId());
-            weatherData.setTitle(weather.getTitle());
-            weatherData.setDescription(weather.getDescription());
-
+            if(weather != null) {
+                WeatherData weatherData = new WeatherData();
+                weatherData.setWeatherId(weather.getWeatherId());
+                weatherData.setTitle(weather.getTitle());
+                weatherData.setDescription(weather.getDescription());
+                expData.setWeather(weatherData);
+            }
             Person subject = exp.getPersonBySubjectPersonId();
-            SubjectData subjectData = new SubjectData();
-            subjectData.setPersonId(subject.getPersonId());
-            subjectData.setName(subject.getGivenname());
-            subjectData.setSurname(subject.getSurname());
-            subjectData.setLeftHanded(subject.getLaterality() == 'L' || subject.getLaterality() == 'l');
-            subjectData.setGender(subject.getGender());
-            subjectData.setAge(Years.yearsBetween(new LocalDate(subject.getDateOfBirth()), new LocalDate()).getYears());
-            subjectData.setMail(subject.getUsername());
+            if(subject != null) {
+                SubjectData subjectData = new SubjectData();
+                subjectData.setPersonId(subject.getPersonId());
+                subjectData.setName(subject.getGivenname());
+                subjectData.setSurname(subject.getSurname());
+                subjectData.setLeftHanded(subject.getLaterality() == 'L' || subject.getLaterality() == 'l');
+                subjectData.setGender(subject.getGender());
+                subjectData.setAge(Years.yearsBetween(new LocalDate(subject.getDateOfBirth()), new LocalDate()).getYears());
+                subjectData.setMail(subject.getUsername());
+                expData.setSubject(subjectData);
+            }
 
             Artifact artifact = exp.getArtifact();
             ArtifactData artifactData = new ArtifactData();
@@ -745,13 +753,33 @@ public class ExperimentServiceImpl implements ExperimentService {
             expData.setHardwareList(new HardwareDataList(hardwareDatas));
             expData.setScenario(scenarioData);
             expData.setArtifact(artifactData);
-            expData.setSubject(subjectData);
             expData.setDiseases(new DiseaseDataList(diseaseDatas));
             expData.setDigitization(dgData);
-            expData.setWeather(weatherData);
+
             experiments.add(expData);
         }
         Collections.sort(experiments, idComparator);
         return experiments;
+    }
+
+    @Override
+    @Transactional
+    public Experiment addMobioMetadata(int id, JSONObject data) {
+
+        Experiment experiment = experimentDao.read(id);
+        ExperimentElastic elasticExperiment = new ExperimentElastic();
+        MobioMetadata mobioMetadata = new MobioMetadata();
+
+        try {
+            elasticExperiment.setMetadata(mobioMetadata.createMetaData(data));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        experiment.setElasticExperiment(elasticExperiment);
+
+        experimentDao.update(experiment);
+
+        return experiment;
+
     }
 }

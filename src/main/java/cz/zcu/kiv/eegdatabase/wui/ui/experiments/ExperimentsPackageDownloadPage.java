@@ -98,6 +98,11 @@ public class ExperimentsPackageDownloadPage extends MenuPage {
     @SpringBean
     private ExperimentLicenseFacade experimentLicenseFacade;
 
+    @SpringBean
+    private ExperimentPackageLicenseFacade experimentPackageLicenseFacade;
+    @SpringBean
+    private ExperimentLicenseFacade experimentLicenseFacade;
+
     public ExperimentsPackageDownloadPage(PageParameters parameters) {
 
         StringValue packageIdValue = parameters.get(DEFAULT_PARAM_ID);
@@ -193,7 +198,7 @@ public class ExperimentsPackageDownloadPage extends MenuPage {
                 {
                     timer.stop(target); //wicket6
 
-                    info("Package created! Press the Download package button to download the package.");
+                    info("Package created!");
                     if (manager.isAlive()) {
                         try {
                             manager.join();
@@ -262,7 +267,7 @@ public class ExperimentsPackageDownloadPage extends MenuPage {
             group.setOutputMarkupPlaceholderTag(true);
             group.setOutputMarkupId(true);
             group.setRenderBodyOnly(false);
-            // add(new AjaxPagingNavigator("navigator",experimentsList));
+           // add(new AjaxPagingNavigator("navigator",experimentsList));
             add(group);
 
             // checkbox for group of checkboxes about person
@@ -358,6 +363,7 @@ public class ExperimentsPackageDownloadPage extends MenuPage {
                     manager.start();
                     timer.restart(target);
                     progressBar.setModelObject(0);
+                    step = 1;
 
                     //outputFile = downloadProvider.generatePackageFile(expPackage, command, licenseModel.getObject(), selectList);
 

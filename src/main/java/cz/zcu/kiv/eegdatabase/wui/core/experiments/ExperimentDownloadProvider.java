@@ -143,7 +143,6 @@ public class ExperimentDownloadProvider {
             return dto;
 
         } catch (Exception e) {
-
             log.error(e.getMessage(), e);
             FileUtils.deleteQuietly(file);
             return null;
@@ -176,6 +175,7 @@ public class ExperimentDownloadProvider {
             zipOutputStream = new ZipOutputStream(fileOutputStream);
 
             for (Experiment tmp : selectList) {
+
 
                 Experiment exp = service.getExperimentForDetail(tmp.getExperimentId());
                 String experimentDirPrefix = "";

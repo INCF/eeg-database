@@ -102,7 +102,7 @@ public class ExperimentsDownloadPage extends MenuPage {
 
         int experimentId = parseParameters(parameters);
 
-        setPageTitle(ResourceUtils.getModel("pageTitle.chooseMetadata"));
+        setPageTitle(ResourceUtils.getModel("pageTitle.downloadPackage"));
 
         add(new ButtonPageMenu("leftMenu", ExperimentsPageLeftMenu.values()));
 
@@ -329,9 +329,9 @@ public class ExperimentsDownloadPage extends MenuPage {
                         command.setBirth(false);
                         command.setEmail(false);
                         command.setPhoneNumber(false);
+
                     }
                     command.setScenario(true);
-
                     Collection<DataFile> files = group.getModelObject();
                     FileDTO outputFile = downloadProvider.generate(experiment, command, files, paramSelect);
 

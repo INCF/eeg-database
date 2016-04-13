@@ -47,10 +47,8 @@ public class ExperimentBuyDownloadLinkPanel extends Panel {
 
     @SpringBean
     private OrderFacade facade;
-
     @SpringBean
     ExperimentDownloadProvider downloadProvider;
-
     private IModel<ExperimentLicence> model;
     private Experiment experiment;
 
@@ -127,7 +125,7 @@ public class ExperimentBuyDownloadLinkPanel extends Panel {
 //                return isDownloadable;
 //            }
 //        };
-//        add(downloadLink);
+
         Link<Void> downloadLink = new Link<Void>("downloadLink") {
             @Override
             public void onClick() {
@@ -137,7 +135,7 @@ public class ExperimentBuyDownloadLinkPanel extends Panel {
                         new HashMap<Integer, Set<FileMetadataParamVal>>());
 
                 if (outputFile == null || outputFile.getFile() == null)
-                    error("Error while file is generated. Can't be downloaded.");
+                    error("Error while file is generated. Can't be downloaded. " + experiment.getDataFiles().size());
                 else {
                     getRequestCycle().scheduleRequestHandlerAfterCurrent(FileUtils.prepareDownloadFile(outputFile));
                 }
