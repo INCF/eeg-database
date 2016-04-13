@@ -322,6 +322,10 @@
 		<property name="ontologyHeader" value="classpath:ontologyHeader.owl" />
 	</bean>
 
+	<bean name="removeTmpFilesFactory" class="cz.zcu.kiv.eegdatabase.logic.init.SimpleRemoveTmpFilesFactory" init-method="init">
+
+	</bean>
+
 	<!-- Creating csv file with our experiments and scenarios for NIF -->
 	<bean name="csvFactory" class="cz.zcu.kiv.eegdatabase.logic.csv.SimpleCSVFactory">
 		<property name="domain" value="${app.domain}" />
