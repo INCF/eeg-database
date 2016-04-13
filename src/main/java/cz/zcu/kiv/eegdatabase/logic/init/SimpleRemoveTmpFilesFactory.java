@@ -3,8 +3,10 @@ package cz.zcu.kiv.eegdatabase.logic.init;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Value;
+
 import java.io.File;
 import java.io.FilenameFilter;
+import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -70,14 +72,20 @@ public class SimpleRemoveTmpFilesFactory implements RemoveTmpFilesFactory {
                     }
                 });
                 for (File file : files) {
-                    boolean isDeleted = file.delete();
-                    if (isDeleted) {
-                        log.info("file: " + file + " has been deleted");
-                    } else {
-                        log.warn("file: " + file + " has NOT been deleted");
+                    long diff = new Date().getTime() - file.lastModified();
+                    long oneDay = 86400000;
+                    //delete only more than one day old files.
+                    //It prevents deleting the files currently created when the thread starts
+                    if (diff > oneDay) {
+                        boolean isDeleted = file.delete();
+                        if (isDeleted) {
+                            log.info("file: " + file + " has been deleted");
+                        } else {
+                            log.warn("file: " + file + " has NOT been deleted");
+                        }
                     }
+                    log.debug("Tmp files has been deleted");
                 }
-                log.debug("Tmp files has been deleted");
             }
         }
     }
