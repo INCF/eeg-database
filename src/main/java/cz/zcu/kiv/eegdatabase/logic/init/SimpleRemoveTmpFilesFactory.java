@@ -51,8 +51,6 @@ public class SimpleRemoveTmpFilesFactory implements RemoveTmpFilesFactory {
         log.debug("RemoveTmpFiles task reached");
         Timer timer = new Timer();
         timer.scheduleAtFixedRate(new DeleteTask(), delay, interval);
-
-
     }
 
     private class DeleteTask extends TimerTask {
@@ -84,8 +82,8 @@ public class SimpleRemoveTmpFilesFactory implements RemoveTmpFilesFactory {
                             log.warn("file: " + file + " has NOT been deleted");
                         }
                     }
-                    log.debug("Tmp files have been deleted");
                 }
+                log.debug("Tmp files have been deleted");
             }
         }
     }
