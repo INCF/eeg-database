@@ -84,7 +84,7 @@ public class SimpleRemoveTmpFilesFactory implements RemoveTmpFilesFactory {
                             log.warn("file: " + file + " has NOT been deleted");
                         }
                     }
-                    log.debug("Tmp files has been deleted");
+                    log.debug("Tmp files have been deleted");
                 }
             }
         }
