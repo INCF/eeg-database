@@ -70,7 +70,7 @@ public class SimpleScenarioDao extends SimpleGenericDao<Scenario, Integer> imple
 	public List<Scenario> getScenarioSearchResults(List<SearchRequest> requests, int personId) throws NumberFormatException {
 
 		boolean ignoreChoice = false;
-		String hqlQuery = "from Scenario where (";
+		StringBuilder sb = new StringBuilder("from Scenario where (");
 		for (SearchRequest request : requests) {
 			if (request.getCondition().equals("")) {
 				if (request.getChoice().equals("")) {
@@ -79,26 +79,25 @@ public class SimpleScenarioDao extends SimpleGenericDao<Scenario, Integer> imple
 				continue;
 			}
 			if (!ignoreChoice) {
-				hqlQuery += request.getChoice();
-
+				sb.append(request.getChoice());
 			}
 			if (request.getSource().endsWith("ScenarioLength")) {
 				if (Integer.parseInt(request.getCondition()) < 0) {
 					throw new RuntimeException("Invalid length value. It has to be non-negative number");
 				}
-				hqlQuery += "scenarioLength" + getCondition(request.getSource()) + request.getCondition();
+				sb.append("scenarioLength").append(getCondition(request.getSource())).append(request.getCondition());
 			} else if (request.getSource().equals("person")) {
-				hqlQuery += getAuthor(request.getCondition());
+				sb.append(getAuthor(request.getCondition()));
 			} else {
-				hqlQuery += "lower(" + request.getSource() + ") like lower('%" + request.getCondition() + "%')";
+				sb.append("lower(").append(request.getSource()).append(") like lower('%").append(request.getCondition()).append("%')");
 			}
 			ignoreChoice = false;
 		}
 		List<Scenario> results;
 
-		hqlQuery += ")";
+		sb.append(")");
 		try {
-			results = getHibernateTemplate().find(hqlQuery);
+			results = getHibernateTemplate().find(sb.toString());
 		} catch (Exception e) {
 			return new ArrayList<Scenario>();
 		}

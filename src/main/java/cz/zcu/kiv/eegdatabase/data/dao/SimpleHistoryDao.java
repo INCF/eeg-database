@@ -248,9 +248,10 @@ public class SimpleHistoryDao extends SimpleGenericDao<History, Integer> impleme
  */
   public List<History> getHistorySearchResults(List<SearchRequest> requests, boolean isGroupAdmin, List<Integer> groupsId) {
     boolean ignoreChoice = false;
-    String leftJoin = "";
-    leftJoin = getLeftJoin(isGroupAdmin, groupsId.get(0));
-    String hqlQuery = "select distinct h from History as h" + leftJoin + " where ";
+    String leftJoin = getLeftJoin(isGroupAdmin, groupsId.get(0));
+    StringBuilder sb = new StringBuilder("select distinct h from History as h");
+    sb.append(leftJoin);
+    sb.append(" where ");
     for (SearchRequest request : requests) {
       if (request.getCondition().equals("")) {
         if (request.getChoice().equals("")) {
@@ -259,19 +260,21 @@ public class SimpleHistoryDao extends SimpleGenericDao<History, Integer> impleme
         continue;
       }
       if (!ignoreChoice) {
-        hqlQuery += request.getChoice();
+        sb.append(request.getChoice());
 
       }
       if (request.getSource().endsWith("DateOfDownload")) {
-        hqlQuery += "h.dateOfDownload" + getCondition(request.getSource()) + "'" + request.getCondition() + "'";
+        sb.append("h.dateOfDownload").append(getCondition(request.getSource())).append("'")
+                .append(request.getCondition()).append("'");
       } else {
-        hqlQuery += "lower(h." + request.getSource() + ") like lower('%" + request.getCondition() + "%')";
+        sb.append("lower(h.").append(request.getSource()).append(") like lower('%")
+                .append(request.getCondition()).append("%')");
       }
     }
-    hqlQuery += getGroupsCondition(isGroupAdmin, groupsId);
+    sb.append(getGroupsCondition(isGroupAdmin, groupsId));
     List<History> results;
     try {
-      results = getHibernateTemplate().find(hqlQuery);
+      results = getHibernateTemplate().find(sb.toString());
       System.out.println(results.size());
     } catch (Exception e) {
       return new ArrayList<History>();
@@ -287,19 +290,20 @@ public class SimpleHistoryDao extends SimpleGenericDao<History, Integer> impleme
   private String getGroupsCondition(boolean isGroupAdmin, List<Integer> groupsId) {
     if (isGroupAdmin) {
       boolean first = true;
-      String query = " and (";
+      StringBuilder sb = new StringBuilder(" and (");
       for (int groupId : groupsId) {
         if (first) {
-          query += " m.researchGroup.researchGroupId =" + groupId;
+          sb.append(" m.researchGroup.researchGroupId =").append(groupId);
           first = false;
         } else {
-          query += " or m.researchGroup.researchGroupId =" + groupId;
+          sb.append(" or m.researchGroup.researchGroupId =").append(groupId);
         }
       }
-      return query + ")";
+      return sb.append(")").toString();
     }
     return "";
   }
+
 /**
  * Returns comparative condition(">=" or "<=" or "like")
  * @param choice - element of date interval (fromDateDownload, toDateDownload)
