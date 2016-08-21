@@ -29,6 +29,7 @@ import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackage;
 import cz.zcu.kiv.eegdatabase.data.pojo.License;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.logic.controller.experiment.MetadataCommand;
+import cz.zcu.kiv.eegdatabase.logic.hdf5converter.Hdf5Converter;
 import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
 import cz.zcu.kiv.eegdatabase.wui.components.menu.button.ButtonPageMenu;
 import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
@@ -71,6 +72,8 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.util.string.StringValue;
 import org.apache.wicket.util.time.Duration;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -126,8 +129,9 @@ public class ExperimentsPackageDownloadPage extends MenuPage {
         private IModel<License> licenseModel;
         private ProgressBar progressBar;
         AjaxSubmitLink submit;
+        AjaxSubmitLink submit2;
         private int step = 0;
-        Link<Void> downloadLink;
+        Link<Void> downloadLink,downloadLinkForHdf5;
         FileDTO outputFile;
         DownloadPackageManager manager;
         private final AjaxIndicatorAppender indicator = new AjaxIndicatorAppender();
@@ -204,7 +208,9 @@ public class ExperimentsPackageDownloadPage extends MenuPage {
                     }
                     outputFile = manager.getOutputFile();
                     downloadLink.setVisible(true);
+                    downloadLinkForHdf5.setVisible(true);
                     target.add(downloadLink);
+                    target.add(downloadLinkForHdf5);
                 }
             };
 
@@ -217,6 +223,42 @@ public class ExperimentsPackageDownloadPage extends MenuPage {
 
             // Initialize FeedbackPanel //
             //this.info("value: " + this.progressBar.getDefaultModelObjectAsString());
+
+            downloadLinkForHdf5 = new Link<Void>("downloadLinkForHdf5") {
+                @Override
+                public void onClick() {
+
+                    Hdf5Converter hdf5Converter = new Hdf5Converter();
+                    String returnedFileAbsolutePath = null;
+                    try {
+                        returnedFileAbsolutePath = hdf5Converter.giveMeHDF5package(outputFile.getFile().getAbsolutePath());
+                    } catch (IOException e) {
+                        error("could not get a converted hdf5 file");
+                    }
+                    File returnedFile = new File(returnedFileAbsolutePath);
+
+                    FileDTO fileFinal = new FileDTO();
+                    fileFinal.setFile(returnedFile);
+                    fileFinal.setFileName(returnedFile.getName());
+                    fileFinal.setMimetype(outputFile.getMimetype());
+
+                    if (fileFinal == null || fileFinal.getFile() == null)
+                        error("Error while file is generated. Can't be downloaded.");
+                    else if (fileFinal.isDeleted() || outputFile.isDeleted()) {
+                        setResponsePage(ExperimentsPackageDownloadPage.class, PageParametersUtils.getDefaultPageParameters(expPackage.getExperimentPackageId()));
+                    }
+                    else {
+                        outputFile.setDeleted(true);
+                        fileFinal.setDeleted(true);
+                        getPage().getRequestCycle().scheduleRequestHandlerAfterCurrent(FileUtils.prepareDownloadFile(fileFinal));
+                    }
+                }
+            };
+            downloadLinkForHdf5.setOutputMarkupPlaceholderTag(true);
+            downloadLinkForHdf5.setOutputMarkupId(true);
+            downloadLinkForHdf5.setVisible(false);
+            add(downloadLinkForHdf5);
+
 
             downloadLink = new Link<Void>("downloadLink") {
                 @Override
