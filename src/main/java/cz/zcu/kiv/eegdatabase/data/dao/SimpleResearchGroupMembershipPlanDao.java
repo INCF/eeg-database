@@ -33,6 +33,10 @@ import java.util.List;
  */
 public class SimpleResearchGroupMembershipPlanDao extends SimpleGenericDao<ResearchGroupMembershipPlan,Integer> implements ResearchGroupMembershipPlanDao {
 
+    public SimpleResearchGroupMembershipPlanDao() {
+        super(ResearchGroupMembershipPlan.class);
+    }
+
     @Override
     public List<ResearchGroupMembershipPlan> getGroupMembershipPlans(ResearchGroup researchGroup) {
         String query = "select m from ResearchGroupMembershipPlan m where m.researchGroup = :group";

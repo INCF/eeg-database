@@ -34,6 +34,10 @@ import java.util.List;
 
 public class SimpleMembershipPlanDao extends SimpleGenericDao<MembershipPlan,Integer> implements MembershipPlanDao {
 
+    public SimpleMembershipPlanDao() {
+        super(MembershipPlan.class);
+    }
+
     @Override
     public List<MembershipPlan> getAvailableGroupMembershipPlans() {
         String query = "select m from MembershipPlan m where m.type = :membershipPlanType and m.valid = 'TRUE'";

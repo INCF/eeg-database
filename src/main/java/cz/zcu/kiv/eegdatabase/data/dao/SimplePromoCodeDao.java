@@ -36,6 +36,10 @@ import java.util.List;
 
 public class SimplePromoCodeDao extends SimpleGenericDao<PromoCode,Integer> implements PromoCodeDao {
 
+    public SimplePromoCodeDao() {
+        super(PromoCode.class);
+    }
+
     public List<PromoCode> getAvailableGroupPromoCodes()  {
         String query = "select m from PromoCode m where m.type = :promoCodeType and m.valid = 'TRUE'";
 

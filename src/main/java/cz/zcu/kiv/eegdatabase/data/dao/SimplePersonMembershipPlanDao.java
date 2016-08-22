@@ -35,6 +35,10 @@ import java.util.List;
  */
 public class SimplePersonMembershipPlanDao extends SimpleGenericDao<PersonMembershipPlan,Integer> implements PersonMembershipPlanDao {
 
+    public SimplePersonMembershipPlanDao() {
+        super(PersonMembershipPlan.class);
+    }
+
     @Override
     public List<PersonMembershipPlan> getPersonMembershipPlans(Person person) {
         String query = "select m from PersonMembershipPlan m where m.person = :person";

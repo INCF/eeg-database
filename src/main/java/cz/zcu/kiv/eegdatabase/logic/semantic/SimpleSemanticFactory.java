@@ -100,7 +100,7 @@ public class SimpleSemanticFactory implements InitializingBean, ApplicationConte
         String[] beanNamesForType = context.getBeanNamesForType(GenericDao.class);
         for(String name : beanNamesForType) {
             gDaoList.add((GenericDao) context.getBean(name));
-            break; // ???
+           // break; // ???
         }
     }
 
