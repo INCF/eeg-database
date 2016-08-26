@@ -23,6 +23,7 @@
 package cz.zcu.kiv.eegdatabase.logic.semantic;
 
 import cz.zcu.kiv.eegdatabase.data.dao.GenericDao;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
@@ -100,7 +101,7 @@ public class SimpleSemanticFactory implements InitializingBean, ApplicationConte
         String[] beanNamesForType = context.getBeanNamesForType(GenericDao.class);
         for(String name : beanNamesForType) {
             gDaoList.add((GenericDao) context.getBean(name));
-           // break; // ???
+            break; // ???
         }
     }
 
@@ -178,6 +179,7 @@ public class SimpleSemanticFactory implements InitializingBean, ApplicationConte
      * Loads date for transforms POJO object to resouces of semantic web.
      */
     private void loadData() {
+
          for (GenericDao gDao : gDaoList) {
             dataList.addAll(gDao.getAllRecords());
          }

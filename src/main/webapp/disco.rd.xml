@@ -196,5 +196,5 @@
     <owl:Class rdf:about="http://semantic-mediawiki.org/swivt/1.0#Subject">
         <rdfs:isDefinedBy rdf:resource="http://semantic-mediawiki.org/swivt/1.0"/>
     </owl:Class>
-    <!-- Created by Semantic MediaWiki, http://semantic-mediawiki.org -->
+    <!-- Created by SemanticPage MediaWiki, http://semantic-mediawiki.org -->
 </rdf:RDF>
