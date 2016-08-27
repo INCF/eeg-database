@@ -1,7 +1,6 @@
 package cz.zcu.kiv.eegdatabase.logic.hdf5converter;
 
 import converter.DataProcessor;
-import converter.ODMLParserImpl;
 import converter.ZipHandler;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.logging.Log;
