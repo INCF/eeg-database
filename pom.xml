@@ -54,6 +54,21 @@
 
 
 	<dependencies>
+		<dependency>
+			<groupId>org.gnode</groupId>
+			<artifactId>nix-linux-x86_64</artifactId>
+			<version>1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>cz.zcu.kiv.eeg</groupId>
+			<artifactId>EEGLoader</artifactId>
+			<version>2.2</version>
+		</dependency>
+		<dependency>
+			<groupId>odml.core</groupId>
+			<artifactId>odml</artifactId>
+			<version>1.0</version>
+		</dependency>
         <dependency>
             <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-servlets</artifactId>
