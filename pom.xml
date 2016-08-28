@@ -93,6 +93,12 @@
 			<artifactId>log4j</artifactId>
 			<version>1.2.17</version>
 		</dependency>
+
+		<dependency>
+			<groupId>org.bytedeco</groupId>
+			<artifactId>javacpp</artifactId>
+			<version>1.1</version>
+		</dependency>
             
         <!-- ================================ Locally stored libs ============================== -->
         <dependency>
@@ -114,11 +120,6 @@
 			<groupId>odml.core</groupId>
 			<artifactId>odml</artifactId>
 			<version>1.0</version>
-		</dependency>
-		<dependency>
-			<groupId>org.bytedeco</groupId>
-			<artifactId>javacpp</artifactId>
-			<version>1.1</version>
 		</dependency>
 		<dependency>
 			<groupId>converter</groupId>
