@@ -232,7 +232,7 @@ public class ExperimentsPackageDownloadPage extends MenuPage {
                     String returnedFileAbsolutePath = null;
                     try {
                         returnedFileAbsolutePath = hdf5Converter.giveMeHDF5package(outputFile.getFile().getAbsolutePath());
-                    } catch (IOException e) {
+                    } catch (Exception e) {
                         error("could not get a converted hdf5 file");
                     }
                     File returnedFile = new File(returnedFileAbsolutePath);

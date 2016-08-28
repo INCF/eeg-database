@@ -38,7 +38,7 @@ public class Hdf5Converter {
 
     private Log log = LogFactory.getLog(getClass());
 
-    public String giveMeHDF5package(String zipFileAbsolutePath) throws IOException {
+    public String giveMeHDF5package(String zipFileAbsolutePath) throws Exception {
         log.info("Entered Hdf5Converter class with name - "+zipFileAbsolutePath);
 
         DataProcessor dataProcessor = new DataProcessor();
