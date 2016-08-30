@@ -172,12 +172,12 @@ public class Experiment implements Serializable {
 		this.setHistories(histories);
 		this.setExperimentOptParamVals(experimentOptParamVals);
 	}
-
+/*
 	@Transient
 	public List<GenericParameter> getGenericParameters() {
 		return this.elasticExperiment.getParams();
 	}
-
+*/
 //	public List<GenericParameter> getGenericParameters(String paramName) {
 //		List<GenericParameter> out = new ArrayList<GenericParameter>();
 //		for (GenericParameter p : this.getGenericParameters()) {
@@ -196,11 +196,11 @@ public class Experiment implements Serializable {
 //		}
 //		return null;
 //	}
-
+/*
 	public void setGenericParameters(List<GenericParameter> params) {
 		this.elasticExperiment.setParams(params);
 	}
-
+*/
 	@GenericGenerator(name = "generator", strategy = "increment")
 	@Id
 	@GeneratedValue(generator = "generator")

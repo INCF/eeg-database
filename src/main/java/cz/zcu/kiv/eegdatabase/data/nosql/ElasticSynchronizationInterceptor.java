@@ -60,7 +60,6 @@ public class ElasticSynchronizationInterceptor extends EmptyInterceptor {
         boolean res = super.onFlushDirty(entity, id, currentState, previousState, propertyNames, types);
         if (entity instanceof Experiment) {
             Experiment e = (Experiment) entity;
-            this.syncExperimentParams(e);
             e.getElasticExperiment().setExperimentId("" + id);
             IndexQuery indexQuery = new IndexQuery();
             indexQuery.setObject(e.getElasticExperiment());
@@ -77,7 +76,6 @@ public class ElasticSynchronizationInterceptor extends EmptyInterceptor {
         boolean res = super.onSave(entity, id, state, propertyNames, types);
         if (entity instanceof Experiment) {
             Experiment e = (Experiment) entity;
-            this.syncExperimentParams(e);
             e.getElasticExperiment().setExperimentId("" + id);
             IndexQuery indexQuery = new IndexQuery();
             indexQuery.setObject(e.getElasticExperiment());
@@ -103,124 +101,9 @@ public class ElasticSynchronizationInterceptor extends EmptyInterceptor {
     @Override
     public boolean onLoad(Object entity, Serializable id, Object[] state, String[] propertyNames, Type[] types) {
         boolean res = super.onLoad(entity, id, state, propertyNames, types); // To change body of generated methods, choose Tools | Templates.
-//        if (entity instanceof Experiment) {
-//            Experiment e = (Experiment) entity;
-//            SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(new IdsQueryBuilder("experiment").addIds("" + e.getExperimentId())).build();
-//            List<ExperimentElastic> elastic = elasticsearchTemplate.queryForList(searchQuery, ExperimentElastic.class);
-//            if (elastic.size() > 0 && elastic.get(0) != null) {
-//                e.setElasticExperiment(elastic.get(0));
-//            }
-//
-//
-//        }
+
 
         return res;
     }
 
-    /**
-     * Just temporal method. Keeps synced specific params that are stored in ES with its originals in relational DB. As soon as the bussiness code will be completely switched to
-     * GenericParameters, all original experiment properties will be dropped and this method will not be necessary.
-     *
-     * @param e
-     */
-    private void syncExperimentParams(Experiment e) {
-
-        List<GenericParameter> syncedParams = getGenericParamaters("hardware", e.getGenericParameters());
-        syncedParams.addAll(getGenericParamaters("software", e.getGenericParameters()));
-        syncedParams.addAll(getGenericParamaters("diesease", e.getGenericParameters()));
-        syncedParams.addAll(getGenericParamaters("pharmaceutical", e.getGenericParameters()));
-        syncedParams.addAll(getGenericParamaters("digitization", e.getGenericParameters()));
-        syncedParams.addAll(getGenericParamaters("temperature", e.getGenericParameters()));
-        syncedParams.addAll(getGenericParamaters("weather", e.getGenericParameters()));
-        log.trace("synced parameters " + syncedParams.size());
-
-        GenericParameter param;
-        log.trace("before remove all parameters " + e.getGenericParameters().size());
-        e.getGenericParameters().removeAll(syncedParams);
-        log.trace("after remove all parameters " + e.getGenericParameters().size());
-
-        e.getElasticExperiment().setGroupId(e.getResearchGroup().getResearchGroupId());
-        e.getElasticExperiment().setUserId(e.getPersonByOwnerId().getPersonId());
-
-		for (Hardware hw : e.getHardwares()) {
-			param = new GenericParameter("hardware", hw.getTitle());
-			if (!"".equals(hw.getDescription())) {
-				param.getAttributes().add(new ParameterAttribute("description", hw.getDescription()));
-			}
-
-			if (!"".equals(hw.getType())) {
-				param.getAttributes().add(new ParameterAttribute("type", hw.getType()));
-			}
-			e.getGenericParameters().add(param);
-		}
-
-		for (Software sw : e.getSoftwares()) {
-			param = new GenericParameter("software", sw.getTitle());
-			if (!"".equals(sw.getDescription())) {
-				param.getAttributes().add(new ParameterAttribute("description", sw.getDescription()));
-			}
-
-			e.getGenericParameters().add(param);
-		}
-
-
-		for (Disease dis : e.getDiseases()) {
-			param = new GenericParameter("diesease", dis.getTitle());
-			if (!"".equals(dis.getDescription())) {
-				param.getAttributes().add(new ParameterAttribute("description", dis.getDescription()));
-			}
-
-			e.getGenericParameters().add(param);
-		}
-
-
-		for (ProjectType type : e.getProjectTypes()) {
-			param = new GenericParameter("projectType", type.getTitle());
-			if (!"".equals(type.getDescription())) {
-				param.getAttributes().add(new ParameterAttribute("description", type.getDescription()));
-			}
-
-			e.getGenericParameters().add(param);
-		}
-
-
-		for (Pharmaceutical pharm : e.getPharmaceuticals()) {
-			param = new GenericParameter("pharmaceutical", pharm.getTitle());
-			if (!"".equals(pharm.getDescription())) {
-				param.getAttributes().add(new ParameterAttribute("description", pharm.getDescription()));
-			}
-
-			e.getGenericParameters().add(param);
-		}
-
-
-        Digitization d = e.getDigitization();
-        if (d != null) {
-            param = new GenericParameter("digitization", d.getFilter());
-            param.getAttributes().add(new ParameterAttribute("gain", "" + d.getGain()));
-            param.getAttributes().add(new ParameterAttribute("samplingRate", "" + d.getSamplingRate()));
-            e.getGenericParameters().add(param);
-        }
-
-        Weather w = e.getWeather();
-        if (w != null) {
-            param = new GenericParameter("weather", w.getTitle());
-            if (!"".equals(w.getDescription())) {
-                param.getAttributes().add(new ParameterAttribute("description", "" + w.getDescription()));
-            }
-            e.getGenericParameters().add(param);
-        }
-
-		e.getGenericParameters().add(new GenericParameter("temperature", (double)e.getTemperature()));
-	}
-
-	public List<GenericParameter> getGenericParamaters(String paramName, List<GenericParameter> params) {
-        List<GenericParameter> out = new ArrayList<GenericParameter>();
-        for (GenericParameter p : params) {
-            if (p.getName().equals(paramName)) {
-                out.add(p);
-            }
-        }
-        return out;
-    }
 }
