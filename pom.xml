@@ -77,11 +77,11 @@
             <artifactId>imaging</artifactId>
             <version>01012005</version>
         </dependency>
-        <dependency>
-            <groupId>cz.zcu.kiv</groupId>
-            <artifactId>jenabeanextension</artifactId>
-            <version>3.3.5</version>
-        </dependency>
+		<dependency>
+			<groupId>cz.zcu.kiv</groupId>
+			<artifactId>semantic-framework</artifactId>
+			<version>3.3.5.2</version>
+		</dependency>
         <dependency>
             <groupId>cz.zcu.kiv</groupId>
             <artifactId>eegdsp</artifactId>
@@ -165,7 +165,7 @@
 
 		<!-- ====================================== Slf4j ============================================== -->
 
-		<dependency>
+	<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
 			<version>${slf4j-version}</version>

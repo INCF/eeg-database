@@ -22,6 +22,7 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.logic.semantic;
 
+import cz.zcu.kiv.eegdatabase.data.dao.ExperimentDao;
 import cz.zcu.kiv.eegdatabase.data.dao.GenericDao;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.logging.Log;
@@ -98,10 +99,10 @@ public class SimpleSemanticFactory implements InitializingBean, ApplicationConte
      * @throws Exception
      */
     public void afterPropertiesSet() throws Exception {
-        String[] beanNamesForType = context.getBeanNamesForType(GenericDao.class);
+        String[] beanNamesForType = context.getBeanNamesForType(ExperimentDao.class);
         for(String name : beanNamesForType) {
             gDaoList.add((GenericDao) context.getBean(name));
-            break; // ???
+          //  break; // ???
         }
     }
 
