@@ -25,6 +25,7 @@ package cz.zcu.kiv.eegdatabase.data.pojo;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.converters.IAutoCompletable;
 import cz.zcu.kiv.formgen.annotation.*;
 import org.hibernate.annotations.GenericGenerator;
+import thewebsemantic.annotations.Ignore;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -562,6 +563,7 @@ public class Person implements Serializable, Comparable<Person>, IAutoCompletabl
 		this.experimentsForSubjectPersonId = experimentsForSubjectPersonId;
 	}
 
+	@Ignore
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "person")
 	public Set<History> getHistories() {
 		return this.histories;

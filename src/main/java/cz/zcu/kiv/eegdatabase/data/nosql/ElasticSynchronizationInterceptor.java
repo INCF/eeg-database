@@ -54,6 +54,7 @@ import java.util.List;
 public class ElasticSynchronizationInterceptor extends EmptyInterceptor {
 
     protected Log log = LogFactory.getLog(getClass());
+    private boolean loadSemantic;
 
     @Resource
     private ElasticsearchTemplate elasticsearchTemplate;
@@ -105,8 +106,24 @@ public class ElasticSynchronizationInterceptor extends EmptyInterceptor {
     public boolean onLoad(Object entity, Serializable id, Object[] state, String[] propertyNames, Type[] types) {
         log.debug("onLoad: " + entity);
         boolean res = super.onLoad(entity, id, state, propertyNames, types);
-
+        if(loadSemantic) {
+            if (entity instanceof Experiment) {
+                Experiment e = (Experiment) entity;
+                SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(new IdsQueryBuilder("experiment").addIds("" + e.getExperimentId())).build();
+                List<ExperimentElastic> elastic = elasticsearchTemplate.queryForList(searchQuery, ExperimentElastic.class);
+                if (elastic.size() > 0 && elastic.get(0) != null) {
+                    e.setElasticExperiment(elastic.get(0));
+                }
+            }
+        }
         return res;
     }
 
+    public boolean isLoadSemantic() {
+        return loadSemantic;
+    }
+
+    public void setLoadSemantic(boolean loadSemantic) {
+        this.loadSemantic = loadSemantic;
+    }
 }

@@ -439,6 +439,7 @@ public class Experiment implements Serializable {
         this.experimentLicences = experimentLicences;
     }
 
+    @Ignore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "experiment")
 	public Set<DataFile> getDataFiles() {
 		return this.dataFiles;
