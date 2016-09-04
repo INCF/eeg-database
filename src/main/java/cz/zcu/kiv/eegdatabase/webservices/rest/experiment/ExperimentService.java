@@ -200,5 +200,5 @@ public interface ExperimentService {
      * @param data odML data to be inserted to experiment
      * @return experiment
      */
-    public Experiment addMobioMetadata(int id, JSONObject data);
+    public Experiment addMobioMetadata(int id, JSONObject data) throws Exception;
 }

@@ -22,7 +22,10 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.logic.semantic;
 
+import cz.zcu.kiv.eegdatabase.data.dao.ExperimentDao;
 import cz.zcu.kiv.eegdatabase.data.dao.GenericDao;
+import cz.zcu.kiv.eegdatabase.data.nosql.ElasticSynchronizationInterceptor;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
@@ -97,10 +100,10 @@ public class SimpleSemanticFactory implements InitializingBean, ApplicationConte
      * @throws Exception
      */
     public void afterPropertiesSet() throws Exception {
-        String[] beanNamesForType = context.getBeanNamesForType(GenericDao.class);
+        String[] beanNamesForType = context.getBeanNamesForType(ExperimentDao.class);
         for(String name : beanNamesForType) {
             gDaoList.add((GenericDao) context.getBean(name));
-            break; // ???
+          //  break; // ???
         }
     }
 
@@ -178,9 +181,12 @@ public class SimpleSemanticFactory implements InitializingBean, ApplicationConte
      * Loads date for transforms POJO object to resouces of semantic web.
      */
     private void loadData() {
+        ElasticSynchronizationInterceptor elasticSynchronizationInterceptor = (ElasticSynchronizationInterceptor) context.getBean(ElasticSynchronizationInterceptor.class);
+        elasticSynchronizationInterceptor.setLoadSemantic(true);
          for (GenericDao gDao : gDaoList) {
             dataList.addAll(gDao.getAllRecords());
          }
+         elasticSynchronizationInterceptor.setLoadSemantic(false);
     }
 
 

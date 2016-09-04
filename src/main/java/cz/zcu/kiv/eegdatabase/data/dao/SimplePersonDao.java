@@ -182,7 +182,7 @@ public class SimplePersonDao
 
     public List<Person> getPersonSearchResults(List<SearchRequest> requests) throws NumberFormatException {
         boolean ignoreChoice = false;
-        String hqlQuery = "from Person where ";
+        StringBuilder sb = new StringBuilder("from Person where ");
         for (SearchRequest request : requests) {
 
             if ((request.getCondition().equals("")) && (!request.getSource().equals("defect"))) {
@@ -192,25 +192,27 @@ public class SimplePersonDao
                 continue;
             }
             if (!ignoreChoice) {
-                hqlQuery += request.getChoice();
+                sb.append(request.getChoice());
 
             }
             if (request.getSource().startsWith("age")) {
-                hqlQuery += "dateOfBirth" + getCondition(request.getSource()) +
-                        "'" + getPersonDateOfBirth(request.getCondition()) + "'";
+                sb.append("dateOfBirth").append(getCondition(request.getSource())).append("'")
+                        .append(getPersonDateOfBirth(request.getCondition())).append("'");
 //            } else if (request.getSource().equals("defect")) {
 //                hqlQuery += "(visualImpairments.size = 0 and hearingImpairments.size = 0)";
             } else if (request.getSource().equals("gender")) {
-                hqlQuery += "gender = '" + request.getCondition().toUpperCase().charAt(0) + "'";
+                sb.append("gender = '").append(request.getCondition().toUpperCase().charAt(0)).append("'");
             } else {
-                hqlQuery += "lower(" + request.getSource() + ")" +
-                        getCondition(request.getSource()) + "lower('%" + request.getCondition() + "%')";
+                sb.append("lower(").append(request.getSource()).append(")")
+                        .append(getCondition(request.getSource())).append("lower('%")
+                        .append(request.getCondition()).append("%')");
             }
         }
+
         List<Person> results;
 
         try {
-            results = getHibernateTemplate().find(hqlQuery);
+            results = getHibernateTemplate().find(sb.toString());
         } catch (Exception e) {
             return new ArrayList<Person>();
         }

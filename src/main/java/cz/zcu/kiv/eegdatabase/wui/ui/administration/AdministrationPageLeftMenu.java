@@ -42,7 +42,7 @@ public enum AdministrationPageLeftMenu implements IButtonPageMenu {
     MEMBERSHIP_PLANS(AdminManageMembershipPlansPage.class,"menuItem.manageMembershipPlan",null),
     MANAGE_LICENSES(AdminManageLicensesPage.class, "menuItem.manageLicenses", null),
 	MANAGE_SYSTEM_TEMPLATE(ListTemplatePage.class, "pageTitle.template.system", PageParametersUtils.getDefaultPageParameters(0)),
-	ODML_MIGRATION_PAGE(ODMLMigrationPage.class, "pageTitle.migration.short", null)
+	//ODML_MIGRATION_PAGE(ODMLMigrationPage.class, "pageTitle.migration.short", null)
     ;
 
     private Class<? extends MenuPage> pageClass;

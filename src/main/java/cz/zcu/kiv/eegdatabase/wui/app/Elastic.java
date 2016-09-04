@@ -84,44 +84,6 @@ public class Elastic extends BasePage {
     }
 
 	@Transactional
-	void test() {
-		Experiment read = this.experimentDao.read(245);
-		Experiment newExperiment = new Experiment(read.getWeather(), read.getPersonBySubjectPersonId(), read.getScenario(), read.getPersonByOwnerId(), read.getResearchGroup(), read.getDigitization(), read.getSubjectGroup(), read.getArtifact(), read.getElectrodeConf());
-		newExperiment.getGenericParameters().add(new GenericParameter("test1", "value1"));
-		newExperiment.getGenericParameters().add(new GenericParameter("test2", "value2"));
-		int newId = experimentDao.create(newExperiment);
-
-		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(new IdsQueryBuilder("experiment").addIds("" + newId)).build();
-		List<ExperimentElastic> elastic = elasticsearchTemplate.queryForList(searchQuery, ExperimentElastic.class);
-		if (elastic.size() != 1) {
-			throw new RuntimeException("Missing doc in Elastic");
-		}
-
-		ExperimentElastic exp = elastic.get(0);
-		if (exp.getParams().get(0).getName().compareTo("test1") != 0) {
-			throw new RuntimeException("Invalid param test1");
-		}
-		if (exp.getParams().get(0).getValueString().compareTo("value1") != 0) {
-			throw new RuntimeException("Invalid param value value1");
-		}
-
-		if (exp.getParams().get(1).getName().compareTo("test2") != 0) {
-			throw new RuntimeException("Invalid param test2");
-		}
-		if (exp.getParams().get(1).getValueString().compareTo("value2") != 0) {
-			throw new RuntimeException("Invalid param value value2");
-		}
-
-		experimentDao.delete(newExperiment);
-
-		searchQuery = new NativeSearchQueryBuilder().withQuery(new IdsQueryBuilder("experiment").addIds("" + newId)).build();
-		elastic = elasticsearchTemplate.queryForList(searchQuery, ExperimentElastic.class);
-		if (elastic.size() != 0) {
-			throw new RuntimeException("Elastic doc should be missing and I found one.");
-		}
-	}
-
-	@Transactional
 	void search() {
 
 //		GenericParameter[] yes = {new GenericParameter("hardware", "head CIRCUMFERENCEs"), new GenericParameter("hardware", "visionable"), new GenericParameter("hardware", "blue")};
@@ -148,32 +110,6 @@ public class Elastic extends BasePage {
 	private void delete() {
 		Experiment read = this.experimentDao.read(318);
 		experimentDao.delete(read);
-	}
-
-	@Transactional
-	private void findByMethod() {
-
-		Person owner = personDao.read(14);
-		List<Experiment> allExperimentsForUser = this.experimentDao.getAllExperimentsForUser(owner, 0, 100);
-
-		System.out.println("found:");
-		System.out.println("##########################");
-		for (Experiment experiment : allExperimentsForUser) {
-			System.out.println(experiment.getElasticExperiment().getExperimentId());
-			System.out.println(experiment.getExperimentId());
-			for (GenericParameter p : experiment.getGenericParameters()) {
-
-				System.out.println(p.getName() + " : " + p.getValueString());
-			}
-		}
-
-	}
-
-	private void update() {
-		Experiment read = experimentDao.read(245);
-		read.getGenericParameters().add(new GenericParameter("updateParam222", "blablabla"));
-		experimentDao.update(read);
-
 	}
 
         @Transactional

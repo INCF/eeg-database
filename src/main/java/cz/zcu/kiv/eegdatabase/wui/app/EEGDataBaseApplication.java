@@ -22,6 +22,9 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.app;
 
+import cz.zcu.kiv.eegdatabase.wui.ui.semantic.GetOntology;
+import cz.zcu.kiv.eegdatabase.wui.ui.semantic.GetOntologyOwlApi;
+import cz.zcu.kiv.eegdatabase.wui.ui.semantic.GetOntologySchema;
 import org.apache.wicket.ConverterLocator;
 import org.apache.wicket.IConverterLocator;
 import org.apache.wicket.Page;
@@ -321,6 +324,9 @@ public class EEGDataBaseApplication extends AuthenticatedWebApplication implemen
 
         mountPage("administration-manage-membership-plans", AdminManageMembershipPlansPage.class);
         mountPage("administration-manage-licenses", AdminManageLicensesPage.class);
+        mountPage("get-ontology", GetOntology.class);
+        mountPage("get-ontology-owl", GetOntologyOwlApi.class);
+        mountPage("get-ontology-schema", GetOntologySchema.class);
         
 // XXX price list hidden for now.
 //        mountPage("pricelist", PriceListPage.class);

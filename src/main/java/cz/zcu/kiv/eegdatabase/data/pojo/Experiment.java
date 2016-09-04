@@ -39,6 +39,7 @@ import cz.zcu.kiv.formgen.annotation.FormId;
 import cz.zcu.kiv.formgen.annotation.FormItem;
 import cz.zcu.kiv.formgen.annotation.PreviewLevel;
 import org.hibernate.annotations.GenericGenerator;
+import thewebsemantic.annotations.Ignore;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -172,12 +173,12 @@ public class Experiment implements Serializable {
 		this.setHistories(histories);
 		this.setExperimentOptParamVals(experimentOptParamVals);
 	}
-
+/*
 	@Transient
 	public List<GenericParameter> getGenericParameters() {
 		return this.elasticExperiment.getParams();
 	}
-
+*/
 //	public List<GenericParameter> getGenericParameters(String paramName) {
 //		List<GenericParameter> out = new ArrayList<GenericParameter>();
 //		for (GenericParameter p : this.getGenericParameters()) {
@@ -196,11 +197,11 @@ public class Experiment implements Serializable {
 //		}
 //		return null;
 //	}
-
+/*
 	public void setGenericParameters(List<GenericParameter> params) {
 		this.elasticExperiment.setParams(params);
 	}
-
+*/
 	@GenericGenerator(name = "generator", strategy = "increment")
 	@Id
 	@GeneratedValue(generator = "generator")
@@ -215,6 +216,7 @@ public class Experiment implements Serializable {
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "WEATHER_ID", nullable = true)
+	@Ignore
 	public Weather getWeather() {
 		return this.weather;
 	}
@@ -225,6 +227,7 @@ public class Experiment implements Serializable {
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "SUBJECT_PERSON_ID", nullable = true)
+	@Ignore
 	public Person getPersonBySubjectPersonId() {
 		return this.personBySubjectPersonId;
 	}
@@ -235,6 +238,7 @@ public class Experiment implements Serializable {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "SCENARIO_ID", nullable = false)
+	@Ignore
 	public Scenario getScenario() {
 		return this.scenario;
 	}
@@ -245,6 +249,7 @@ public class Experiment implements Serializable {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "OWNER_ID", nullable = false)
+	@Ignore
 	public Person getPersonByOwnerId() {
 		return this.personByOwnerId;
 	}
@@ -255,6 +260,7 @@ public class Experiment implements Serializable {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "RESEARCH_GROUP_ID", nullable = false)
+	@Ignore
 	public ResearchGroup getResearchGroup() {
 		return this.researchGroup;
 	}
@@ -265,6 +271,7 @@ public class Experiment implements Serializable {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "DIGITIZATION_ID", nullable = true)
+	@Ignore
 	public Digitization getDigitization() {
 		return this.digitization;
 	}
@@ -275,6 +282,7 @@ public class Experiment implements Serializable {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "SUBJECT_GROUP_ID", nullable = false)
+	@Ignore
 	public SubjectGroup getSubjectGroup() {
 		return this.subjectGroup;
 	}
@@ -285,6 +293,7 @@ public class Experiment implements Serializable {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "ARTEFACT_ID", nullable = true)
+	@Ignore
 	public Artifact getArtifact() {
 		return this.artifact;
 	}
@@ -295,6 +304,7 @@ public class Experiment implements Serializable {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "ELECTRODE_CONF_ID", nullable = true)
+	@Ignore
 	public ElectrodeConf getElectrodeConf() {
 		return this.electrodeConf;
 	}
@@ -349,6 +359,7 @@ public class Experiment implements Serializable {
 	}
 
 	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "experiments")
+	@Ignore
 	public Set<Person> getPersons() {
 		return this.persons;
 	}
@@ -358,6 +369,7 @@ public class Experiment implements Serializable {
 	}
 
 	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "experiments")
+	@Ignore
 	public Set<Hardware> getHardwares() {
 		return this.hardwares;
 	}
@@ -367,6 +379,7 @@ public class Experiment implements Serializable {
 	}
 
 	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "experiments")
+	@Ignore
 	public Set<Pharmaceutical> getPharmaceuticals() {
 		return this.pharmaceuticals;
 	}
@@ -376,6 +389,7 @@ public class Experiment implements Serializable {
 	}
 
 	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "experiments")
+	@Ignore
 	public Set<Disease> getDiseases() {
 		return this.diseases;
 	}
@@ -385,6 +399,7 @@ public class Experiment implements Serializable {
 	}
 
 	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "experiments")
+	@Ignore
 	public Set<ProjectType> getProjectTypes() {
 		return this.projectTypes;
 	}
@@ -394,6 +409,7 @@ public class Experiment implements Serializable {
 	}
 
 	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "experiments")
+	@Ignore
 	public Set<Software> getSoftwares() {
 		return this.softwares;
 	}
@@ -403,6 +419,7 @@ public class Experiment implements Serializable {
 	}
 
 	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "experiments")
+	@Ignore
 	public Set<ArtifactRemoveMethod> getArtifactRemoveMethods() {
 		return this.artifactRemoveMethods;
 	}
@@ -413,6 +430,7 @@ public class Experiment implements Serializable {
 	}
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "experiment")
+	@Ignore
     public Set<ExperimentLicence> getExperimentLicences() {
         return experimentLicences;
     }
@@ -421,6 +439,7 @@ public class Experiment implements Serializable {
         this.experimentLicences = experimentLicences;
     }
 
+    @Ignore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "experiment")
 	public Set<DataFile> getDataFiles() {
 		return this.dataFiles;
@@ -431,6 +450,7 @@ public class Experiment implements Serializable {
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "experiment")
+	@Ignore
 	public Set<History> getHistories() {
 		return this.histories;
 	}
@@ -440,6 +460,7 @@ public class Experiment implements Serializable {
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "experiment")
+	@Ignore
 	public Set<ExperimentOptParamVal> getExperimentOptParamVals() {
 		return this.experimentOptParamVals;
 	}
@@ -450,6 +471,7 @@ public class Experiment implements Serializable {
 	}
 
 	@OneToMany(mappedBy = "experiment")
+	@Ignore
 	public Set<ExperimentPackageConnection> getExperimentPackageConnections() {
 		return experimentPackageConnections;
 	}

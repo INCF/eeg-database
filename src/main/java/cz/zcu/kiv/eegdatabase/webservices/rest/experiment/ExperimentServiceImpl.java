@@ -30,6 +30,8 @@ import cz.zcu.kiv.eegdatabase.data.nosql.entities.ParameterAttribute;
 import cz.zcu.kiv.eegdatabase.data.pojo.*;
 import cz.zcu.kiv.eegdatabase.webservices.rest.experiment.wrappers.*;
 import cz.zcu.kiv.eegdatabase.webservices.rest.groups.wrappers.ResearchGroupData;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.wicket.ajax.json.JSONObject;
 import org.joda.time.LocalDate;
 import org.joda.time.Years;
@@ -764,17 +766,22 @@ public class ExperimentServiceImpl implements ExperimentService {
 
     @Override
     @Transactional
-    public Experiment addMobioMetadata(int id, JSONObject data) {
+    public Experiment addMobioMetadata(int id, JSONObject data) throws Exception {
+
+        Log log = LogFactory.getLog(getClass());
 
         Experiment experiment = experimentDao.read(id);
-        ExperimentElastic elasticExperiment = new ExperimentElastic();
+        ExperimentElastic elasticExperiment = experiment.getElasticExperiment();
         MobioMetadata mobioMetadata = new MobioMetadata();
 
-        try {
+        if(elasticExperiment.getMetadata() == null) {
             elasticExperiment.setMetadata(mobioMetadata.createMetaData(data));
-        } catch (Exception e) {
-            e.printStackTrace();
+            log.debug("Null metadata of experiment #" + id + " Setting new metadata.");
+        } else {
+            elasticExperiment.getMetadata().add(mobioMetadata.createMetaData(data));
+            log.debug("Adding metadata to experiment #" + id);
         }
+
         experiment.setElasticExperiment(elasticExperiment);
 
         experimentDao.update(experiment);

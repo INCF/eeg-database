@@ -47,8 +47,6 @@ public class ExperimentElastic implements Serializable {
 
 	@Id
 	private String experimentId;
-	@Field(type = FieldType.Nested)
-	private List<GenericParameter> params = new ArrayList<GenericParameter>();
 	@Field(type = FieldType.Integer)
 	private int userId;
 	@Field(type = FieldType.Integer)
@@ -76,13 +74,6 @@ public class ExperimentElastic implements Serializable {
 		this.groupId = groupId;
 	}
 
-	public List<GenericParameter> getParams() {
-		return params;
-	}
-
-	public void setParams(List<GenericParameter> params) {
-		this.params = params;
-	}
 
 	public String getExperimentId() {
 		return this.experimentId;
