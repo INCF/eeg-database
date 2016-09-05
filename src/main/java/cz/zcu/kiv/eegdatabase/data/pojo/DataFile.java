@@ -129,6 +129,7 @@ public class DataFile implements Serializable {
 		this.description = description;
 	}
 
+	@Ignore
 	@Basic(fetch=FetchType.LAZY)
 	@Lob
 	@Column(name = "FILE_CONTENT", nullable = false)

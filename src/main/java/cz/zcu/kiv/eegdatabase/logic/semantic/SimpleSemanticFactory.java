@@ -181,7 +181,7 @@ public class SimpleSemanticFactory implements InitializingBean, ApplicationConte
      * Loads date for transforms POJO object to resouces of semantic web.
      */
     private void loadData() {
-        ElasticSynchronizationInterceptor elasticSynchronizationInterceptor = (ElasticSynchronizationInterceptor) context.getBean(ElasticSynchronizationInterceptor.class);
+        ElasticSynchronizationInterceptor elasticSynchronizationInterceptor = context.getBean(ElasticSynchronizationInterceptor.class);
         elasticSynchronizationInterceptor.setLoadSemantic(true);
          for (GenericDao gDao : gDaoList) {
             dataList.addAll(gDao.getAllRecords());

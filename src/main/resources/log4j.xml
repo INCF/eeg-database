@@ -35,7 +35,7 @@
 	/Users/bydga/logs/eegdatabase.log will be used on OSX or
 	C:\Users\bydga\eegdatabase.log on Windows
     -->
-        <param name="File" value="./logs/eegdatabase.log" />
+        <param name="File" value="${java.io.tmpdir}/eegdatabase.log" />
         <param name="Append" value="true" />
         <param name="DatePattern" value=".yyyy-MM-dd" />
         <layout class="org.apache.log4j.PatternLayout">
@@ -118,9 +118,15 @@
     <logger name="cz.zcu.kiv.formgen">
         <level value="warn" />
     </logger>
-    
+
     <logger name="odml">
         <level value="error" />
+    </logger>
+
+<!-- Because odml Property loggs errors on places that it should not 
+     It is better to supress it-->
+    <logger name="odml.core.Property">
+        <level value="off" />
     </logger>
 
     <root>

@@ -22,6 +22,8 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.data.pojo;
 
+import thewebsemantic.annotations.Ignore;
+
 import java.io.InputStream;
 import java.io.Serializable;
 import java.sql.Blob;
@@ -145,7 +147,8 @@ public class License implements Serializable {
 	public void setAttachmentFileName(String attachmentFileName) {
         this.attachmentFileName = attachmentFileName;
     }
-	
+
+    @Ignore
 	public Blob getAttachmentContent() {
         return attachmentContent;
     }
