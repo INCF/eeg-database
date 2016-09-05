@@ -26,6 +26,7 @@ package cz.zcu.kiv.eegdatabase.data.pojo;
 
 import java.sql.Blob;
 import org.hibernate.annotations.GenericGenerator;
+import thewebsemantic.annotations.Ignore;
 
 import javax.persistence.*;
 
@@ -86,6 +87,7 @@ public class ServiceResult implements java.io.Serializable {
 	@Column(name = "CONTENT")
     @Basic(fetch=FetchType.LAZY)
     @Lob
+	@Ignore
 	public Blob getContent() {
 		return this.content;
 	}

@@ -250,6 +250,7 @@ public class Scenario implements Serializable, Comparable<Scenario> {
 		this.experiments = experiments;
 	}
 
+	@Ignore
 	@XmlJavaTypeAdapter(BlobSerializer.class)
 	@Basic(fetch=FetchType.LAZY)
 	@Lob
