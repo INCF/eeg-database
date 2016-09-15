@@ -64,7 +64,7 @@ public class ElasticSynchronizationInterceptor extends EmptyInterceptor {
         boolean res = super.onFlushDirty(entity, id, currentState, previousState, propertyNames, types);
         if (entity instanceof Experiment) {
             Experiment e = (Experiment) entity;
-            e.getElasticExperiment().setExperimentId("" + id);
+            e.getElasticExperiment().setExperimentId(Integer.parseInt("" + id));
             IndexQuery indexQuery = new IndexQuery();
             indexQuery.setObject(e.getElasticExperiment());
             indexQuery.setId("" + id);
@@ -80,7 +80,7 @@ public class ElasticSynchronizationInterceptor extends EmptyInterceptor {
         boolean res = super.onSave(entity, id, state, propertyNames, types);
         if (entity instanceof Experiment) {
             Experiment e = (Experiment) entity;
-            e.getElasticExperiment().setExperimentId("" + id);
+            e.getElasticExperiment().setExperimentId(Integer.parseInt("" + id));
             IndexQuery indexQuery = new IndexQuery();
             indexQuery.setObject(e.getElasticExperiment());
             indexQuery.setId("" + id);

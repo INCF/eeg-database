@@ -250,7 +250,7 @@ public class SimpleSemanticFactory implements InitializingBean, ApplicationConte
                     "configuration document: " + ontologyHeader.getFilename(), e);
         }
         jbe.loadOOM(dataList);
-        jbe.declareAllClassesDisjoint();
+     //   jbe.declareAllClassesDisjoint();
         return jbe;
     }
     

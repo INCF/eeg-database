@@ -46,7 +46,7 @@ import org.springframework.data.elasticsearch.annotations.FieldType;
 public class ExperimentElastic implements Serializable {
 
 	@Id
-	private String experimentId;
+	private int experimentId;
 	@Field(type = FieldType.Integer)
 	private int userId;
 	@Field(type = FieldType.Integer)
@@ -75,11 +75,11 @@ public class ExperimentElastic implements Serializable {
 	}
 
 
-	public String getExperimentId() {
+	public int getExperimentId() {
 		return this.experimentId;
 	}
 
-	public void setExperimentId(String experimentId) {
+	public void setExperimentId(int experimentId) {
 		this.experimentId = experimentId;
 	}
 	
