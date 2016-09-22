@@ -359,7 +359,7 @@ public class SimpleExperimentDao extends SimpleGenericDao<Experiment, Integer> i
 	private List<Experiment> transformEsResultToHibernate(List<ExperimentElastic> experiments) {
 		List<Integer> ids = new ArrayList<Integer>();
 		for (ExperimentElastic e : experiments) {
-			ids.add(Integer.parseInt(e.getExperimentId()));
+			ids.add(e.getExperimentId());
 		}
 		return this.getExperimentsById(ids);
 	}
@@ -459,7 +459,7 @@ public class SimpleExperimentDao extends SimpleGenericDao<Experiment, Integer> i
         ExperimentElastic elasticExperiment = transientObject.getElasticExperiment();
         
         IndexQuery indexQuery = new IndexQuery();
-        elasticExperiment.setExperimentId("" + transientObject.getExperimentId());
+        elasticExperiment.setExperimentId(transientObject.getExperimentId());
         elasticExperiment.setUserId(transientObject.getPersonByOwnerId().getPersonId());
         elasticExperiment.setGroupId(transientObject.getResearchGroup().getResearchGroupId());
         indexQuery.setObject(elasticExperiment);
