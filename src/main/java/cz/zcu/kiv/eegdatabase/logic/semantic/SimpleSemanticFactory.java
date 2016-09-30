@@ -62,7 +62,6 @@ public class SimpleSemanticFactory implements InitializingBean, ApplicationConte
     private Log log = LogFactory.getLog(getClass());
     private ApplicationContext context;
     private List<GenericDao> gDaoList = new ArrayList<GenericDao>();
-    private List<Object> dataList = new ArrayList<Object>();
     private ReentrantReadWriteLock lock = new ReentrantReadWriteLock(true);
 
     private File ontologyFile;         // temporary ontology document
@@ -180,13 +179,15 @@ public class SimpleSemanticFactory implements InitializingBean, ApplicationConte
     /**
      * Loads date for transforms POJO object to resouces of semantic web.
      */
-    private void loadData() {
+    private List<Object> loadData() {
+        List<Object> dataList = new ArrayList<Object>();
         ElasticSynchronizationInterceptor elasticSynchronizationInterceptor = context.getBean(ElasticSynchronizationInterceptor.class);
         elasticSynchronizationInterceptor.setLoadSemantic(true);
          for (GenericDao gDao : gDaoList) {
             dataList.addAll(gDao.getAllRecords());
          }
          elasticSynchronizationInterceptor.setLoadSemantic(false);
+        return dataList;
     }
 
 
@@ -218,8 +219,8 @@ public class SimpleSemanticFactory implements InitializingBean, ApplicationConte
         OutputStream out;
 
         try {
-            loadData();
-            jbe = creatingJenaBean();
+            List<Object> dataList = loadData();
+            jbe = creatingJenaBean(dataList);
             lock.writeLock().lock();
             out = new FileOutputStream(ontologyFile);
             jbe.writeOntologyDocument(out, Syntax.RDF_XML);
@@ -241,7 +242,7 @@ public class SimpleSemanticFactory implements InitializingBean, ApplicationConte
      * Creates an instance of JenaBeanExtension with loaded model.
      * @return instance of JenaBeanExtension
      */
-    private JenaBeanExtension creatingJenaBean() {
+    private JenaBeanExtension creatingJenaBean(List<Object> dataList) {
         JenaBeanExtension jbe = new JenaBeanExtensionTool();
         try {
             jbe.loadStatements(ontologyHeader.getInputStream(), Syntax.RDF_XML_ABBREV);
