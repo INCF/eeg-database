@@ -144,7 +144,7 @@ public class PersonTestIT extends AbstractUITest{
         tester.selectOption("panelPerson:title", "Mr.");
         tester.setTextField("panelPerson:givenname", "Test");
         tester.setTextField("panelPerson:surname", "Test");
-        tester.setTextField("panelPerson:dateOfBirth", "10/10/2016"); //is in the future
+        tester.setTextField("panelPerson:dateOfBirth", "10/10/2116"); //is in the future
        // tester.clickRadioOption("gender", "0");//"Male"
         tester.selectOption("panelPerson:country", "Angola");
         tester.selectOption("panelPerson:organizationType", "Commercial");
