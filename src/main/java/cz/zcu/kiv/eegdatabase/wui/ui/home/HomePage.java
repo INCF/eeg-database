@@ -22,18 +22,15 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.ui.home;
 
-import org.apache.wicket.RestartResponseAtInterceptPageException;
-import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.html.link.BookmarkablePageLink;
-
 import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
 import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.ui.security.ForgottenPasswordPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.security.RegistrationPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.welcome.WelcomePage;
+import org.apache.wicket.RestartResponseAtInterceptPageException;
+import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.markup.html.link.ExternalLink;
-import org.apache.wicket.markup.html.link.Link;
 
 /**
  * Home page of web portal.
@@ -65,9 +62,9 @@ public class HomePage extends MenuPage {
 
         add(new BookmarkablePageLink<Void>("forgottenPass", ForgottenPasswordPage.class));
         add(new BookmarkablePageLink<Void>("registerLink", RegistrationPage.class));
-        add(new ExternalLink("licenseLink1", ResourceUtils.getString("homePage.license.link1")));
-        add(new ExternalLink("EEGBaseLink", ResourceUtils.getString("homePage.license.EEGBaseLink"), ResourceUtils.getString("homePage.license.EEGBaseLink")));
-        add(new ExternalLink("licenseLink2", ResourceUtils.getString("homePage.license.link1"), ResourceUtils.getString("homePage.license.linkText2") + "."));
+//        add(new ExternalLink("licenseLink1", ResourceUtils.getString("homePage.license.link1")));
+//        add(new ExternalLink("EEGBaseLink", ResourceUtils.getString("homePage.license.EEGBaseLink"), ResourceUtils.getString("homePage.license.EEGBaseLink")));
+//        add(new ExternalLink("licenseLink2", ResourceUtils.getString("homePage.license.link1"), ResourceUtils.getString("homePage.license.linkText2") + "."));
         add(new ExternalLink("githubLink", ResourceUtils.getString("homePage.license.githubLink"), ResourceUtils.getString("homePage.license.githubLink") + "."));
     }
 }
