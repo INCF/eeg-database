@@ -123,6 +123,8 @@
 
                         <value>cz.zcu.kiv.eegdatabase.webservices.rest.scenario.wrappers.ScenarioData</value>
                         <value>cz.zcu.kiv.eegdatabase.webservices.rest.scenario.wrappers.ScenarioDataList</value>
+
+                        <value>cz.zcu.kiv.eegdatabase.webservices.rest.metadata.wrappers.OdmlWrapper</value>
                     </list>
                 </property>
             </bean>
