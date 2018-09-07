@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 
 /***********************************************************************************************************************
  *
@@ -72,7 +73,11 @@ public class MetadataServiceImpl implements MetadataService, ApplicationContextA
         log.debug("ODML Writter: " + result);
         byte[] bytes = file.toByteArray();
         wrapper.setData(new String(bytes));
-
+        try {
+            file.close();
+        } catch (IOException e) {
+            log.warn(e);
+        }
         return wrapper;
     }
 
