@@ -77,7 +77,7 @@ public class MetadataServiceImpl implements MetadataService, ApplicationContextA
         try {
             copy = sec.copy();
         } catch (Exception e) {
-            log.warn("Creation odml copy failed. Using current one");
+            log.warn("Creating odml copy failed. Using current one");
             log.warn(e);
         }
 
@@ -86,7 +86,7 @@ public class MetadataServiceImpl implements MetadataService, ApplicationContextA
         Writer writer = new Writer(copy);
         ByteArrayOutputStream file = new ByteArrayOutputStream();
         boolean result = writer.write(file);
-        log.debug("ODML Writter: " + result);
+        log.debug("ODML writter created: " + result);
         byte[] bytes = file.toByteArray();
         wrapper.setData(new String(bytes));
         return wrapper;
