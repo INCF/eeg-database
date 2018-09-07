@@ -4,6 +4,8 @@ import cz.zcu.kiv.eegdatabase.data.dao.ExperimentDao;
 import cz.zcu.kiv.eegdatabase.data.nosql.ElasticSynchronizationInterceptor;
 import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
 import cz.zcu.kiv.eegdatabase.webservices.rest.metadata.wrappers.OdmlWrapper;
+import odml.core.Property;
+import odml.core.Section;
 import odml.core.Writer;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -15,8 +17,10 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.ws.rs.core.Response;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.Vector;
 
 /***********************************************************************************************************************
  *
@@ -65,24 +69,56 @@ public class MetadataServiceImpl implements MetadataService, ApplicationContextA
 
     }
 
-    protected OdmlWrapper fill(odml.core.Section sec) {
+    protected OdmlWrapper fill(odml.core.Section sec)  {
+        /*Working with copy - copy is created as tmp file on drive
+        The original is used when any I/O error occurs
+        * */
+        Section copy = sec;
+        try {
+            copy = sec.copy();
+        } catch (Exception e) {
+            log.warn("Creation odml copy failed. Using current one");
+            log.warn(e);
+        }
+
+        modify(copy);
         OdmlWrapper wrapper = new OdmlWrapper();
-        Writer writer = new Writer(sec);
+        Writer writer = new Writer(copy);
         ByteArrayOutputStream file = new ByteArrayOutputStream();
         boolean result = writer.write(file);
         log.debug("ODML Writter: " + result);
         byte[] bytes = file.toByteArray();
         wrapper.setData(new String(bytes));
-        try {
-            file.close();
-        } catch (IOException e) {
-            log.warn(e);
-        }
         return wrapper;
     }
 
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         this.context = applicationContext;
+    }
+
+    /**
+     * Modify odml values to return only the selected one
+     * @param root
+     */
+    private  void modify(Section root) {
+        Vector<Property> properties = root.getProperties();
+
+        for (Property property : properties) {
+            Object value = property.getValue();
+            if (value != null && property.getValues().size() > 1) {
+                for (Object val : property.getValues()) {
+                    property.removeValue(val);
+                }
+                property.addValue(value);
+
+            }
+        }
+        Vector<Section> sections = root.getSections();
+        if (sections != null) {
+            for (Section section : sections) {
+                modify(section);
+            }
+        }
     }
 }
