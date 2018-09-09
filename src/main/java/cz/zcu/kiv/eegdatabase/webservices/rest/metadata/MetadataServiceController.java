@@ -53,4 +53,9 @@ public class MetadataServiceController {
     public List<OdmlWrapper> getPublicExperiments(@PathVariable int fromId, @PathVariable int count) {
         return metadataService.getOdml(fromId, count);
     }
+
+    @RequestMapping(value = "/public/{count}")
+    public List<OdmlWrapper> getPublicExperiments(@PathVariable int count) {
+        return metadataService.getOdml(0, count);
+    }
 }
