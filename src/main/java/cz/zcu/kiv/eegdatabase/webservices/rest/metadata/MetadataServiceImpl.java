@@ -1,6 +1,7 @@
 package cz.zcu.kiv.eegdatabase.webservices.rest.metadata;
 
 import cz.zcu.kiv.eegdatabase.data.dao.ExperimentDao;
+import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
 import cz.zcu.kiv.eegdatabase.data.nosql.ElasticSynchronizationInterceptor;
 import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
 import cz.zcu.kiv.eegdatabase.webservices.rest.metadata.wrappers.OdmlWrapper;
@@ -20,6 +21,8 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.ws.rs.core.Response;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Vector;
 
 /***********************************************************************************************************************
@@ -55,17 +58,24 @@ public class MetadataServiceImpl implements MetadataService, ApplicationContextA
     @Qualifier("experimentDao")
     private ExperimentDao experimentDao;
 
+    @Autowired
+    @Qualifier("personDao")
+    private PersonDao personDao;
+
     private ApplicationContext context;
 
     @Override
     @Transactional(readOnly = true)
-    public OdmlWrapper getOdml(int experimentId) {
+    public List<OdmlWrapper> getOdml(int from, int count) {
+        List<OdmlWrapper> result = new LinkedList<OdmlWrapper>();
         ElasticSynchronizationInterceptor elasticSynchronizationInterceptor = context.getBean(ElasticSynchronizationInterceptor.class);
         elasticSynchronizationInterceptor.setLoadSemantic(true);
-        Experiment experiment = experimentDao.read(experimentId);
-        odml.core.Section section = experiment.getElasticExperiment().getMetadata();
+        List<Experiment> experiments = experimentDao.getAllExperimentsForUser(personDao.getLoggedPerson(), from, count);
+        for(Experiment experiment : experiments) {
+            result.add(fill(experiment.getElasticExperiment().getMetadata()));
+        }
         elasticSynchronizationInterceptor.setLoadSemantic(false);
-        return fill(section);
+        return result;
 
     }
 

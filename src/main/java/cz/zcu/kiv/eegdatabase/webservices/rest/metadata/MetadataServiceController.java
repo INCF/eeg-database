@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import java.util.List;
+
 /***********************************************************************************************************************
  *
  * This file is part of the eegdatabase project
@@ -41,13 +43,14 @@ public class MetadataServiceController {
     MetadataService metadataService;
 
     /**
-     * Get odml metadata for experiment.
+     * Get odml metadata for experiments.
      *
-     * @param experimentId id of experiment
-     * @return metadata for experiment
+     * @param fromId from which id should service fetch records
+     * @param count  maximum records fetched
+     * @return metadata for experiments
      */
-    @RequestMapping(value = "/public/{experimentId}", method = RequestMethod.GET, produces={"application/xml;charset=UTF-8"})
-    public OdmlWrapper getPublicExperiments(@PathVariable int experimentId) {
-        return metadataService.getOdml(experimentId);
+    @RequestMapping(value = "/public/{fromId}/{count}")
+    public List<OdmlWrapper> getPublicExperiments(@PathVariable int fromId, @PathVariable int count) {
+        return metadataService.getOdml(fromId, count);
     }
 }

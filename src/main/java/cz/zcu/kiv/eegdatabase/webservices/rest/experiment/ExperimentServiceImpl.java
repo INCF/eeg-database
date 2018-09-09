@@ -119,7 +119,7 @@ public class ExperimentServiceImpl implements ExperimentService {
     @Override
     @Transactional(readOnly = true)
     public List<ExperimentData> getPublicExperiments(int from, int max) {
-        return fillAndSortExperiments(experimentDao.getVisibleExperiments(personDao.getLoggedPerson().getPersonId(), from, max));
+        return fillAndSortExperiments(experimentDao.getAllExperimentsForUser(personDao.getLoggedPerson(), from, max));
     }
 
     /**
@@ -138,7 +138,7 @@ public class ExperimentServiceImpl implements ExperimentService {
     @Override
     @Transactional(readOnly = true)
     public int getPublicExperimentsCount() {
-        return experimentDao.getVisibleExperimentsCount(personDao.getLoggedPerson().getPersonId());
+        return experimentDao.getCountForAllExperimentsForUser(personDao.getLoggedPerson());
     }
 
     /**
