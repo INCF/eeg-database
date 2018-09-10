@@ -4,7 +4,8 @@ import cz.zcu.kiv.eegdatabase.data.dao.ExperimentDao;
 import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
 import cz.zcu.kiv.eegdatabase.data.nosql.ElasticSynchronizationInterceptor;
 import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
-import cz.zcu.kiv.eegdatabase.webservices.rest.metadata.wrappers.OdmlWrapper;
+import cz.zcu.kiv.eegdatabase.webservices.rest.metadata.wrappers.Metadata;
+import cz.zcu.kiv.eegdatabase.webservices.rest.metadata.wrappers.MetadataList;
 import odml.core.Property;
 import odml.core.Section;
 import odml.core.Writer;
@@ -18,7 +19,6 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.ws.rs.core.Response;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.LinkedList;
@@ -66,20 +66,20 @@ public class MetadataServiceImpl implements MetadataService, ApplicationContextA
 
     @Override
     @Transactional(readOnly = true)
-    public List<OdmlWrapper> getOdml(int from, int count) {
-        List<OdmlWrapper> result = new LinkedList<OdmlWrapper>();
+    public MetadataList getOdml(int from, int count) {
         ElasticSynchronizationInterceptor elasticSynchronizationInterceptor = context.getBean(ElasticSynchronizationInterceptor.class);
         elasticSynchronizationInterceptor.setLoadSemantic(true);
         List<Experiment> experiments = experimentDao.getAllExperimentsForUser(personDao.getLoggedPerson(), from, count);
+        List<Metadata> result = new LinkedList<Metadata>();
         for(Experiment experiment : experiments) {
-            result.add(fill(experiment.getElasticExperiment().getMetadata()));
+            result.add(new Metadata(fill(experiment.getElasticExperiment().getMetadata()), experiment.getExperimentId()));
         }
         elasticSynchronizationInterceptor.setLoadSemantic(false);
-        return result;
+        return new MetadataList(result);
 
     }
 
-    protected OdmlWrapper fill(odml.core.Section sec)  {
+    protected String fill(odml.core.Section sec)  {
         /*Working with copy - copy is created as tmp file on drive
         The original is used when any I/O error occurs
         * */
@@ -92,14 +92,17 @@ public class MetadataServiceImpl implements MetadataService, ApplicationContextA
         }
 
         modify(copy);
-        OdmlWrapper wrapper = new OdmlWrapper();
         Writer writer = new Writer(copy);
         ByteArrayOutputStream file = new ByteArrayOutputStream();
         boolean result = writer.write(file);
         log.debug("ODML writter created: " + result);
         byte[] bytes = file.toByteArray();
-        wrapper.setData(new String(bytes));
-        return wrapper;
+        try {
+            file.close();
+        } catch (IOException e) {
+            log.warn(e);
+        }
+        return new String(bytes);
     }
 
     @Override
@@ -112,22 +115,24 @@ public class MetadataServiceImpl implements MetadataService, ApplicationContextA
      * @param root
      */
     private  void modify(Section root) {
-        Vector<Property> properties = root.getProperties();
-
-        for (Property property : properties) {
-            Object value = property.getValue();
-            if (value != null && property.getValues().size() > 1) {
-                for (Object val : property.getValues()) {
-                    property.removeValue(val);
+        if (root != null) {
+            Vector<Property> properties = root.getProperties();
+            if (properties != null) {
+                for (Property property : properties) {
+                    Object value = property.getValue();
+                    if (value != null && property.getValues().size() > 1) {
+                        for (Object val : property.getValues()) {
+                            property.removeValue(val);
+                        }
+                        property.addValue(value);
+                    }
                 }
-                property.addValue(value);
-
             }
-        }
-        Vector<Section> sections = root.getSections();
-        if (sections != null) {
-            for (Section section : sections) {
-                modify(section);
+            Vector<Section> sections = root.getSections();
+            if (sections != null) {
+                for (Section section : sections) {
+                    modify(section);
+                }
             }
         }
     }

@@ -138,7 +138,8 @@
                         <value>cz.zcu.kiv.eegdatabase.webservices.rest.scenario.wrappers.ScenarioData</value>
                         <value>cz.zcu.kiv.eegdatabase.webservices.rest.scenario.wrappers.ScenarioDataList</value>
 
-                        <value>cz.zcu.kiv.eegdatabase.webservices.rest.metadata.wrappers.OdmlWrapper</value>
+                        <value>cz.zcu.kiv.eegdatabase.webservices.rest.metadata.wrappers.Metadata</value>
+                        <value>cz.zcu.kiv.eegdatabase.webservices.rest.metadata.wrappers.MetadataList</value>
                     </list>
                 </property>
             </bean>
@@ -146,6 +147,7 @@
 
     </bean>
 
-    <bean id="cdataCharacterEscapeHandler" class="cz.zcu.kiv.eegdatabase.webservices.rest.CdataCharacterEscapeHandler"/>
+    <bean id="cdataCharacterEscapeHandler" class="cz.zcu.kiv.eegdatabase.webservices.rest.common.utils.CdataCharacterEscapeHandler"/>
 
 </beans>
+

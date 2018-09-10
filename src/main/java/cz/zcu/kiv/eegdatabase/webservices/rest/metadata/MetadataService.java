@@ -1,8 +1,6 @@
 package cz.zcu.kiv.eegdatabase.webservices.rest.metadata;
 
-import cz.zcu.kiv.eegdatabase.webservices.rest.metadata.wrappers.OdmlWrapper;
-
-import java.util.List;
+import cz.zcu.kiv.eegdatabase.webservices.rest.metadata.wrappers.MetadataList;
 
 /***********************************************************************************************************************
  *
@@ -30,5 +28,5 @@ import java.util.List;
  **********************************************************************************************************************/
 public interface MetadataService {
 
-    List<OdmlWrapper> getOdml(int from, int count);
+    MetadataList getOdml(int from, int count);
 }

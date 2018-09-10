@@ -1,14 +1,11 @@
 package cz.zcu.kiv.eegdatabase.webservices.rest.metadata.wrappers;
 
-import com.sun.xml.txw2.annotation.XmlCDATA;
-import cz.zcu.kiv.eegdatabase.webservices.rest.AdapterCDATA;
+import cz.zcu.kiv.eegdatabase.webservices.rest.common.utils.AdapterCDATA;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlInlineBinaryData;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-import java.io.OutputStream;
 
 /***********************************************************************************************************************
  *

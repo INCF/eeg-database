@@ -1,4 +1,4 @@
-package cz.zcu.kiv.eegdatabase.webservices.rest;
+package cz.zcu.kiv.eegdatabase.webservices.rest.common.utils;
 
 import com.sun.xml.bind.marshaller.CharacterEscapeHandler;
 

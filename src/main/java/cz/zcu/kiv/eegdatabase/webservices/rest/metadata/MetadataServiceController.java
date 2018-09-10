@@ -1,14 +1,11 @@
 package cz.zcu.kiv.eegdatabase.webservices.rest.metadata;
 
-import cz.zcu.kiv.eegdatabase.webservices.rest.metadata.wrappers.OdmlWrapper;
+import cz.zcu.kiv.eegdatabase.webservices.rest.metadata.wrappers.MetadataList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-
-import java.util.List;
 
 /***********************************************************************************************************************
  *
@@ -50,12 +47,12 @@ public class MetadataServiceController {
      * @return metadata for experiments
      */
     @RequestMapping(value = "/public/{fromId}/{count}")
-    public List<OdmlWrapper> getPublicExperiments(@PathVariable int fromId, @PathVariable int count) {
+    public MetadataList getPublicExperiments(@PathVariable int fromId, @PathVariable int count) {
         return metadataService.getOdml(fromId, count);
     }
 
     @RequestMapping(value = "/public/{count}")
-    public List<OdmlWrapper> getPublicExperiments(@PathVariable int count) {
+    public MetadataList getPublicExperiments(@PathVariable int count) {
         return metadataService.getOdml(0, count);
     }
 }
