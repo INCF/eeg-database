@@ -1,27 +1,27 @@
 /**
  * *****************************************************************************
  * This file is part of the EEG-database project
- *
+ * <p>
  * ==========================================
- *
+ * <p>
  * Copyright (C) 2013 by University of West Bohemia (http://www.zcu.cz/en/)
- *
- *  ***********************************************************************************************************************
- *
+ * <p>
+ * ***********************************************************************************************************************
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- *
+ * <p>
  * http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
  * License for the specific language governing permissions and limitations under
  * the License.
- *
- *  ***********************************************************************************************************************
- *
+ * <p>
+ * ***********************************************************************************************************************
+ * <p>
  * MyInterceptor.java, 2013/10/02 00:01 Martin Bydzovsky
  * ****************************************************************************
  */
@@ -36,6 +36,7 @@ import org.apache.commons.logging.LogFactory;
 import org.elasticsearch.index.query.IdsQueryBuilder;
 import org.hibernate.EmptyInterceptor;
 import org.hibernate.type.Type;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
 import org.springframework.data.elasticsearch.core.query.DeleteQuery;
 import org.springframework.data.elasticsearch.core.query.IndexQuery;
@@ -55,6 +56,9 @@ public class ElasticSynchronizationInterceptor extends EmptyInterceptor {
 
     protected Log log = LogFactory.getLog(getClass());
     private boolean loadSemantic;
+
+    @Autowired
+    MetadataUtil metadataUtil;
 
     @Resource
     private ElasticsearchTemplate elasticsearchTemplate;
@@ -106,14 +110,10 @@ public class ElasticSynchronizationInterceptor extends EmptyInterceptor {
     public boolean onLoad(Object entity, Serializable id, Object[] state, String[] propertyNames, Type[] types) {
         log.debug("onLoad: " + entity);
         boolean res = super.onLoad(entity, id, state, propertyNames, types);
-        if(loadSemantic) {
+        if (loadSemantic) {
             if (entity instanceof Experiment) {
                 Experiment e = (Experiment) entity;
-                SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(new IdsQueryBuilder("experiment").addIds("" + e.getExperimentId())).build();
-                List<ExperimentElastic> elastic = elasticsearchTemplate.queryForList(searchQuery, ExperimentElastic.class);
-                if (elastic.size() > 0 && elastic.get(0) != null) {
-                    e.setElasticExperiment(elastic.get(0));
-                }
+                metadataUtil.loadMetadata(e);
             }
         }
         return res;

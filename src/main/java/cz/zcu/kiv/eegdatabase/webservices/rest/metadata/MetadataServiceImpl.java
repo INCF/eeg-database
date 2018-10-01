@@ -1,21 +1,23 @@
 package cz.zcu.kiv.eegdatabase.webservices.rest.metadata;
 
 import cz.zcu.kiv.eegdatabase.data.dao.ExperimentDao;
+import cz.zcu.kiv.eegdatabase.data.dao.ExperimentPackageConnectionDao;
 import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
-import cz.zcu.kiv.eegdatabase.data.nosql.ElasticSynchronizationInterceptor;
+import cz.zcu.kiv.eegdatabase.data.nosql.MetadataUtil;
 import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
+import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackage;
+import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackageConnection;
 import cz.zcu.kiv.eegdatabase.webservices.rest.metadata.wrappers.Metadata;
 import cz.zcu.kiv.eegdatabase.webservices.rest.metadata.wrappers.MetadataList;
+import cz.zcu.kiv.eegdatabase.wui.core.experimentpackage.ExperimentPackageFacade;
 import odml.core.Property;
 import odml.core.Section;
 import odml.core.Writer;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,6 +25,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 import java.util.Vector;
 
 /***********************************************************************************************************************
@@ -50,13 +53,23 @@ import java.util.Vector;
  *
  **********************************************************************************************************************/
 @Service
-public class MetadataServiceImpl implements MetadataService, ApplicationContextAware {
+public class MetadataServiceImpl implements MetadataService {
 
     protected Log log = LogFactory.getLog(getClass());
 
     @Autowired
+    MetadataUtil metadataUtil;
+
+    @Autowired
     @Qualifier("experimentDao")
     private ExperimentDao experimentDao;
+
+    @Autowired
+    @Qualifier("experimentPackageConnectionDao")
+    private ExperimentPackageConnectionDao experimentPackageConnectionDao;
+
+    @Autowired
+    private ExperimentPackageFacade experimentPackageFacade;
 
     @Autowired
     @Qualifier("personDao")
@@ -67,14 +80,31 @@ public class MetadataServiceImpl implements MetadataService, ApplicationContextA
     @Override
     @Transactional(readOnly = true)
     public MetadataList getOdml(int from, int count) {
-        ElasticSynchronizationInterceptor elasticSynchronizationInterceptor = context.getBean(ElasticSynchronizationInterceptor.class);
-        elasticSynchronizationInterceptor.setLoadSemantic(true);
-        List<Experiment> experiments = experimentDao.getAllExperimentsForUser(personDao.getLoggedPerson(), from, count);
+        List<Experiment> experiments = new LinkedList<Experiment>();
+        //Firstly read experiments with a package then experiments without package
+        List<ExperimentPackage> packages = experimentPackageFacade.listVisiblePackages(personDao.getLoggedPerson());
+        for(ExperimentPackage pack : packages) {
+            Set<ExperimentPackageConnection> connectionSet =  pack.getExperimentPackageConnections();
+            for(ExperimentPackageConnection connection : connectionSet) {
+                experiments.add(connection.getExperiment());
+            }
+        }
+        experiments.addAll(experimentPackageConnectionDao.listExperimentsWithoutPackage());
+
+        //check bounds
+        if(from < 0) {
+            from = 0;
+        }
+        if(count >= experiments.size()) {
+            count = experiments.size() - 1;
+        }
         List<Metadata> result = new LinkedList<Metadata>();
-        for(Experiment experiment : experiments) {
+        log.debug("I got " + experiments.size() + " experiments");
+        //There is no dao with from, count parameters, I must read everything and then return a sublist
+        for(Experiment experiment : experiments.subList(from, count)) {
+            metadataUtil.loadMetadata(experiment);
             result.add(new Metadata(fill(experiment.getElasticExperiment().getMetadata()), experiment.getExperimentId()));
         }
-        elasticSynchronizationInterceptor.setLoadSemantic(false);
         return new MetadataList(result);
 
     }
@@ -103,11 +133,6 @@ public class MetadataServiceImpl implements MetadataService, ApplicationContextA
             log.warn(e);
         }
         return new String(bytes);
-    }
-
-    @Override
-    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        this.context = applicationContext;
     }
 
     /**

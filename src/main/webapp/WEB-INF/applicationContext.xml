@@ -75,6 +75,8 @@
     
 	<bean id="encoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
 
+	<bean id="metadataUtil" class="cz.zcu.kiv.eegdatabase.data.nosql.MetadataUtil"></bean>
+
 	<!-- CORE -->
 	<bean id="wicketApplication " class="cz.zcu.kiv.eegdatabase.wui.app.EEGDataBaseApplication" >
         <property name="development" value="${development}" />
