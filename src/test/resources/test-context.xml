@@ -68,6 +68,8 @@
 		<property name="password" value=""/>
 	</bean>
 
+	<bean id="metadataUtil" class="cz.zcu.kiv.eegdatabase.data.nosql.MetadataUtil"></bean>
+	
     <bean id="elasticSynchronizationInterceptor" class="cz.zcu.kiv.eegdatabase.data.nosql.ElasticSynchronizationInterceptor"/>
 
     <elasticsearch:transport-client id="client" cluster-name="${elasticsearch.clusterName}" cluster-nodes="${elasticsearch.url}" />
