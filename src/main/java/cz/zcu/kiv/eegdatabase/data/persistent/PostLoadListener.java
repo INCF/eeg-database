@@ -1,5 +1,6 @@
 package cz.zcu.kiv.eegdatabase.data.persistent;
 
+import cz.zcu.kiv.eegdatabase.data.nosql.MetadataUtil;
 import cz.zcu.kiv.eegdatabase.data.nosql.entities.ExperimentElastic;
 import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
 import org.apache.commons.logging.Log;
@@ -8,6 +9,7 @@ import org.elasticsearch.index.query.IdsQueryBuilder;
 import org.hibernate.LazyInitializationException;
 import org.hibernate.event.PostLoadEvent;
 import org.hibernate.event.PostLoadEventListener;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
 import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
 import org.springframework.data.elasticsearch.core.query.SearchQuery;
@@ -25,6 +27,9 @@ public class PostLoadListener implements PostLoadEventListener {
     @Resource
     private ElasticsearchTemplate elasticsearchTemplate;
 
+    @Autowired
+    MetadataUtil metadataUtil;
+
     @Override
     public void onPostLoad(PostLoadEvent event) {
         Object obj = event.getEntity();
@@ -33,11 +38,7 @@ public class PostLoadListener implements PostLoadEventListener {
             try {
                 e.getDataFiles().size();
             } catch (LazyInitializationException ex) {
-                SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(new IdsQueryBuilder("experiment").addIds("" + e.getExperimentId())).build();
-                List<ExperimentElastic> elastic = elasticsearchTemplate.queryForList(searchQuery, ExperimentElastic.class);
-                if (elastic.size() > 0 && elastic.get(0) != null) {
-                    e.setElasticExperiment(elastic.get(0));
-                }
+                metadataUtil.loadMetadata(e);
             }
 
         }

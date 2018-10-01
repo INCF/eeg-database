@@ -66,7 +66,10 @@ public class SimpleRemoveTmpFilesFactory implements RemoveTmpFilesFactory {
                 File[] files = f.listFiles(new FilenameFilter() {
                     @Override
                     public boolean accept(File dir, String name) {
-                        return name.toLowerCase().endsWith(".zip");
+                        String lowercaseName = name.toLowerCase();
+                        return (lowercaseName.startsWith("experimentdownload") && lowercaseName.endsWith(".zip")) ||
+                                (lowercaseName.startsWith("section") && lowercaseName.endsWith(".ser")) ||
+                                (lowercaseName.startsWith("upload") && lowercaseName.endsWith(".tmp"));
                     }
                 });
                 for (File file : files) {

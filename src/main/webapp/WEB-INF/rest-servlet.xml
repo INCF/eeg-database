@@ -49,7 +49,7 @@
     <bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
         <property name="order" value="1"/>
         <property name="favorPathExtension" value="true"/>
-        <property name="favorParameter" value="true" />
+        <property name="favorParameter" value="true"/>
         <property name="defaultContentType" value="application/xml"/>
         <property name="mediaTypes">
             <map>
@@ -78,6 +78,17 @@
         <property name="contentType" value="application/xml;charset=UTF-8"/>
         <constructor-arg>
             <bean class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
+                <property name="marshallerProperties">
+                    <map>
+                        <entry>
+                            <key>
+                                <value>com.sun.xml.bind.marshaller.CharacterEscapeHandler</value>
+                            </key>
+
+                            <ref bean="cdataCharacterEscapeHandler"/>
+                        </entry>
+                    </map>
+                </property>
                 <property name="classesToBeBound">
                     <list>
                         <value>cz.zcu.kiv.eegdatabase.webservices.rest.common.wrappers.RecordCountData</value>
@@ -103,15 +114,18 @@
                         <value>cz.zcu.kiv.eegdatabase.webservices.rest.experiment.wrappers.SoftwareData</value>
                         <value>cz.zcu.kiv.eegdatabase.webservices.rest.experiment.wrappers.SoftwareDataList</value>
                         <value>cz.zcu.kiv.eegdatabase.webservices.rest.experiment.wrappers.PharmaceuticalData</value>
-                        <value>cz.zcu.kiv.eegdatabase.webservices.rest.experiment.wrappers.PharmaceuticalDataList</value>
+                        <value>cz.zcu.kiv.eegdatabase.webservices.rest.experiment.wrappers.PharmaceuticalDataList
+                        </value>
                         <value>cz.zcu.kiv.eegdatabase.webservices.rest.experiment.wrappers.ElectrodeLocationData</value>
-                        <value>cz.zcu.kiv.eegdatabase.webservices.rest.experiment.wrappers.ElectrodeLocationDataList</value>
+                        <value>cz.zcu.kiv.eegdatabase.webservices.rest.experiment.wrappers.ElectrodeLocationDataList
+                        </value>
                         <value>cz.zcu.kiv.eegdatabase.webservices.rest.experiment.wrappers.ElectrodeTypeData</value>
                         <value>cz.zcu.kiv.eegdatabase.webservices.rest.experiment.wrappers.ElectrodeTypeDataList</value>
                         <value>cz.zcu.kiv.eegdatabase.webservices.rest.experiment.wrappers.ElectrodeFixData</value>
                         <value>cz.zcu.kiv.eegdatabase.webservices.rest.experiment.wrappers.ElectrodeFixDataList</value>
                         <value>cz.zcu.kiv.eegdatabase.webservices.rest.experiment.wrappers.ElectrodeSystemData</value>
-                        <value>cz.zcu.kiv.eegdatabase.webservices.rest.experiment.wrappers.ElectrodeSystemDataList</value>
+                        <value>cz.zcu.kiv.eegdatabase.webservices.rest.experiment.wrappers.ElectrodeSystemDataList
+                        </value>
                         <value>cz.zcu.kiv.eegdatabase.webservices.rest.experiment.wrappers.ElectrodeConfData</value>
                         <value>cz.zcu.kiv.eegdatabase.webservices.rest.experiment.wrappers.OwnerData</value>
 
@@ -123,6 +137,9 @@
 
                         <value>cz.zcu.kiv.eegdatabase.webservices.rest.scenario.wrappers.ScenarioData</value>
                         <value>cz.zcu.kiv.eegdatabase.webservices.rest.scenario.wrappers.ScenarioDataList</value>
+
+                        <value>cz.zcu.kiv.eegdatabase.webservices.rest.metadata.wrappers.Metadata</value>
+                        <value>cz.zcu.kiv.eegdatabase.webservices.rest.metadata.wrappers.MetadataList</value>
                     </list>
                 </property>
             </bean>
@@ -130,4 +147,7 @@
 
     </bean>
 
+    <bean id="cdataCharacterEscapeHandler" class="cz.zcu.kiv.eegdatabase.webservices.rest.common.utils.CdataCharacterEscapeHandler"/>
+
 </beans>
+
