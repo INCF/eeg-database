@@ -567,7 +567,7 @@
 		<dependency>
 			<groupId>commons-collections</groupId>
 			<artifactId>commons-collections</artifactId>
-			<version>3.2</version>
+			<version>3.2.2</version>
 			<type>jar</type>
 			<scope>compile</scope>
 		</dependency>
