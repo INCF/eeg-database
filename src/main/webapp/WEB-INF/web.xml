@@ -126,6 +126,19 @@
         <filter-name>cross-origin</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
+
+    <!-- Fix: Preserve PUT/POST during HTTP → HTTPS redirect -->
+    <filter>
+        <filter-name>httpToHttpsPreserveMethodFilter</filter-name>
+        <filter-class>cz.zcu.kiv.eegdatabase.web.filters.HttpToHttpsPreserveMethodFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>httpToHttpsPreserveMethodFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+
     <!-- Filter mappings starting -->
     <filter-mapping>
         <filter-name>springSecurityFilterChain</filter-name>
