@@ -89,7 +89,7 @@ public class ArticleCommentDaoTest extends AbstractDataAccessTest {
 
         Article article2 = new Article();
         article2.setText("test-text");
-        article2.setTitle("test-title2");
+        article2.setTitle("test-title33333");
         article2.setTime(new Timestamp(System.currentTimeMillis()));
         article2.setPerson(personReader);
         articleDao.create(article2);
