@@ -22,6 +22,10 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.data.pojo;
 
+import cz.zcu.kiv.eegdatabase.data.annotation.Indexed;
+import cz.zcu.kiv.eegdatabase.data.annotation.SolrField;
+import cz.zcu.kiv.eegdatabase.data.annotation.SolrId;
+import cz.zcu.kiv.eegdatabase.logic.indexing.IndexField;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.converters.IAutoCompletable;
 import cz.zcu.kiv.formgen.annotation.*;
 import org.hibernate.annotations.GenericGenerator;
@@ -40,17 +44,21 @@ import java.util.Set;
  */
 @Form
 @Entity
+@Indexed
 @Table(name = "PERSON")
 public class Person implements Serializable, Comparable<Person>, IAutoCompletable {
 
+	@SolrId
 	@FormId
 	private int personId;
 	@FormItem
 	private String facebookId;
 	@FormItem(required = true)
 	private String email;
+	@SolrField(name = IndexField.TITLE)
 	@FormItem(preview = PreviewLevel.MINOR)
 	private String givenname;
+	@SolrField(name = IndexField.TITLE)
 	@FormItem(required = true, preview = PreviewLevel.MAJOR)
 	private String surname;
 	@FormItem(required = true)
@@ -63,6 +71,7 @@ public class Person implements Serializable, Comparable<Person>, IAutoCompletabl
 	private char laterality;
 	@FormItem
 	private String phoneNumber;
+	@SolrField(name = IndexField.TEXT)
 	@FormItem
 	private String note;
 	private String username;
